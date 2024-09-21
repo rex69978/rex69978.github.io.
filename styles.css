@@ -1,3 +1,12 @@
+/* Logo styling */
+.logo {
+    max-width: 150px; /* Adjust to your preferred size */
+    height: auto; /* Ensures the aspect ratio is maintained */
+    display: block; /* Ensures it doesn't overflow */
+    margin: 0 auto; /* Center the logo if needed */
+}
+
+
 body {
     background-color: #f4f4f9; /* Light gray background */
     color: #333; /* Dark text */
