@@ -1,49 +1,471 @@
-/* Logo styling */
-.logo {
-    max-width: 150px; /* Adjust to your preferred size */
-    height: auto; /* Ensures the aspect ratio is maintained */
-    display: block; /* Ensures it doesn't overflow */
-    margin: 0 auto; /* Center the logo if needed */
+#footerlinks {
+    color: #fff;
+    text-decoration: none
 }
 
-
-.glass-background {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    backdrop-filter: blur(10px); /* Adds blur behind the element */
-    -webkit-backdrop-filter: blur(10px); /* Safari support */
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 20px;
-}
-
-
-}
-
-header {
-    background-color: #005f73; /* Teal header */
-    color: white;
-}
-
-button, a {
-    background-color: #94d2bd; /* Light teal buttons */
-    color: #333; /* Button text color */
-
-}
-
-background {
-      @keyframes move-background {
-    0% { background-position: 0 0; }
-    100% { background-position: 100% 100%; }
+#footerlinks:hover {
+    color: #007bff
 }
 
 body {
-    background: url('https://example.com/moving-bg.jpg') repeat;
+    overflow-x: hidden;
+    overflow-y: auto
+}
+
+.img-reponsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto
+}
+
+.textoverimage {
+    position: relative
+}
+
+p.title {
+    position: absolute;
+    top: 110px;
+    left: 0;
+    text-align: center;
+    font-size: 55px;
+    width: 100%;
+    color: #ff0;
+    font-weight: 700
+}
+
+@media only screen and (max-width: 767px) {
+    p.title {
+        font-size:1.8em;
+        line-height: .1em
+    }
+}
+
+@media only screen and (max-width: 479px) {
+    p.title {
+        font-size:1.8em;
+        line-height: .1em;
+        top: 40px
+    }
+}
+
+#avatar {
+    background-image: url(http://i.stack.imgur.com/Dj7eP.jpg);
+    width: 150px;
+    height: 150px;
     background-size: cover;
-    animation: move-background 10s linear infinite;
+    background-position: top center;
+    border-radius: 50%
 }
 
-
-    body {
-    background: linear-gradient(to bottom right, #f4f4f9, #dbe7e4);
+ul,#myUL {
+    list-style-type: none
 }
+
+#myUL {
+    margin: 0;
+    padding: 0
+}
+
+.caret {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.caret::before {
+    content: "\25B6";
+    color: #000;
+    display: inline-block;
+    margin-right: 6px
+}
+
+.caret-down::before {
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg)
+}
+
+.nested {
+    display: none
+}
+
+.active {
+    display: block
+}
+
+.container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px
+}
+
+button.accordion {
+    width: 100%;
+    background-color: #63a3f1;
+    border: none;
+    outline: none;
+    text-align: left;
+    padding: 15px 20px;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color .2s linear
+}
+
+button.accordion:after {
+    content: 'OPEN  \f055  ';
+    font-family: fontawesome;
+    font-size: 14px;
+    float: right
+}
+
+button.accordion.is-open:after {
+    content: ' CLOSE  \f056 '
+}
+
+button.accordion:hover,button.accordion.is-open {
+    background-color: #17a2b8
+}
+
+.accordion-content {
+    background-color: #fff;
+    border-left: 1px solid #f5f5f5;
+    border-right: 1px solid #f5f5f5;
+    padding: 0 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .2s ease-in-out
+}
+
+.bg-dark {
+    height: 100px;
+    background-color: #fff!important
+}
+
+.nav-link {
+    color: #000!important
+}
+
+.h3 {
+    margin-bottom: 20px!important;
+    margin-top: 10px!important;
+    font-size: 1.8em
+}
+
+h3 {
+    font-weight: 700
+}
+
+h3 {
+    font-size: 1.75rem;
+    background-color: #be8037;
+    color: #fff;
+    padding: 10px!important;
+    margin-bottom: 20px;
+    text-decoration: none!important
+}
+
+.albumdetail2 {
+    font-size: 1.2em;
+    line-height: 1.8em;
+    padding-top: 10px
+}
+
+.bg-light {
+    background-color: #fff!important
+}
+
+.card-title {
+    color: #be8037
+}
+
+a {
+    color: #be8037!important
+}
+
+.songdetails {
+    font-size: 1.2em;
+    padding: 5px;
+    line-height: 1.7em
+}
+
+.albumpic {
+    float: left;
+    width: 20%
+}
+
+.albumdetail {
+    float: left;
+    margin-left: 10px;
+    width: 80%;
+    font-size: 1.2em
+}
+
+.album {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    font-size: 1.1em
+}
+
+.rss-box {
+    width: 100%!important
+}
+
+.rss-items {
+    list-style-type: none!important;
+    width: 100%
+}
+
+.rss-item {
+    width: 250px!important;
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 15px
+}
+
+.rss-item img {
+    width: 250px
+}
+
+#display_comment {
+    font-size: 20px!important
+}
+
+.splide__slide img {
+    border-radius: 50%;
+    border: 2px #fff solid;
+    width: 100%
+}
+
+.splide__slide img:hover {
+    border: 2px #be8037 solid
+}
+
+.card img:hover {
+    border: 2px #be8037 solid
+}
+
+.splide__arrow {
+    height: 4em;
+    width: 4em
+}
+
+.rate {
+    float: left;
+    height: 46px;
+    text-align: left
+}
+
+.rate:not(:checked)>input {
+    position: absolute;
+    display: none
+}
+
+.rate:not(:checked)>label {
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 40px;
+    color: #ccc
+}
+
+.rate:not(:checked)>label:before {
+    content: url(https://www.malawi-music.com/images/micb.png)
+}
+
+.rate>input:required~label,.rate input[required=required]~label {
+    content: url(https://www.malawi-music.com/images/micd3.png)
+}
+
+.rate>input:checked~label,.rate input[checked=checked]~label {
+    content: url(https://www.malawi-music.com/images/mica.png)
+}
+
+.rate:not(:checked)>label:hover,.rate:not(:checked)>label:hover~label {
+    content: url(https://www.malawi-music.com/images/mica.png)
+}
+
+.rate>input:checked+label:hover,.rate>input:checked+label:hover~label,.rate>input:checked~label:hover,.rate>input:checked~label:hover~label,.rate>label:hover~input:checked~label {
+    content: url(https://www.malawi-music.com/images/mica.png)
+}
+
+.overall-rating {
+    width: 100%;
+    float: left;
+    font-size: 16px;
+    margin-top: 20px;
+    color: #8e8d8d
+}
+
+.statusMsg {
+    font-size: 16px;
+    padding: 10px!important;
+    border: 1.5px dashed
+}
+
+.statusMsg.errordiv {
+    color: #ff4040
+}
+
+.statusMsg.succdiv {
+    color: #00bf6f
+}
+
+#rate {
+    float: left;
+    height: 36px;
+    text-align: center;
+    margin-top: 5px;
+    cursor: default
+}
+
+#rate:not(:checked)>input {
+    position: absolute;
+    display: none
+}
+
+#rate:not(:checked)>label {
+    float: right;
+    width: .8;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 30px;
+    color: #ccc;
+    cursor: default
+}
+
+#rate:not(:checked)>label:before {
+    content: url(https://www.malawi-music.com/images/micb.png);
+    cursor: default
+}
+
+#rate>input:required~label,#rate input[required=required]~label {
+    content: url(https://www.malawi-music.com/images/micd3.png)
+}
+
+#rate>input:checked~label,#rate input[checked=checked]~label {
+    content: url(https://www.malawi-music.com/images/mica.png);
+    cursor: default
+}
+
+.halfchecked {
+    content: url(https://www.malawi-music.com/images/micd.png)!important;
+    cursor: default
+}
+
+.wrapper5 .icon {
+    position: relative;
+    background: #fff;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all .2s cubic-bezier(.68,-.55,.265,1.55)
+}
+
+.wrapper5 .tooltip {
+    position: absolute;
+    top: 0;
+    font-size: 14px;
+    background: #fff;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0,0,0,.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all .3s cubic-bezier(.68,-.55,.265,1.55)
+}
+
+.wrapper5 .tooltip::before {
+    position: absolute;
+    content: "";
+    height: 8px;
+    width: 8px;
+    background: #fff;
+    bottom: -3px;
+    left: 50%;
+    transform: translate(-50%) rotate(45deg);
+    transition: all .3s cubic-bezier(.68,-.55,.265,1.55)
+}
+
+.wrapper5 .icon:hover .tooltip {
+    top: -45px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto
+}
+
+.wrapper5 .icon:hover span,.wrapper5 .icon:hover .tooltip {
+    text-shadow: 0 -1px 0 rgba(0,0,0,.1)
+}
+
+.wrapper5 .mfmrating:hover,.wrapper5 .mfmrating:hover .tooltip,.wrapper5 .mfmrating:hover .tooltip::before {
+    background: #eee;
+    color: #000
+}
+
+.tooltip div {
+    padding: 10px;
+    width: 120px
+}
+
+.splide__pagination {
+    position: static
+}
+
+.splide__pagination__page.is-active {
+    background: #be8037
+}
+
+.splide__arrow {
+    background: #be8037;
+    border: 2px solid #fff
+}
+
+.splide__arrow svg {
+    fill: #fff
+}
+
+.card-deck .card {
+    margin-right: 0;
+    margin-left: 0
+}
+
+.card-deck {
+    margin-right: 0;
+    margin-left: 0
+}
+
+li.nav-item {
+    padding: 10px 10px 10px 0
+}
+
+.navbar-collapse {
+    font-size: 1.2em;
+    text-align: center;
+    font-weight: 700
+}
+
+.btn-lg {
+    background-color: red!important;
+    border: 1px solid red
+}
+
+.btn-primary {
+    background-color: red!important
+}
+
+.bootCols img {
+    width: 96%
 }
