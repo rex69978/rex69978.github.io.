@@ -12,4 +12,8 @@ header {
 button, a {
     background-color: #94d2bd; /* Light teal buttons */
     color: #333; /* Button text color */
+
+    body {
+    background: linear-gradient(to bottom right, #f4f4f9, #dbe7e4);
+}
 }
