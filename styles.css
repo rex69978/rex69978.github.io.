@@ -23,6 +23,21 @@ button, a {
     background-color: #94d2bd; /* Light teal buttons */
     color: #333; /* Button text color */
 
+}
+
+background {
+      @keyframes move-background {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
+}
+
+body {
+    background: url('https://example.com/moving-bg.jpg') repeat;
+    background-size: cover;
+    animation: move-background 10s linear infinite;
+}
+
+
     body {
     background: linear-gradient(to bottom right, #f4f4f9, #dbe7e4);
 }
