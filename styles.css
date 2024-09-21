@@ -105,6 +105,23 @@ padding: 10px;
 .container {
 margin: 10px auto;
 padding: 5px;
+
+  body {
+    background-color: #f4f4f9; /* Light gray background */
+    color: #333; /* Dark text */
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+header {
+    background-color: #005f73; /* Teal header */
+    color: white;
+}
+
+button, a {
+    background-color: #94d2bd; /* Light teal buttons */
+    color: #333; /* Button text color */
+}
+
 }
 }
 
