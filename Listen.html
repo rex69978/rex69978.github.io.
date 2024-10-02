@@ -163,9 +163,11 @@
 
 <script>
     const validAdminCredentials = {
-        username: 'UrbanPromo1',
-        password: '$trongPass24'
+        username: 'adminPromo1',
+        password: '$trongPass2420'
     };
+
+    const uploadedSongs = []; // Array to store uploaded songs
 
     document.getElementById('secretButton').addEventListener('click', function() {
         document.getElementById('adminLoginHeader').classList.toggle('hidden');
@@ -185,7 +187,7 @@
             this.classList.add('hidden');
             document.getElementById('adminLoginHeader').classList.add('hidden');
         } else {
-            alert('Invalid credentials. Please try again after 30 minutes or you shall be blocked from using this feature .');
+            alert('Invalid credentials. Please try again after 30 minutes or you shall be blocked from accessing this feature .');
         }
     });
 
@@ -198,10 +200,17 @@
         if (songFile) {
             const songItem = document.createElement('div');
             songItem.className = 'song-item';
-            songItem.innerHTML = `<strong>${songTitle}</strong><br><audio controls>
-                                    <source src="${URL.createObjectURL(songFile)}" type="${songFile.type}">
-                                    Your browser does not support the audio element.
-                                   </audio>`;
+            const songURL = URL.createObjectURL(songFile);
+            uploadedSongs.push({ title: songTitle, url: songURL, type: songFile.type });
+
+            songItem.innerHTML = `
+                <strong>${songTitle}</strong><br>
+                <audio controls>
+                    <source src="${songURL}" type="${songFile.type}">
+                    Your browser does not support the audio element.
+                </audio>
+                <a href="${songURL}" download="${songTitle}.mp3">Download</a>
+            `;
             document.getElementById('songList').appendChild(songItem);
 
             document.getElementById('uploadForm').reset();
@@ -216,3 +225,5 @@
 
 </body>
 </html>
+
+
