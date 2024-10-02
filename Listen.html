@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,12 +12,14 @@
             color: #333;
             margin: 0;
             padding: 0;
+            transition: background-color 0.3s, color 0.3s;
         }
         header {
             background-color: #212121;
             color: #fff;
             text-align: center;
             padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         .container {
             max-width: 800px;
@@ -40,15 +43,16 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        input[type="submit"] {
+        input[type="submit"], .toggle-button {
             background-color: #007BFF;
             color: white;
             border: none;
             padding: 10px;
             cursor: pointer;
             border-radius: 4px;
+            width: 100%;
         }
-        input[type="submit"]:hover {
+        input[type="submit"]:hover, .toggle-button:hover {
             background-color: #0056b3;
         }
         .song-list {
@@ -68,12 +72,32 @@
         .admin-controls {
             display: none; /* Hidden by default */
         }
+        .dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .dark-mode header {
+            background-color: #1f1f1f;
+        }
+        .dark-mode input[type="text"],
+        .dark-mode input[type="password"],
+        .dark-mode input[type="file"],
+        .dark-mode input[type="submit"],
+        .dark-mode .toggle-button {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #444;
+        }
+        .dark-mode .song-item {
+            background-color: #1e1e1e;
+        }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Urban Music Promo Malawi</h1>
+    <button class="toggle-button" id="toggleButton">Switch to Dark Mode</button>
 </header>
 
 <div class="container">
@@ -100,8 +124,8 @@
 
 <script>
     const validAdminCredentials = {
-        username: 'UrbanPromo1',  // Change this to a secure way of storing credentials
-        password: '$trongPass24' // This is insecure; consider using a hashed password in a database
+        username: 'admin',
+        password: 'password'
     };
 
     document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -114,7 +138,7 @@
             document.getElementById('adminControls').style.display = 'block';
             alert('Admin access granted.');
         } else {
-            alert('Invalid credentials. Wrong Credentials inserted Please try again(2 trials left) .');
+            alert('Invalid credentials. Please try again.');
         }
     });
 
@@ -133,9 +157,13 @@
                                    </audio>`;
             document.getElementById('songList').appendChild(songItem);
 
-            // Clear form inputs
             document.getElementById('uploadForm').reset();
         }
+    });
+
+    document.getElementById('toggleButton').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        this.textContent = document.body.classList.contains('dark-mode') ? 'Switch to Light Mode' : 'Switch to Dark Mode';
     });
 </script>
 
