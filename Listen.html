@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Music Promo Malawi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #212121;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #007BFF;
+            text-align: center;
+        }
+        .upload-form, .login-form {
+            margin-bottom: 30px;
+        }
+        input[type="text"], input[type="password"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .song-list {
+            margin-top: 20px;
+        }
+        .song-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .song-item:last-child {
+            border-bottom: none;
+        }
+        audio {
+            width: 100%;
+            margin-top: 5px;
+        }
+        .admin-controls {
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Urban Music Promo Malawi</h1>
+</header>
+
+<div class="container">
+    <h2>Admin Login</h2>
+    <form class="login-form" id="loginForm">
+        <input type="text" id="adminUsername" placeholder="Username" required>
+        <input type="password" id="adminPassword" placeholder="Password" required>
+        <input type="submit" value="Login">
+    </form>
+
+    <div class="admin-controls" id="adminControls">
+        <h2>Upload Your Song</h2>
+        <form class="upload-form" id="uploadForm">
+            <input type="text" id="songTitle" placeholder="Song Title" required>
+            <input type="file" id="songFile" accept="audio/*" required>
+            <input type="submit" value="Upload Song">
+        </form>
+    </div>
+
+    <div class="song-list" id="songList">
+        <h2>Listen to Uploaded Songs</h2>
+    </div>
+</div>
+
+<script>
+    const validAdminCredentials = {
+        username: 'UrbanPromo1',  // Change this to a secure way of storing credentials
+        password: '$trongPass24' // This is insecure; consider using a hashed password in a database
+    };
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const username = document.getElementById('adminUsername').value;
+        const password = document.getElementById('adminPassword').value;
+
+        if (username === validAdminCredentials.username && password === validAdminCredentials.password) {
+            document.getElementById('adminControls').style.display = 'block';
+            alert('Admin access granted.');
+        } else {
+            alert('Invalid credentials. Wrong Credentials inserted Please try again(2 trials left) .');
+        }
+    });
+
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const songTitle = document.getElementById('songTitle').value;
+        const songFile = document.getElementById('songFile').files[0];
+
+        if (songFile) {
+            const songItem = document.createElement('div');
+            songItem.className = 'song-item';
+            songItem.innerHTML = `<strong>${songTitle}</strong><br><audio controls>
+                                    <source src="${URL.createObjectURL(songFile)}" type="${songFile.type}">
+                                    Your browser does not support the audio element.
+                                   </audio>`;
+            document.getElementById('songList').appendChild(songItem);
+
+            // Clear form inputs
+            document.getElementById('uploadForm').reset();
+        }
+    });
+</script>
+
+</body>
+</html>
