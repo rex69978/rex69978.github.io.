@@ -1,157 +1,30 @@
+
 <?php
-session_start();
+// Define the directory for uploaded songs and metadata file
+$uploadDir = 'uploads/';
+$metadataFile = 'songs.txt';
 
-// Configuration
-$uploadDir = __DIR__ . '/uploads/';
-$dbFile = __DIR__ . '/music.db';
-
-// Create uploads directory if not exists
+// Check if the uploads directory exists; if not, create it
 if (!is_dir($uploadDir)) {
-    mkdir($uploadDir, 0755, true);
+    mkdir($uploadDir, 0777, true);
 }
 
-// Initialize SQLite Database
-if (!file_exists($dbFile)) {
-    $db = new PDO('sqlite:' . $dbFile);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $db->exec("CREATE TABLE songs (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        file_path TEXT NOT NULL,
-        alt_text TEXT NOT NULL,
-        artwork_path TEXT,
-        category TEXT NOT NULL,
-        listens INTEGER DEFAULT 0,
-        downloads INTEGER DEFAULT 0
-    )");
-} else {
-    $db = new PDO('sqlite:' . $dbFile);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// Read song metadata from the text file
+$songs = [];
+if (file_exists($metadataFile)) {
+    $songs = file($metadataFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 }
 
-// Handle Admin Login
-$admin_password = "admin123"; // Change this to a secure password
-
-if (isset($_POST['admin_login'])) {
-    $password = $_POST['password'];
-    if ($password === $admin_password) {
-        $_SESSION['admin_logged_in'] = true;
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
-    } else {
-        $login_error = "Incorrect password.";
-    }
-}
-
-// Handle Admin Logout
-if (isset($_GET['logout'])) {
-    session_destroy();
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
-}
-
-// Handle File Upload
-if (isset($_POST['upload']) && isset($_SESSION['admin_logged_in'])) {
-    $category = $_POST['category'];
-    $title = htmlspecialchars($_POST['title']);
-    $artist = htmlspecialchars($_POST['artist']);
-    $album = htmlspecialchars($_POST['album']);
-    $alt_text = "Title: $title, Artist: $artist, Album: $album";
-
-    // Handle Artwork Upload
-    $artwork_path = null;
-    if (isset($_FILES['artwork']) && $_FILES['artwork']['error'] == 0) {
-        $allowed_artworks = ['image/jpeg', 'image/png', 'image/gif'];
-        if (in_array($_FILES['artwork']['type'], $allowed_artworks)) {
-            $artwork_ext = pathinfo($_FILES['artwork']['name'], PATHINFO_EXTENSION);
-            $artwork_path = 'uploads/' . uniqid() . '.' . $artwork_ext;
-            move_uploaded_file($_FILES['artwork']['tmp_name'], __DIR__ . '/' . $artwork_path);
-        }
-    }
-
-    // Handle Music File Upload
-    if (isset($_FILES['music']) && $_FILES['music']['error'] == 0) {
-        $allowed_mimes = ['audio/mpeg', 'audio/mp4', 'video/mp4'];
-        if (in_array($_FILES['music']['type'], $allowed_mimes)) {
-            $music_ext = pathinfo($_FILES['music']['name'], PATHINFO_EXTENSION);
-            $music_path = 'uploads/' . uniqid() . '.' . $music_ext;
-            move_uploaded_file($_FILES['music']['tmp_name'], __DIR__ . '/' . $music_path);
-
-            // Insert into Database
-            $stmt = $db->prepare("INSERT INTO songs (file_path, alt_text, artwork_path, category) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$music_path, $alt_text, $artwork_path, $category]);
-            $upload_success = "Song uploaded successfully.";
-        } else {
-            $upload_error = "Invalid music file type.";
-        }
-    } else {
-        $upload_error = "Error uploading music file.";
-    }
-}
-
-// Handle Delete Song
-if (isset($_GET['delete']) && isset($_SESSION['admin_logged_in'])) {
-    $song_id = intval($_GET['delete']);
-    // Fetch song to delete files
-    $stmt = $db->prepare("SELECT file_path, artwork_path FROM songs WHERE id = ?");
-    $stmt->execute([$song_id]);
-    $song = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($song) {
-        // Delete files
-        if (file_exists(__DIR__ . '/' . $song['file_path'])) {
-            unlink(__DIR__ . '/' . $song['file_path']);
-        }
-        if ($song['artwork_path'] && file_exists(__DIR__ . '/' . $song['artwork_path'])) {
-            unlink(__DIR__ . '/' . $song['artwork_path']);
-        }
-        // Delete from database
-        $stmt = $db->prepare("DELETE FROM songs WHERE id = ?");
-        $stmt->execute([$song_id]);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
-    }
-}
-
-// Handle Listen and Download Counts
-if (isset($_GET['listen'])) {
-    $song_id = intval($_GET['listen']);
-    $stmt = $db->prepare("UPDATE songs SET listens = listens + 1 WHERE id = ?");
-    $stmt->execute([$song_id]);
-}
-
-if (isset($_GET['download'])) {
-    $song_id = intval($_GET['download']);
-    $stmt = $db->prepare("SELECT file_path FROM songs WHERE id = ?");
-    $stmt->execute([$song_id]);
-    $song = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($song) {
-        // Update download count
-        $stmt = $db->prepare("UPDATE songs SET downloads = downloads + 1 WHERE id = ?");
-        $stmt->execute([$song_id]);
-        // Serve the file for download
-        $file = __DIR__ . '/' . $song['file_path'];
-        if (file_exists($file)) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
-            header('Content-Length: ' . filesize($file));
-            readfile($file);
-            exit();
-        }
-    }
-}
-
-// Fetch Songs for Display
-$stmt = $db->query("SELECT * FROM songs ORDER BY id DESC");
-$songs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Categorize Songs
-$categories = [];
+// Convert song metadata into an associative array
+$songList = [];
 foreach ($songs as $song) {
-    $cat = $song['category'];
-    if (!isset($categories[$cat])) {
-        $categories[$cat] = [];
-    }
-    $categories[$cat][] = $song;
+    list($filename, $title, $artist, $album) = explode('|', $song);
+    $songList[] = [
+        'filename' => $filename,
+        'title' => $title,
+        'artist' => $artist,
+        'album' => $album
+    ];
 }
 ?>
 
@@ -159,222 +32,127 @@ foreach ($songs as $song) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urban Music Promo</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
-        .menu {
-            background-color: #333;
-            padding: 10px;
-        }
-        .menu a {
-            color: #fff;
-            margin-right: 15px;
-            text-decoration: none;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
         }
         .container {
-            width: 90%;
-            margin: 20px auto;
-        }
-        .song {
-            background-color: #fff;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-        }
-        .song img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            margin-right: 15px;
-        }
-        .song-details {
-            flex: 1;
-        }
-        .song-actions {
-            text-align: right;
-        }
-        .admin-login-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #ff5722;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: none; /* Hidden by default */
-        }
-        #admin-login-form {
-            display: none;
-            position: fixed;
-            top: 30%;
-            left: 40%;
-            background-color: #fff;
+            max-width: 600px;
+            margin: auto;
+            background: white;
             padding: 20px;
-            border: 2px solid #333;
-            border-radius: 5px;
-            z-index: 1000;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        #admin-login-form.active {
-            display: block;
+        h1, h2 {
+            text-align: center;
         }
-        .overlay {
-            display: none;
-            position: fixed;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
+        button {
+            margin: 10px;
         }
-        .overlay.active {
-            display: block;
-        }
-        .upload-form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius:5px;
-            margin-bottom: 20px;
-        }
-        .upload-form input, .upload-form select {
+        input[type="text"],
+        input[type="file"],
+        input[type="submit"] {
             width: 100%;
-            padding: 8px;
-            margin: 5px 0 15px 0;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
-        .upload-form button {
-            padding: 10px 15px;
-            background-color: #4CAF50;
-            border: none;
-            color: #fff;
-            cursor: pointer;
+        ul {
+            list-style-type: none;
+            padding: 0;
         }
-        .delete-btn {
-            background-color: #f44336;
-            border: none;
-            color: #fff;
-            padding: 8px 12px;
-            cursor: pointer;
-            border-radius: 3px;
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
         }
-        .listen-btn, .download-btn {
-            background-color: #2196F3;
-            border: none;
-            color: #fff;
-            padding: 8px 12px;
-            cursor: pointer;
-            border-radius: 3px;
-            margin-right: 5px;
+        audio {
+            display: block;
+            margin-top: 10px;
+        }
+        img {
+            max-width: 100px;
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
 
-<div class="menu">
-    <a href="#artists">Artists</a>
-    <a href="#songs">Songs</a>
-    <a href="#albums">Albums</a>
-</div>
-
 <div class="container">
-    <?php if (isset($_SESSION['admin_logged_in'])): ?>
-        <div class="upload-form">
-            <h2>Upload New Song</h2>
-            <?php if (isset($upload_error)): ?>
-                <p style="color:red;"><?php echo $upload_error; ?></p>
-            <?php endif; ?>
-            <?php if (isset($upload_success)): ?>
-                <p style="color:green;"><?php echo $upload_success; ?></p>
-            <?php endif; ?>
-            <form method="POST" enctype="multipart/form-data">
-                <input type="text" name="title" placeholder="Song Title" required>
-                <input type="text" name="artist" placeholder="Artist" required>
-                <input type="text" name="album" placeholder="Album" required>
-                <select name="category" required>
-                    <option value="" disabled selected>Select Category</option>
-                    <option value="Artists">Artists</option>
-                    <option value="Songs">Songs</option>
-                    <option value="Albums">Albums</option>
-                </select>
-                <label>Artwork (optional):</label>
-                <input type="file" name="artwork" accept="image/*">
-                <label>Music File (MP3/MP4):</label>
-                <input type="file" name="music" accept="audio/mpeg, audio/mp4, video/mp4" required>
-                <button type="submit" name="upload">Upload</button>
-            </form>
-            <a href="?logout" style="display:block; margin-top:10px;">Logout</a>
-        </div>
-    <?php endif; ?>
+    <h1>Urban Music Promo</h1>
 
-    <?php if (!isset($_SESSION['admin_logged_in'])): ?>
-        <button class="admin-login-btn" onclick="toggleLoginForm()">Admin</button>
-    <?php endif; ?>
-
-    <!-- Admin Login Form -->
-    <div class="overlay" id="overlay"></div>
-    <div id="admin-login-form">
+    <!-- Admin Login Button -->
+    <button id="adminButton" style="display: none;">Admin Login</button>
+    <div id="loginForm" style="display: none;">
         <h2>Admin Login</h2>
-        <?php if (isset($login_error)): ?>
-            <p style="color:red;"><?php echo $login_error; ?></p>
-        <?php endif; ?>
-        <form method="POST">
-            <input type="password" name="password" placeholder="Enter Admin Password" required>
-            <button type="submit" name="admin_login">Login</button>
+        <form id="adminLogin" method="POST">
+            <input type="password" name="admin_password" placeholder="Enter Admin Password" required>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+
+    <!-- Upload Form -->
+    <div id="uploadFormContainer" style="display: none;">
+        <h2>Upload New Song</h2>
+        <form action="upload.php" method="POST" enctype="multipart/form-data">
+            <input type="text" name="title" placeholder="Song Title" required>
+            <input type="text" name="artist" placeholder="Artist" required>
+            <input type="text" name="album" placeholder="Album" required>
+            <input type="file" name="file" accept=".mp3, .mp4" required>
+            <input type="file" name="artwork" accept="image/*">
+            <input type="submit" value="Upload">
         </form>
     </div>
 
     <!-- Display Songs -->
-    <?php foreach ($categories as $category => $cat_songs): ?>
-        <h2 id="<?php echo strtolower($category); ?>"><?php echo htmlspecialchars($category); ?></h2>
-        <?php foreach ($cat_songs as $song): ?>
-            <div class="song">
-                <?php if ($song['artwork_path']): ?>
-                    <img src="<?php echo htmlspecialchars($song['artwork_path']); ?>" alt="Artwork">
-                <?php else: ?>
-                    <img src="https://via.placeholder.com/100" alt="No Artwork">
-                <?php endif; ?>
-                <div class="song-details">
-                    <h3><?php echo htmlspecialchars($song['alt_text']); ?></h3>
-                    <audio controls>
-                        <source src="<?php echo htmlspecialchars($song['file_path']); ?>" type="<?php echo mime_content_type(__DIR__ . '/' . $song['file_path']); ?>">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <p>Listens: <?php echo $song['listens']; ?> | Downloads: <?php echo $song['downloads']; ?></p>
-                </div>
-                <div class="song-actions">
-                    <form method="GET" style="display:inline;">
-                        <input type="hidden" name="listen" value="<?php echo $song['id']; ?>">
-                        <button type="submit" class="listen-btn">Listen</button>
-                    </form>
-                    <a href="?download=<?php echo $song['id']; ?>" class="download-btn">Download</a>
-                    <?php if (isset($_SESSION['admin_logged_in'])): ?>
-                        <a href="?delete=<?php echo $song['id']; ?>" onclick="return confirm('Are you sure you want to delete this song?');" class="delete-btn">Delete</a>
-                    <?php endif; ?>
-                </div>
-            </div>
+    <h2>Songs List</h2>
+    <ul>
+        <?php foreach ($songList as $song): ?>
+            <li>
+                <strong><?php echo htmlspecialchars($song['title']); ?></strong> by <?php echo htmlspecialchars($song['artist']); ?> (<?php echo htmlspecialchars($song['album']); ?>)
+                <audio controls>
+                    <source src="<?php echo htmlspecialchars($uploadDir . $song['filename']); ?>" type="audio/mpeg">
+                    Your browser does not support the audio tag.
+                </audio>
+                <form method="POST" action="delete.php" style="display:inline;">
+                    <input type="hidden" name="file" value="<?php echo htmlspecialchars($song['filename']); ?>">
+                    <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this song?');">
+                </form>
+            </li>
         <?php endforeach; ?>
-    <?php endforeach; ?>
+    </ul>
 </div>
 
 <script>
-    // Toggle Admin Login Form
-    function toggleLoginForm() {
-        document.getElementById('admin-login-form').classList.toggle('active');
-        document.getElementById('overlay').classList.toggle('active');
+    // Show admin login button after 5 seconds
+    setTimeout(function() {
+        document.getElementById('adminButton').style.display = 'inline';
+    }, 5000);
+
+    // Admin login button click event
+    document.getElementById('adminButton').onclick = function() {
+        document.getElementById('loginForm').style.display = 'block';
     }
 
-    // Show Admin Button after 5 seconds (as hidden by default)
-    window.onload = function() {
-        setTimeout(function() {
-            document.querySelector('.admin-login-btn').style.display = 'block';
-        }, 5000); // 5 seconds delay
-    };
+    // Handle admin login
+    document.getElementById('adminLogin').onsubmit = function(event) {
+        event.preventDefault();
+        const password = event.target.admin_password.value;
+
+        // Simple password check (change to a secure method for production)
+        if (password === 'admin123') {
+            document.getElementById('uploadFormContainer').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+        } else {
+            alert('Invalid password');
+        }
+    }
 </script>
 
 </body>
