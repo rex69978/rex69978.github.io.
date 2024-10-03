@@ -1,33 +1,4 @@
 
-<?php
-// Define the directory for uploaded songs and metadata file
-$uploadDir = 'uploads/';
-$metadataFile = 'songs.txt';
-
-// Check if the uploads directory exists; if not, create it
-if (!is_dir($uploadDir)) {
-    mkdir($uploadDir, 0777, true);
-}
-
-// Read song metadata from the text file
-$songs = [];
-if (file_exists($metadataFile)) {
-    $songs = file($metadataFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-}
-
-// Convert song metadata into an associative array
-$songList = [];
-foreach ($songs as $song) {
-    list($filename, $title, $artist, $album) = explode('|', $song);
-    $songList[] = [
-        'filename' => $filename,
-        'title' => $title,
-        'artist' => $artist,
-        'album' => $album
-    ];
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,123 +8,151 @@ foreach ($songs as $song) {
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        button {
-            margin: 10px;
-        }
-        input[type="text"],
-        input[type="file"],
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        ul {
-            list-style-type: none;
             padding: 0;
         }
-        li {
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+
+        header nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        #uploadSection {
+            margin: 20px 0;
+        }
+
+        footer {
+            text-align: center;
             padding: 10px;
-            border-bottom: 1px solid #ccc;
+            background-color: #333;
+            color: white;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
         }
-        audio {
-            display: block;
-            margin-top: 10px;
-        }
-        img {
-            max-width: 100px;
-            margin-left: 10px;
+
+        #loginModal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Urban Music Promo</h1>
+        <nav>
+            <ul>
+                <li><a href="#artists">Artists</a></li>
+                <li><a href="#songs">Songs</a></li>
+                <li><a href="#albums">Albums</a></li>
+                <li><button id="adminLoginBtn">Admin Login</button></li>
+            </ul>
+        </nav>
+    </header>
 
-<div class="container">
-    <h1>Urban Music Promo</h1>
+    <main>
+        <section id="uploadSection" style="display: none;">
+            <h2>Upload Songs</h2>
+            <form id="uploadForm">
+                <input type="file" id="audioFile" accept=".mp3,.mp4" required>
+                <input type="text" id="songName" placeholder="Song Name" required>
+                <input type="text" id="artistName" placeholder="Artist Name" required>
+                <input type="text" id="albumName" placeholder="Album Name" required>
+                <input type="file" id="artworkFile" accept=".jpg,.jpeg,.png" required>
+                <button type="submit">Upload</button>
+            </form>
+        </section>
 
-    <!-- Admin Login Button -->
-    <button id="adminButton" style="display: none;">Admin Login</button>
-    <div id="loginForm" style="display: none;">
+        <section id="musicLibrary">
+            <h2>Music Library</h2>
+            <div id="songList"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Urban Music Promo</p>
+    </footer>
+
+    <div id="loginModal" style="display: none;">
         <h2>Admin Login</h2>
-        <form id="adminLogin" method="POST">
-            <input type="password" name="admin_password" placeholder="Enter Admin Password" required>
-            <input type="submit" value="Login">
-        </form>
+        <input type="password" id="adminPassword" placeholder="Enter Password">
+        <button id="loginBtn">Login</button>
     </div>
 
-    <!-- Upload Form -->
-    <div id="uploadFormContainer" style="display: none;">
-        <h2>Upload New Song</h2>
-        <form action="upload.php" method="POST" enctype="multipart/form-data">
-            <input type="text" name="title" placeholder="Song Title" required>
-            <input type="text" name="artist" placeholder="Artist" required>
-            <input type="text" name="album" placeholder="Album" required>
-            <input type="file" name="file" accept=".mp3, .mp4" required>
-            <input type="file" name="artwork" accept="image/*">
-            <input type="submit" value="Upload">
-        </form>
-    </div>
+    <script>
+        const adminPassword = 'adminpromo1';
 
-    <!-- Display Songs -->
-    <h2>Songs List</h2>
-    <ul>
-        <?php foreach ($songList as $song): ?>
-            <li>
-                <strong><?php echo htmlspecialchars($song['title']); ?></strong> by <?php echo htmlspecialchars($song['artist']); ?> (<?php echo htmlspecialchars($song['album']); ?>)
+        document.getElementById('adminLoginBtn').addEventListener('click', () => {
+            document.getElementById('loginModal').style.display = 'block';
+        });
+
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            const passwordInput = document.getElementById('adminPassword').value;
+            if (passwordInput === adminPassword) {
+                alert('Login successful!');
+                document.getElementById('uploadSection').style.display = 'block';
+                document.getElementById('loginModal').style.display = 'none';
+            } else {
+                alert('Incorrect password.');
+            }
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const songName = document.getElementById('songName').value;
+            const artistName = document.getElementById('artistName').value;
+            const albumName = document.getElementById('albumName').value;
+
+            const songItem = document.createElement('div');
+            songItem.innerHTML = `
+                <h3>${songName} by ${artistName}</h3>
                 <audio controls>
-                    <source src="<?php echo htmlspecialchars($uploadDir . $song['filename']); ?>" type="audio/mpeg">
+                    <source src="${URL.createObjectURL(document.getElementById('audioFile').files[0])}" type="audio/mp3">
                     Your browser does not support the audio tag.
                 </audio>
-                <form method="POST" action="delete.php" style="display:inline;">
-                    <input type="hidden" name="file" value="<?php echo htmlspecialchars($song['filename']); ?>">
-                    <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this song?');">
-                </form>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-</div>
+                <p>Album: ${albumName}</p>
+                <p>Downloads: <span class="downloadCount">0</span></p>
+                <button class="downloadBtn">Download</button>
+            `;
 
-<script>
-    // Show admin login button after 5 seconds
-    setTimeout(function() {
-        document.getElementById('adminButton').style.display = 'inline';
-    }, 5000);
+            document.getElementById('songList').appendChild(songItem);
 
-    // Admin login button click event
-    document.getElementById('adminButton').onclick = function() {
-        document.getElementById('loginForm').style.display = 'block';
-    }
+            songItem.querySelector('.downloadBtn').addEventListener('click', () => {
+                const countElement = songItem.querySelector('.downloadCount');
+                countElement.innerText = parseInt(countElement.innerText) + 1;
+            });
 
-    // Handle admin login
-    document.getElementById('adminLogin').onsubmit = function(event) {
-        event.preventDefault();
-        const password = event.target.admin_password.value;
-
-        // Simple password check (change to a secure method for production)
-        if (password === 'admin123') {
-            document.getElementById('uploadFormContainer').style.display = 'block';
-            document.getElementById('loginForm').style.display = 'none';
-        } else {
-            alert('Invalid password');
-        }
-    }
-</script>
-
+            document.getElementById('uploadForm').reset();
+        });
+    </script>
 </body>
 </html>
+
+
+        // Simple password check (change to a secure method ht
