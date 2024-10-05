@@ -1,158 +1,364 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urban Music Promo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #fff;
         }
 
         header {
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
+            background-color: #1db954;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        header nav ul {
-            list-style: none;
-            padding: 0;
+        header h1 {
+            font-size: 2rem;
         }
 
-        header nav ul li {
-            display: inline;
-            margin-right: 20px;
+        header nav {
+            display: flex;
+            gap: 20px;
         }
 
-        header nav ul li a {
-            color: white;
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Responsive navigation menu */
+        @media (max-width: 768px) {
+            header nav {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Sidebar for Categories */
+        .sidebar {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            background-color: #282828;
+            width: 250px;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            color: #1db954;
+        }
+
+        .sidebar a {
+            display: block;
+            margin: 15px 0;
+            color: #fff;
             text-decoration: none;
         }
 
-        main {
-            padding: 20px;
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                padding: 10px;
+            }
         }
 
-        #uploadSection {
-            margin: 20px 0;
+        /* Main Content */
+        .content {
+            margin-left: 270px;
+            padding: 40px;
         }
 
-        footer {
+        @media (max-width: 768px) {
+            .content {
+                margin-left: 0;
+            }
+        }
+
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .music-item {
+            background-color: #282828;
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-            position: absolute;
-            width: 100%;
-            bottom: 0;
         }
 
-        #loginModal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            border: 1px solid #ccc;
-            padding: 20px;
-            z-index: 1000;
+        .music-item img {
+            width: 100%;
+            border-radius: 10px;
         }
+
+        .music-item h3 {
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+
+        .music-item button {
+            background-color: #1db954;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Ad Banner */
+        .ad-banner {
+            background-color: #333;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        /* Upload Section */
+        #upload-section {
+            display: none; /* Hidden by default */
+            margin-top: 40px;
+        }
+
+        #upload-section form {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #upload-section form input, #upload-section form select {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        #upload-section form button {
+            background-color: #1db954;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1b1b1b;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal-content input {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            width: 80%;
+        }
+
+        .modal-content button {
+            background-color: #1db954;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
+
     <header>
         <h1>Urban Music Promo</h1>
         <nav>
-            <ul>
-                <li><a href="#artists">Artists</a></li>
-                <li><a href="#songs">Songs</a></li>
-                <li><a href="#albums">Albums</a></li>
-                <li><button id="adminLoginBtn">Admin Login</button></li>
-            </ul>
+            <a href="#">Home</a>
+            <a href="#">Albums</a>
+            <a href="#">EPs</a>
+            <a href="#">Singles</a>
+            <a href="#">Unreleased</a>
+            <a href="#" id="login-button">Admin Login</a> <!-- Login button -->
+            <a href="#" id="admin-toggle" style="display: none;">Admin</a> <!-- Hidden Admin Button -->
         </nav>
     </header>
 
-    <main>
-        <section id="uploadSection" style="display: none;">
-            <h2>Upload Songs</h2>
-            <form id="uploadForm">
-                <input type="file" id="audioFile" accept=".mp3,.mp4" required>
-                <input type="text" id="songName" placeholder="Song Name" required>
-                <input type="text" id="artistName" placeholder="Artist Name" required>
-                <input type="text" id="albumName" placeholder="Album Name" required>
-                <input type="file" id="artworkFile" accept=".jpg,.jpeg,.png" required>
+    <!-- Sidebar for Categories -->
+    <div class="sidebar">
+        <h2>Categories</h2>
+        <a href="#">Songs</a>
+        <a href="#">Albums</a>
+        <a href="#">EPs</a>
+        <a href="#">Unreleased</a>
+    </div>
+
+    <div class="content">
+        <!-- Featured Section -->
+        <h2>Featured Music</h2>
+        <div class="music-grid" id="music-grid">
+            <!-- Music items will be loaded here dynamically -->
+        </div>
+
+        <!-- Ad Banner Section -->
+        <div class="ad-banner">
+            <h3>Ad Space / Promotions</h3>
+            <p>Get your music promoted here!</p>
+        </div>
+
+        <!-- Hidden Upload Section for Admin -->
+        <div id="upload-section">
+            <h2>Admin Upload Section</h2>
+            <form id="upload-form">
+                <input type="text" name="title" placeholder="Song Title" required>
+                <input type="text" name="artist" placeholder="Artist" required>
+                <select name="category" required>
+                    <option value="Song">Song</option>
+                    <option value="EP">EP</option>
+                    <option value="Album">Album</option>
+                    <option value="Unreleased">Unreleased</option>
+                </select>
+                <input type="file" name="file" accept="audio/*" required>
                 <button type="submit">Upload</button>
             </form>
-        </section>
-
-        <section id="musicLibrary">
-            <h2>Music Library</h2>
-            <div id="songList"></div>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <footer>
-        <p>&copy; 2024 Urban Music Promo</p>
+        <p>© 2024 Urban Music Promo - All Rights Reserved</p>
     </footer>
 
-    <div id="loginModal" style="display: none;">
-        <h2>Admin Login</h2>
-        <input type="password" id="adminPassword" placeholder="Enter Password">
-        <button id="loginBtn">Login</button>
+    <!-- Modal for login -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <h2>Admin Login</h2>
+            <input type="password" id="admin-password" placeholder="Enter password">
+            <button id="login-submit">Login</button>
+            <button id="reset-password">Forgot Password?</button> <!-- Password Reset Button -->
+        </div>
     </div>
 
     <script>
-        const adminPassword = 'adminpromo1';
+        const correctPassword = 'AdminUrban2420'; // Real password
+        const loginButton = document.getElementById('login-button');
+        const adminToggle = document.getElementById('admin-toggle');
+        const loginModal = document.getElementById('login-modal');
+        const uploadSection = document.getElementById('upload-section');
 
-        document.getElementById('adminLoginBtn').addEventListener('click', () => {
-            document.getElementById('loginModal').style.display = 'block';
+        // Show the login modal when login button is clicked
+        loginButton.addEventListener('click', function() {
+            loginModal.style.display = 'flex';
         });
 
-        document.getElementById('loginBtn').addEventListener('click', () => {
-            const passwordInput = document.getElementById('adminPassword').value;
-            if (passwordInput === adminPassword) {
-                alert('Login successful!');
-                document.getElementById('uploadSection').style.display = 'block';
-                document.getElementById('loginModal').style.display = 'none';
+        // Admin login functionality
+        document.getElementById('login-submit').addEventListener('click', function() {
+            const enteredPassword = document.getElementById('admin-password').value;
+
+            if (enteredPassword === correctPassword) {
+                alert('Login successful');
+                loginModal.style.display = 'none'; // Close the modal
+                adminToggle.style.display = 'block'; // Show hidden admin section
+                uploadSection.style.display = 'block'; // Show upload form
+                loginButton.style.display = 'none'; // Hide login button
             } else {
-                alert('Incorrect password.');
+                alert('Invalid password');
             }
         });
 
-        document.getElementById('uploadForm').addEventListener('submit', (e) => {
+        // Handle the file upload form submission
+        document.getElementById('upload-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const songName = document.getElementById('songName').value;
-            const artistName = document.getElementById('artistName').value;
-            const albumName = document.getElementById('albumName').value;
+            
+            const title = e.target.title.value;
+            const artist = e.target.artist.value;
+            const category = e.target.category.value;
+            const file = e.target.file
+            const file = e.target.file.files[0];
 
-            const songItem = document.createElement('div');
-            songItem.innerHTML = `
-                <h3>${songName} by ${artistName}</h3>
-                <audio controls>
-                    <source src="${URL.createObjectURL(document.getElementById('audioFile').files[0])}" type="audio/mp3">
-                    Your browser does not support the audio tag.
-                </audio>
-                <p>Album: ${albumName}</p>
-                <p>Downloads: <span class="downloadCount">0</span></p>
-                <button class="downloadBtn">Download</button>
-            `;
+// Create a new music item element
+const musicItem = document.createElement('div');
+musicItem.className = 'music-item';
 
-            document.getElementById('songList').appendChild(songItem);
+// Create a title and artist display
+const musicTitle = document.createElement('h3');
+musicTitle.innerText = title;
 
-            songItem.querySelector('.downloadBtn').addEventListener('click', () => {
-                const countElement = songItem.querySelector('.downloadCount');
-                countElement.innerText = parseInt(countElement.innerText) + 1;
-            });
+const musicArtist = document.createElement('p');
+musicArtist.innerText = `by ${artist}`;
 
-            document.getElementById('uploadForm').reset();
-        });
-    </script>
+// Create a button to play/download the music
+const musicButton = document.createElement('button');
+musicButton.innerText = 'Play / Download';
+musicButton.onclick = function() {
+    const url = URL.createObjectURL(file);
+    const audio = new Audio(url);
+    audio.play(); // Play the music file
+};
+
+// Append the title, artist, and button to the music item
+musicItem.appendChild(musicTitle);
+musicItem.appendChild(musicArtist);
+musicItem.appendChild(musicButton);
+
+// Add the music item to the music grid
+document.getElementById('music-grid').appendChild(musicItem);
+
+// Reset the form after submission
+e.target.reset();
+});
+
+// Reset password functionality (Placeholder)
+document.getElementById('reset-password').addEventListener('click', function() {
+alert('Password reset instructions sent to 0995059334');
+});
+
+// Close the modal when clicking outside of it
+window.onclick = function(event) {
+if (event.target === loginModal) {
+    loginModal.style.display = 'none';
+}
+}
+</script>
 </body>
 </html>
-
-
-        // Simple password check (change to a secure method ht
