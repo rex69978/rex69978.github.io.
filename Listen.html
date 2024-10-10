@@ -31,6 +31,7 @@
 
         h1 {
             margin: 0;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
         }
 
         .toggle-button {
@@ -39,16 +40,6 @@
             color: white;
             cursor: pointer;
             font-size: 16px;
-        }
-
-        .admin-link {
-            color: white; /* Set text color for the link */
-            text-decoration: none; /* Remove underline */
-            padding-left: 15px; /* Space between toggle button and link */
-        }
-
-        .admin-link:hover {
-            text-decoration: underline; /* Underline on hover */
         }
 
         .container {
@@ -72,6 +63,7 @@
         h2 {
             color: #007bff;
             text-align: center;
+            text-shadow: 0 0 5px rgba(0, 123, 255, 0.8);
         }
 
         .song-item {
@@ -82,6 +74,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .song-item.dark-mode {
+            background-color: #3a3a3a;
         }
 
         .song-info {
@@ -91,6 +88,7 @@
         .song-name {
             font-size: 18px;
             margin: 0;
+            text-shadow: 0 0 5px rgba(0, 123, 255, 0.8);
         }
 
         .download-count {
@@ -111,6 +109,7 @@
             border-radius: 5px;
             padding: 10px 15px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         .play-btn:hover,
@@ -145,10 +144,7 @@
 
     <header>
         <h1>Urban Music Malawi</h1>
-        <div>
-            <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
-            <a href="adminpromo1.html" class="admin-link">🔒 Admin Login</a>
-        </div>
+        <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
     </header>
 
     <div class="container">
@@ -171,6 +167,10 @@
             const containers = document.querySelectorAll('.container');
             containers.forEach(container => {
                 container.classList.toggle('dark-mode');
+            });
+            const songItems = document.querySelectorAll('.song-item');
+            songItems.forEach(item => {
+                item.classList.toggle('dark-mode');
             });
         }
 
