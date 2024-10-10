@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Urban Music Malawi</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #007bff;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .song-item {
+            background-color: #e9ecef;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .song-info {
+            flex-grow: 1;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .delete-btn {
+            background-color: red;
+        }
+
+        .delete-btn:hover {
+            background-color: darkred;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Admin Panel</h1>
+        <button onclick="logout()">Logout</button>
+    </header>
+
+    <div class="container">
+        <h2>Upload Music</h2>
+        <div class="form-group">
+            <label for="password">Admin Password</label>
+            <input type="password" id="password" placeholder="Enter Admin Password">
+        </div>
+        <div class="form-group">
+            <label for="artist">Artist Name</label>
+            <input type="text" id="artist" placeholder="Enter Artist Name">
+        </div>
+        <div class="form-group">
+            <label for="album">Album Title</label>
+            <input type="text" id="album" placeholder="Enter Album Title">
+        </div>
+        <div class="form-group">
+            <label for="genre">Genre</label>
+            <input type="text" id="genre" placeholder="Enter Genre">
+        </div>
+        <div class="form-group">
+            <label for="fileInput">Select MP3 or MP4 File</label>
+            <input type="file" id="fileInput" accept=".mp3, .mp4">
+        </div>
+        <button onclick="uploadFile()">Upload</button>
+
+        <h2>Uploaded Songs</h2>
+        <div id="uploadedSongsList"></div>
+    </div>
+
+    <footer>&copy; 2024 Urban Music Malawi. All rights reserved.</footer>
+
+    <script>
+        const correctPassword = '2024UrbanAdmin12';
+        const uploadedSongs = JSON.parse(localStorage.getItem('uploadedSongs')) || [];
+
+        function uploadFile() {
+            const passwordInput = document.getElementById('password').value;
+            const artistInput = document.getElementById('artist').value;
+            const albumInput = document.getElementById('album').value;
+            const genreInput = document.getElementById('genre').value;
+            const fileInput = document.getElementById('fileInput');
+
+            if (passwordInput !== correctPassword) {
+                alert('Incorrect password!');
+                return;
+            }
+
+            if (fileInput.files.length === 0 || !artistInput || !albumInput || !genreInput) {
+                alert('Please fill all fields and select a file to upload.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const song = {
+                name: file.name,
+                url: URL.createObjectURL(file),
+                artist: artistInput,
+                album: albumInput,
+                genre: genreInput,
+                downloads: 0
+            };
+
+            uploadedSongs.push(song);
+            localStorage.setItem('uploadedSongs', JSON.stringify(uploadedSongs));
+            fileInput.value = ''; // Clear file input
+            document.getElementById('artist').value = ''; // Clear artist input
+            document.getElementById('album').value = ''; // Clear album input
+            document.getElementById('genre').value = ''; // Clear genre input
+            renderUploadedSongs();
+        }
+
+        function renderUploadedSongs() {
+            const uploadedSongsList = document.getElementById('uploadedSongsList');
+            uploadedSongsList.innerHTML = '';
+
+            if (uploadedSongs.length === 0) {
+                uploadedSongsList.innerHTML = '<p>No songs uploaded yet.</p>';
+                return;
+            }
+
+            uploadedSongs.forEach((song, index) => {
+                const songItem = document.createElement('div');
+                songItem.className = 'song-item';
+                songItem.innerHTML = `
+                    <div class="song-info">
+                        <strong>${song.name}</strong><br>
+                        <span>Artist: ${song.artist}</span><br>
+                        <span>Album: ${song.album}</span><br>
+                        <span>Genre: ${song.genre}</span><br>
+                        <span>Downloads: ${song.downloads}</span>
+                        <audio controls>
+                            <source src="${song.url}" type="audio/mpeg">
+                            Your browser does not support the audio tag.
+                        </audio>
+                    </div>
+                    <button class="delete-btn" onclick="deleteSong(${index})">Delete</button>
+                `;
+                uploadedSongsList.appendChild(songItem);
+            });
+        }
+
+        function deleteSong(index) {
+            uploadedSongs.splice(index, 1);
+            localStorage.setItem('uploadedSongs', JSON.stringify(uploadedSongs));
+            renderUploadedSongs();
+        }
+
+        function logout() {
+            alert('You have logged out.');
+            window.location.reload();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderUploadedSongs();
+        });
+    </script>
+</body>
+
+</html>
