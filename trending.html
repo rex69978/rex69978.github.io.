@@ -6,7 +6,7 @@
     <title>Trending Now - Urban Music Malawi</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
@@ -19,6 +19,13 @@
             padding: 20px;
             text-align: center;
             position: relative;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        header h1 {
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            animation: glow 1.5s infinite alternate;
         }
         nav ul {
             list-style: none;
@@ -31,36 +38,70 @@
         nav a {
             color: #fff;
             text-decoration: none;
+            font-weight: bold;
         }
         main {
             padding: 20px;
+            background: linear-gradient(45deg, #f4f4f4, #f9fafc);
         }
         h2 {
-            color: #007bff;
+            color: #ff4b5c;
+            font-size: 2em;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
         }
         section {
             margin-bottom: 40px;
             padding: 20px;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        section:hover {
+            background: #ffe5e5;
+            transform: scale(1.02);
+            transition: all 0.3s ease-in-out;
         }
         article {
             margin-bottom: 15px;
+        }
+        article img {
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out;
+        }
+        article img:hover {
+            transform: scale(1.05);
         }
         footer {
             text-align: center;
             padding: 20px;
             background-color: #444;
             color: #fff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
         /* Dark Mode */
         body.dark-mode {
             background-color: #1c1c1c;
             color: #f4f4f4;
         }
+        section.dark-mode {
+            background-color: #2b2b2b;
+            color: #f4f4f4;
+        }
+        h2.dark-mode {
+            color: #ffab00;
+        }
         header.dark-mode, footer.dark-mode {
             background-color: #333;
+        }
+        nav a.dark-mode {
+            color: #ffab00;
+        }
+        article img.dark-mode {
+            filter: brightness(0.8);
         }
         /* Dark Mode Toggle */
         .switch {
@@ -92,13 +133,23 @@
             transition: .4s;
         }
         input:checked + .slider {
-            background-color: #2196F3;
+            background-color: #ff4b5c;
         }
         input:checked + .slider:before {
             transform: translateX(26px);
         }
         .slider.round { border-radius: 34px; }
         .slider.round:before { border-radius: 50%; }
+
+        /* Keyframes for glow effect */
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff4b5c, 0 0 20px #ff4b5c, 0 0 30px #ff4b5c, 0 0 40px #ff4b5c;
+            }
+            to {
+                text-shadow: 0 0 20px #ffab00, 0 0 30px #ffab00, 0 0 40px #ffab00, 0 0 50px #ffab00;
+            }
+        }
     </style>
 </head>
 <body>
@@ -106,9 +157,9 @@
         <h1>Trending Now</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="top30.html">Top 10 Weekly Chart</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.html" class="dark-mode-link">Home</a></li>
+                <li><a href="top30.html" class="dark-mode-link">Top 10 Weekly Chart</a></li>
+                <li><a href="contact.html" class="dark-mode-link">Contact</a></li>
             </ul>
         </nav>
         <!-- Dark Mode Toggle -->
@@ -119,7 +170,7 @@
     </header>
 
     <main>
-        <section id="trending-songs">
+        <section id="trending-songs" class="dark-mode-section">
             <h2>Trending Songs</h2>
             <ul>
                 <li>
@@ -131,7 +182,7 @@
             </ul>
         </section>
 
-        <section id="artist-news">
+        <section id="artist-news" class="dark-mode-section">
             <h2>Artist News</h2>
             <article>
                 <h3><strong>Zeze Parts Ways with Serato Media After 4 Years</strong></h3>
@@ -146,16 +197,19 @@
             <article>
                 <h3><strong>Shano Index Unleashes the Sizzling Visuals for 'NTIKA'</strong></h3>
                 <img src="ECF107FD-6DD2-4AF1-B019-F2DED4C0EA86.jpeg" alt="'NTIKA' by Shano Index Poster" style="width: 50%; display: block; margin: 20px 0;">
-                <p><strong>Shano Index unleashes the sizzling visuals for 'NTIKA', his latest dancehall anthem featuring Bee Jay and Ace Jizzy. Directed by Lang K (The Magic Guy), this energetic video will keep you moving!</strong></p>
+                <p><strong>Shano Index unleashes the sizzling visuals for 'NTIKA', his latest dancehall anthem featuring Bee Jay and Ace Jizzy. Directed by Lang K, this energetic video will keep you moving!</strong></p>
             </article>
         </section>
 
-        <section id="urban-music-news">
+        <section id="urban-music-news" class="dark-mode-section">
             <h2>Urban Music News</h2>
             <article>
                 <h3><strong>Summer Amapiano Fest</strong></h3>
                 <img src="E56B27DA-6A4C-4BCE-94BD-F04E50C07242.jpeg" alt="Summer Amapiano Fest Poster" style="width: 50%; display: block; margin: 20px 0;">
-                <p><strong>Join us for an electrifying night with South African Amapiano star, Leemckrazy, live at Moneymen Club, Blantyre on 16th November. Experience non-stop dancing, energetic performances & Amapiano beats. Lineup: Leemckrazy + more artists TBA.</strong></p>
+                                <p><strong>Join us for an electrifying night with South African Amapiano star, Leemckrazy, live at Moneymen Club, Blantyre on 16th November.</strong></p>
+                <p><strong>Experience non-stop dancing, energetic performances & Amapiano beats.</strong></p>
+                <p><strong>Lineup:</strong> Leemckrazy + more artists TBA.</p>
+                <p><strong>Get ready to groove!</strong></p>
             </article>
         </section>
     </main>
@@ -164,34 +218,21 @@
         <p>&copy; 2024 Urban Music Malawi. All rights reserved.</p>
     </footer>
 
-    <!-- Dark Mode Toggle Script -->
+    <!-- Dark Mode Script -->
     <script>
-        const toggleSwitch = document.getElementById('darkModeToggle');
+        const toggle = document.getElementById('darkModeToggle');
         const body = document.body;
-        const header = document.querySelector('header');
-        const footer = document.querySelector('footer');
+        const sections = document.querySelectorAll('section');
+        const headers = document.querySelectorAll('header, footer');
+        const navLinks = document.querySelectorAll('nav a');
+        const images = document.querySelectorAll('article img');
 
-        // Load saved theme from localStorage
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark') {
-            body.classList.add('dark-mode');
-            header.classList.add('dark-mode');
-            footer.classList.add('dark-mode');
-            toggleSwitch.checked = true;
-        }
-
-        toggleSwitch.addEventListener('change', () => {
-            if (toggleSwitch.checked) {
-                body.classList.add('dark-mode');
-                header.classList.add('dark-mode');
-                footer.classList.add('dark-mode');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                body.classList.remove('dark-mode');
-                header.classList.remove('dark-mode');
-                footer.classList.remove('dark-mode');
-                localStorage.setItem('theme', 'light');
-            }
+        toggle.addEventListener('change', () => {
+            body.classList.toggle('dark-mode');
+            headers.forEach(header => header.classList.toggle('dark-mode'));
+            sections.forEach(section => section.classList.toggle('dark-mode'));
+            navLinks.forEach(link => link.classList.toggle('dark-mode'));
+            images.forEach(img => img.classList.toggle('dark-mode'));
         });
     </script>
 </body>
