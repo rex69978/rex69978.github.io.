@@ -3,493 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urban Music Stream</title>
+    <title>Upload and Listen - Urban Music Malawi</title>
     <style>
-        /* Reset CSS */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Fonts and Colors */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212;
-            color: #FFFFFF;
-            overflow-x: hidden;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        /* Header */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            background-color: #1DB954;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            transition: background-color 0.3s;
-        }
-
-        header:hover {
-            background-color: #1ed760;
-        }
-
-        header h1 {
-            font-size: 1.5rem;
-            color: #FFFFFF;
-        }
-
-        /* Hidden Admin Button (Emoji) */
-        #adminSecretButton {
-            font-size: 1.5rem;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        #adminSecretButton.visible {
-            opacity: 1;
-        }
-
-        /* Main Content */
-        main {
-            padding: 100px 40px 40px 40px;
-            background-color: #121212;
-            min-height: 100vh;
-        }
-
-        /* Section Titles */
-        .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #1DB954;
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
-        /* Song Categories */
-        .category {
-            margin-bottom: 40px;
-        }
-
-        .songs-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        /* Song Card */
-        .song-card {
-            background-color: #282828;
-            border-radius: 10px;
-            overflow: hidden;
-            width: 200px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-
-        .song-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        }
-
-        .song-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .song-info {
-            padding: 15px;
-        }
-
-        .song-info h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-
-        .song-info p {
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            color: #b3b3b3;
-        }
-
-        .song-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .song-controls button {
-            background-color: #1DB954;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 20px;
-            color: #FFFFFF;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 0.8rem;
-        }
-
-        .song-controls button:hover {
-            background-color: #1ed760;
-        }
-
-        .counts {
-            font-size: 0.8rem;
-            color: #b3b3b3;
-            margin-top: 5px;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.7);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: #282828;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
             padding: 20px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 400px;
-            position: relative;
-            animation: fadeIn 0.5s;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            color: #FFFFFF;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .modal-content h2 {
-            margin-bottom: 20px;
+        h1, h2 {
             text-align: center;
+            color: #007bff;
         }
 
-        .modal-content label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .modal-content input[type="text"],
-        .modal-content input[type="password"],
-        .modal-content input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
+        label {
+            font-size: 18px;
+            color: #333;
+        }
+
+        input[type="file"], input[type="password"] {
+            margin-top: 10px;
+        }
+
+        .upload-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
             border: none;
             border-radius: 5px;
-        }
-
-        .modal-content button {
-            width: 100%;
-            padding: 10px;
-            background-color: #1DB954;
-            border: none;
-            border-radius: 5px;
-            color: #FFFFFF;
             cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
+            margin-top: 10px;
+            display: block;
         }
 
-        .modal-content button:hover {
-            background-color: #1ed760;
+        .upload-btn:hover {
+            background-color: #0056b3;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            header {
-                padding: 15px 20px;
-            }
-
-            .song-card {
-                width: 45%;
-            }
-
-            main {
-                padding: 100px 20px 20px 20px;
-            }
+        .song-list, .ep-list, .album-list {
+            margin-top: 30px;
         }
 
-        @media (max-width: 480px) {
-            .song-card {
-                width: 100%;
-            }
+        .song-item {
+            background-color: #e9ecef;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .song-item strong {
+            margin-right: 10px;
+            flex-grow: 1;
+        }
+
+        .song-item button {
+            background-color: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .song-item button:hover {
+            background-color: #218838;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+        }
+
+        .menu {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .menu button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .menu button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .lock-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <h1>Urban Music Stream</h1>
-        <div id="adminSecretButton">🔒</div>
-    </header>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Albums Section -->
-        <section class="category" id="albums">
-            <h2 class="section-title">Albums</h2>
-            <div class="songs-container" id="albumContainer">
-                <!-- Album songs will be dynamically loaded here -->
-            </div>
-        </section>
-
-        <!-- EPs Section -->
-        <section class="category" id="eps">
-            <h2 class="section-title">EPs</h2>
-            <div class="songs-container" id="epContainer">
-                <!-- EP songs will be dynamically loaded here -->
-            </div>
-        </section>
-
-        <!-- Singles Section -->
-        <section class="category" id="singles">
-            <h2 class="section-title">Singles</h2>
-            <div class="songs-container" id="singleContainer">
-                <!-- Single songs will be dynamically loaded here -->
-            </div>
-        </section>
-    </main>
-
-    <!-- Admin Login Modal -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeLogin">&times;</span>
-            <h2>Admin Login</h2>
-            <form id="loginForm" action="login.php" method="POST">
-                <label for="adminUsername">Username:</label>
-                <input type="text" id="adminUsername" name="username" required>
-
-                <label for="adminPassword">Password:</label>
-                <input type="password" id="adminPassword" name="password" required>
-
-                <button type="submit">Login</button>
-            </form>
-            <button id="resetPasswordBtn">Forgot Password?</button>
-        </div>
+    <h1>Admin Music Upload Page</h1>
+    <button class="lock-btn" onclick="showLogin()">🔒</button>
+    <div class="container hidden" id="adminContainer">
+        <h2>Admin Login</h2>
+        <label for="password">Enter Password:</label>
+        <input type="password" id="password">
+        <button class="upload-btn" id="loginBtn">Login</button>
     </div>
 
-    <!-- Admin Upload Modal -->
-    <div id="uploadModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeUpload">&times;</span>
-            <h2>Upload New Song</h2>
-            <form id="uploadForm" action="upload.php" method="POST" enctype="multipart/form-data">
-                <label for="songTitle">Song Title:</label>
-                <input type="text" id="songTitle" name="title" required>
+    <div class="container hidden" id="musicContainer">
+        <h2>Upload Your Music</h2>
+        <label for="musicUpload">Choose a music file (MP3, WAV):</label>
+        <input type="file" id="musicUpload" accept="audio/*" multiple>
+        <button class="upload-btn" id="uploadBtn">Upload Music</button>
 
-                <label for="songArtist">Artist:</label>
-                <input type="text" id="songArtist" name="artist" required>
-
-                <label for="songCategory">Category:</label>
-                <select id="songCategory" name="category" required>
-                    <option value="Album">Album</option>
-                    <option value="EP">EP</option>
-                    <option value="Single">Single</option>
-                </select>
-
-                <label for="songFile">Song File (MP3/MP4):</label>
-                <input type="file" id="songFile" name="song" accept=".mp3,.mp4" required>
-
-                <label for="artworkFile">Artwork Image (JPG/PNG):</label>
-                <input type="file" id="artworkFile" name="artwork" accept=".jpg,.png,.jpeg" required>
-
-                <button type="submit">Upload</button>
-            </form>
+        <div class="menu" id="menu">
+            <button onclick="showCategory('songs')">Songs</button>
+            <button onclick="showCategory('ep')">EPs</button>
+            <button onclick="showCategory('album')">Albums</button>
         </div>
+
+        <div class="song-list" id="songList"></div>
+        <div class="ep-list hidden" id="epList"></div>
+        <div class="album-list hidden" id="albumList"></div>
     </div>
 
-    <!-- Password Reset Modal -->
-    <div id="resetModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeReset">&times;</span>
-            <h2>Reset Password</h2>
-            <form id="resetForm" action="reset_password.php" method="POST">
-                <label for="resetUsername">Username:</label>
-                <input type="text" id="resetUsername" name="username" required>
-
-                <button type="submit">Reset Password</button>
-            </form>
-        </div>
-    </div>
+    <footer>&copy; 2024 Urban Music Malawi. All rights reserved.</footer>
 
     <script>
-        // JavaScript Code
+        const musicUpload = document.getElementById('musicUpload');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const loginBtn = document.getElementById('loginBtn');
+        const passwordInput = document.getElementById('password');
+        const songList = document.getElementById('songList');
+        const epList = document.getElementById('epList');
+        const albumList = document.getElementById('albumList');
+        const adminContainer = document.getElementById('adminContainer');
+        const musicContainer = document.getElementById('musicContainer');
 
-        // Admin Secret Button Activation
-        let clickCount = 0;
-        const adminSecretButton = document.getElementById('adminSecretButton');
-        const loginModal = document.getElementById('loginModal');
-        const uploadModal = document.getElementById('uploadModal');
-        const resetModal = document.getElementById('resetModal');
-        const closeLogin = document.getElementById('closeLogin');
-        const closeUpload = document.getElementById('closeUpload');
-        const closeReset = document.getElementById('closeReset');
-        const resetPasswordBtn = document.getElementById('resetPasswordBtn');
+        const localStorageKey = 'uploadedSongs';
+        let uploadedSongs = JSON.parse(localStorage.getItem(localStorageKey)) || [];
 
-        // Show admin button after 5 clicks
-        adminSecretButton.style.cursor = 'pointer';
-        adminSecretButton.style.opacity = '0';
-        document.addEventListener('click', () => {
-            clickCount++;
-            if (clickCount === 5) {
-                adminSecretButton.classList.add('visible');
-                alert('Admin access unlocked!');
-            }
-        });
+        function showLogin() {
+            adminContainer.classList.remove('hidden');
+        }
 
-        // Open Login Modal
-        adminSecretButton.addEventListener('click', () => {
-            loginModal.style.display = 'flex';
-        });
-
-        // Close Modals
-        closeLogin.addEventListener('click', () => {
-            loginModal.style.display = 'none';
-        });
-
-        closeUpload.addEventListener('click', () => {
-            uploadModal.style.display = 'none';
-        });
-
-        closeReset.addEventListener('click', () => {
-            resetModal.style.display = 'none';
-        });
-
-        // Open Reset Modal from Login Modal
-        resetPasswordBtn.addEventListener('click', () => {
-            loginModal.style.display = 'none';
-            resetModal.style.display = 'flex';
-        });
-
-        // Open Upload Modal after successful login
-        // This should be handled by backend after authentication
-        // For demonstration, we assume login is successful
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = document.getElementById('adminUsername').value;
-            const password = document.getElementById('adminPassword').value;
-            if(username === 'admin' && password === 'AdminUrban12') { // Replace with backend validation
-                loginModal.style.display = 'none';
-                uploadModal.style.display = 'flex';
+        loginBtn.addEventListener('click', () => {
+            if (passwordInput.value === 'AdminPromo12') {
+                adminContainer.classList.add('hidden');
+                musicContainer.classList.remove('hidden');
+                renderSongs();
             } else {
-                alert('Invalid credentials!');
+                alert('Incorrect password!');
             }
         });
 
-        // Fetch and Display Songs
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('get_songs.php')
-                .then(response => response.json())
-                .then(data => {
-                    const albumContainer = document.getElementById('albumContainer');
-                    const epContainer = document.getElementById('epContainer');
-                    const singleContainer = document.getElementById('singleContainer');
+        function renderSongs() {
+            songList.innerHTML = '';
+            epList.innerHTML = '';
+            albumList.innerHTML = '';
 
-                    data.forEach(song => {
-                        const songCard = document.createElement('div');
-                        songCard.classList.add('song-card');
+            uploadedSongs.forEach((song, index) => {
+                const songItem = document.createElement('div');
+                songItem.classList.add('song-item');
+                songItem.innerHTML = `
+                    <strong>${song.name}</strong>
+                    <button onclick="playSong(${index})">Play</button>
+                    <button onclick="downloadSong(${index})">Download</button>
+                `;
 
-                        songCard.innerHTML = `
-                            <img src="${song.artwork_path}" alt="${song.title}">
-                            <div class="song-info">
-                                <h3>${song.title}</h3>
-                                <p>${song.artist}</p>
-                                <div class="song-controls">
-                                    <button onclick="playSong('${song.file_path}')">Play</button>
-                                    <button onclick="downloadSong('${song.file_path}')">Download</button>
-                                </div>
-                                <div class="counts">Listens: ${song.listen_count} | Downloads: ${song.download_count}</div>
-                            </div>
-                        `;
+                // Categorize the song
+                if (song.category === 'single') {
+                    songList.appendChild(songItem);
+                } else if (song.category === 'ep') {
+                    epList.appendChild(songItem);
+                } else if (song.category === 'album') {
+                    albumList.appendChild(songItem);
+                }
+            });
+        }
 
-                        // Append to respective category
-                        if(song.category === 'Album') {
-                            albumContainer.appendChild(songCard);
-                        } else if(song.category === 'EP') {
-                            epContainer.appendChild(songCard);
-                        } else {
-                            singleContainer.appendChild(songCard);
-                        }
-                    });
-                })
-                .catch(error => console.error('Error fetching songs:', error));
+        function saveSongs() {
+            localStorage.setItem(localStorageKey, JSON.stringify(uploadedSongs));
+        }
+
+        uploadBtn.addEventListener('click', () => {
+            const files = musicUpload.files;
+            const songData = Array.from(files).map(file => ({
+                name: file.name,
+                url: URL.createObjectURL(file),
+                category: determineCategory()
+            }));
+
+            uploadedSongs.push(...songData);
+            saveSongs();
+            renderSongs();
         });
 
-        // Play Song Function
-        function playSong(filePath) {
-            // Increment listen count via backend
-            fetch('update_listen.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ file: filePath }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.status === 'success') {
-                    alert('Playing song: ' + filePath);
-                    // Implement actual audio playback as needed
-                } else {
-                    alert('Error playing song.');
-                }
-            })
-            .catch(error => console.error('Error:', error));
+        function determineCategory() {
+            const totalSongs = uploadedSongs.length;
+            if (totalSongs >= 6) return 'album';
+            if (totalSongs >= 2) return 'ep';
+            return 'single';
         }
 
-        // Download Song Function
-        function downloadSong(filePath) {
-            // Increment download count via backend
-            fetch('update_download.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ file: filePath }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.status === 'success') {
-                    window.location.href = download.php?file=${encodeURIComponent(filePath)};
-                } else {
-                    alert('Error downloading song.');
-                }
-            })
-            .catch(error => console.error('Error:', error));
+        function playSong(index) {
+            const song = uploadedSongs[index];
+            const audioElement = document.createElement('audio');
+            audioElement.src = song.url;
+            audioElement.controls = true;
+
+            songList.querySelectorAll('audio').forEach(audio => audio.remove());
+            epList.querySelectorAll('audio').forEach(audio => audio.remove());
+            albumList.querySelectorAll('audio').forEach(audio => audio.remove());
+
+            const songItem = songList.children[index] || epList.children[index - songList.children.length] || albumList.children[index - songList.children.length - epList.children.length];
+            songItem.appendChild(audioElement);
         }
+
+        function downloadSong(index) {
+            const song = uploadedSongs[index];
+            const link = document.createElement('a');
+            link.href = song.url;
+            link.download = song.name;
+            link.click();
+        }
+
+        function showCategory(category) {
+            songList.classList.add('hidden');
+            epList.classList.add('hidden');
+            albumList.classList.add('hidden');
+
+            if (category === 'songs') {
+                songList.classList.remove('hidden');
+            } else if (category === 'ep') {
+                epList.classList.remove('hidden');
+            } else if (category === 'album') {
+                albumList.classList.remove('hidden');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', renderSongs);
     </script>
 </body>
-</html
+</html>
