@@ -41,6 +41,16 @@
             font-size: 16px;
         }
 
+        .admin-link {
+            color: white; /* Set text color for the link */
+            text-decoration: none; /* Remove underline */
+            padding-left: 15px; /* Space between toggle button and link */
+        }
+
+        .admin-link:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
         .container {
             max-width: 800px;
             margin: 20px auto;
@@ -93,7 +103,8 @@
             gap: 10px;
         }
 
-        .play-btn, .download-btn {
+        .play-btn,
+        .download-btn {
             background-color: #007bff;
             color: white;
             border: none;
@@ -102,7 +113,8 @@
             cursor: pointer;
         }
 
-        .play-btn:hover, .download-btn:hover {
+        .play-btn:hover,
+        .download-btn:hover {
             background-color: #0056b3;
         }
 
@@ -133,7 +145,10 @@
 
     <header>
         <h1>Urban Music Malawi</h1>
-        <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+        <div>
+            <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+            <a href="adminpromo1.html" class="admin-link">🔒 Admin Login</a>
+        </div>
     </header>
 
     <div class="container">
