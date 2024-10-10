@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trending Now - Urban Music Malawi</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,12 +11,14 @@
             padding: 0;
             background-color: #f4f4f4;
             color: #333;
+            transition: background-color 0.3s, color 0.3s;
         }
         header {
             background-color: #444;
             color: #fff;
             padding: 20px;
             text-align: center;
+            position: relative;
         }
         nav ul {
             list-style: none;
@@ -52,16 +53,52 @@
             padding: 20px;
             background-color: #444;
             color: #fff;
-            position: relative;
+        }
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #1c1c1c;
+            color: #f4f4f4;
+        }
+        header.dark-mode, footer.dark-mode {
+            background-color: #333;
+        }
+        /* Dark Mode Toggle */
+        .switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input { display: none; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
             bottom: 0;
-            width: 100%;
+            background-color: #ccc;
+            transition: .4s;
         }
-        .twitter-feed {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #e9ecef;
-            border-radius: 8px;
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
         }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .slider.round { border-radius: 34px; }
+        .slider.round:before { border-radius: 50%; }
     </style>
 </head>
 <body>
@@ -71,17 +108,23 @@
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="top30.html">Top 10 Weekly Chart</a></li>
-                <li><a href="contact.html">Contact out</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
+        <!-- Dark Mode Toggle -->
+        <label class="switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="slider round"></span>
+        </label>
     </header>
+
     <main>
         <section id="trending-songs">
             <h2>Trending Songs</h2>
             <ul>
                 <li>
-                  <img src="CEC778C8-C0C0-4246-80DE-18D8DFDBB724.jpeg" alt="1. Cardioo by trappy beats X cizzle🔥" style="width: 50%; vertical-align: middle;">
-                  <strong>Cardioo by Trappybeats Featuring Cizzle🔥</strong>
+                    <img src="CEC778C8-C0C0-4246-80DE-18D8DFDBB724.jpeg" alt="1. Cardioo by trappy beats X cizzle🔥" style="width: 50%; vertical-align: middle;">
+                    <strong>Cardioo by Trappybeats Featuring Cizzle🔥</strong>
                 </li>
                 <li><a href="#">Controller 2 by Onesmus 2</a></li>
                 <li><a href="#">Blunts 3 by Sassie X Skull3</a></li>
@@ -90,29 +133,21 @@
 
         <section id="artist-news">
             <h2>Artist News</h2>
-            <section id="artist-news">
-            <h2>Artist News</h2>
             <article>
                 <h3><strong>Zeze Parts Ways with Serato Media After 4 Years</strong></h3>
                 <img src="275D16A1-712A-4490-B2D9-7907309E2014.jpeg" alt="Zeze News Poster" style="width: 50%; display: block; margin: 20px 0;">
                 <p><strong>New Chapter: Zeze's Money Making Music label takes over management.</strong></p>
             </article>
-
-                
-           <article>
-    <h3><strong>'Liti' by TRITAH LIONESS</strong></h3>
-    <img src="8DD600DD-2C73-4ED0-93D2-74583753F239.jpeg" alt="'Liti' by Tritah Lioness Poster" style="width: 50%; display: block; margin: 20px 0;">
-    <p><strong>'Liti' by TRITAH LIONESS is an electrifying fusion of rhythms and melodies, showcasing her signature style and energetic vibes. The track is a powerful display of her musical prowess, blending captivating beats with her dynamic vocal performance to create a hit that resonates with fans of urban and Afro-beat music alike.</strong></p>
-</article>
-
-
-    <article>
-    <h3><strong>Shano Index Unleashes the Sizzling Visuals for 'NTIKA'</strong></h3>
-    <img src="ECF107FD-6DD2-4AF1-B019-F2DED4C0EA86.jpeg" alt="'NTIKA' by Shano Index Poster" style="width: 50%; display: block; margin: 20px 0;">
-    <p><strong>Shano Index unleashes the sizzling visuals for 'NTIKA', his latest dancehall anthem featuring Bee Jay and Ace Jizzy. Directed by the talented Lang K (The Magic Guy), the energetic video brings the infectious dancehall beats to life with vibrant performances, stunning visuals, and a captivating narrative. This video will keep you moving and showcases Shano Index's undeniable talent and presence in the urban music scene.</strong></p>
-</article>
-   
-
+            <article>
+                <h3><strong>'Liti' by TRITAH LIONESS</strong></h3>
+                <img src="8DD600DD-2C73-4ED0-93D2-74583753F239.jpeg" alt="'Liti' by Tritah Lioness Poster" style="width: 50%; display: block; margin: 20px 0;">
+                <p><strong>'Liti' by TRITAH LIONESS is an electrifying fusion of rhythms and melodies, showcasing her signature style and energetic vibes.</strong></p>
+            </article>
+            <article>
+                <h3><strong>Shano Index Unleashes the Sizzling Visuals for 'NTIKA'</strong></h3>
+                <img src="ECF107FD-6DD2-4AF1-B019-F2DED4C0EA86.jpeg" alt="'NTIKA' by Shano Index Poster" style="width: 50%; display: block; margin: 20px 0;">
+                <p><strong>Shano Index unleashes the sizzling visuals for 'NTIKA', his latest dancehall anthem featuring Bee Jay and Ace Jizzy. Directed by Lang K (The Magic Guy), this energetic video will keep you moving!</strong></p>
+            </article>
         </section>
 
         <section id="urban-music-news">
@@ -120,15 +155,44 @@
             <article>
                 <h3><strong>Summer Amapiano Fest</strong></h3>
                 <img src="E56B27DA-6A4C-4BCE-94BD-F04E50C07242.jpeg" alt="Summer Amapiano Fest Poster" style="width: 50%; display: block; margin: 20px 0;">
-                <p><strong>Join us for an electrifying night with South African Amapiano star, Leemckrazy, live at Moneymen Club, Blantyre on 16th November.</strong></p>
-                <p><strong>Experience non-stop dancing, energetic performances & Amapiano beats.</strong></p>
-                <p><strong>Lineup:</strong> Leemckrazy + more artists TBA.</p>
-                <p><strong>Get ready to groove!</strong></p>
+                <p><strong>Join us for an electrifying night with South African Amapiano star, Leemckrazy, live at Moneymen Club, Blantyre on 16th November. Experience non-stop dancing, energetic performances & Amapiano beats. Lineup: Leemckrazy + more artists TBA.</strong></p>
             </article>
         </section>
     </main>
+
     <footer>
         <p>&copy; 2024 Urban Music Malawi. All rights reserved.</p>
     </footer>
+
+    <!-- Dark Mode Toggle Script -->
+    <script>
+        const toggleSwitch = document.getElementById('darkModeToggle');
+        const body = document.body;
+        const header = document.querySelector('header');
+        const footer = document.querySelector('footer');
+
+        // Load saved theme from localStorage
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            header.classList.add('dark-mode');
+            footer.classList.add('dark-mode');
+            toggleSwitch.checked = true;
+        }
+
+        toggleSwitch.addEventListener('change', () => {
+            if (toggleSwitch.checked) {
+                body.classList.add('dark-mode');
+                header.classList.add('dark-mode');
+                footer.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark-mode');
+                header.classList.remove('dark-mode');
+                footer.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
 </body>
 </html>
