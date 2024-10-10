@@ -1,85 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload and Listen - Urban Music Malawi</title>
+    <title>Urban Music Malawi - Music Streaming & Downloads</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        h1, h2 {
-            text-align: center;
-            color: #007bff;
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .toggle-button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
         }
 
         .container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
         }
 
-        label {
-            font-size: 18px;
-            color: #333;
+        .container.dark-mode {
+            background-color: #1e1e1e;
         }
 
-        input[type="file"], input[type="password"] {
-            margin-top: 10px;
+        .section {
+            margin-bottom: 30px;
         }
 
-        .upload-btn {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            display: block;
-        }
-
-        .upload-btn:hover {
-            background-color: #0056b3;
-        }
-
-        .song-list, .ep-list, .album-list {
-            margin-top: 30px;
+        h2 {
+            color: #007bff;
+            text-align: center;
         }
 
         .song-item {
             background-color: #e9ecef;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
             border-radius: 5px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .song-item strong {
-            margin-right: 10px;
+        .song-info {
             flex-grow: 1;
         }
 
-        .song-item button {
-            background-color: #28a745;
+        .song-name {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .download-count {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .play-btn, .download-btn {
+            background-color: #007bff;
             color: white;
-            padding: 5px 10px;
             border: none;
-            border-radius: 3px;
+            border-radius: 5px;
+            padding: 10px 15px;
             cursor: pointer;
         }
 
-        .song-item button:hover {
-            background-color: #218838;
+        .play-btn:hover, .download-btn:hover {
+            background-color: #0056b3;
         }
 
         audio {
@@ -93,145 +117,72 @@
             color: #666;
         }
 
-        .menu {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .menu button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            margin: 0 5px;
-            cursor: pointer;
-        }
-
-        .menu button:hover {
-            background-color: #0056b3;
-        }
-
         .hidden {
             display: none;
         }
 
-        .lock-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            position: absolute;
-            top: 20px;
-            right: 20px;
+        .loading {
+            text-align: center;
+            font-size: 18px;
+            color: #007bff;
         }
     </style>
 </head>
+
 <body>
 
-    <h1>Admin Music Upload Page</h1>
-    <button class="lock-btn" onclick="showLogin()">🔒</button>
-    <div class="container hidden" id="adminContainer">
-        <h2>Admin Login</h2>
-        <label for="password">Enter Password:</label>
-        <input type="password" id="password">
-        <button class="upload-btn" id="loginBtn">Login</button>
-    </div>
+    <header>
+        <h1>Urban Music Malawi</h1>
+        <button class="toggle-button" onclick="toggleDarkMode()">🌙</button>
+    </header>
 
-    <div class="container hidden" id="musicContainer">
-        <h2>Upload Your Music</h2>
-        <label for="musicUpload">Choose a music file (MP3, WAV):</label>
-        <input type="file" id="musicUpload" accept="audio/*" multiple>
-        <button class="upload-btn" id="uploadBtn">Upload Music</button>
-
-        <div class="menu" id="menu">
-            <button onclick="showCategory('songs')">Songs</button>
-            <button onclick="showCategory('ep')">EPs</button>
-            <button onclick="showCategory('album')">Albums</button>
-        </div>
-
+    <div class="container">
+        <h2>Listen and Download Music</h2>
+        <div class="loading" id="loadingMessage">Loading music files...</div>
         <div class="song-list" id="songList"></div>
-        <div class="ep-list hidden" id="epList"></div>
-        <div class="album-list hidden" id="albumList"></div>
     </div>
 
     <footer>&copy; 2024 Urban Music Malawi. All rights reserved.</footer>
 
     <script>
-        const musicUpload = document.getElementById('musicUpload');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const loginBtn = document.getElementById('loginBtn');
-        const passwordInput = document.getElementById('password');
         const songList = document.getElementById('songList');
-        const epList = document.getElementById('epList');
-        const albumList = document.getElementById('albumList');
-        const adminContainer = document.getElementById('adminContainer');
-        const musicContainer = document.getElementById('musicContainer');
-
+        const loadingMessage = document.getElementById('loadingMessage');
         const localStorageKey = 'uploadedSongs';
         let uploadedSongs = JSON.parse(localStorage.getItem(localStorageKey)) || [];
 
-        function showLogin() {
-            adminContainer.classList.remove('hidden');
-        }
-
-        loginBtn.addEventListener('click', () => {
-            if (passwordInput.value === 'AdminPromo12') {
-                adminContainer.classList.add('hidden');
-                musicContainer.classList.remove('hidden');
-                renderSongs();
-            } else {
-                alert('Incorrect password!');
-            }
-        });
-
-        function renderSongs() {
-            songList.innerHTML = '';
-            epList.innerHTML = '';
-            albumList.innerHTML = '';
-
-            uploadedSongs.forEach((song, index) => {
-                const songItem = document.createElement('div');
-                songItem.classList.add('song-item');
-                songItem.innerHTML = `
-                    <strong>${song.name}</strong>
-                    <button onclick="playSong(${index})">Play</button>
-                    <button onclick="downloadSong(${index})">Download</button>
-                `;
-
-                // Categorize the song
-                if (song.category === 'single') {
-                    songList.appendChild(songItem);
-                } else if (song.category === 'ep') {
-                    epList.appendChild(songItem);
-                } else if (song.category === 'album') {
-                    albumList.appendChild(songItem);
-                }
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            const containers = document.querySelectorAll('.container');
+            containers.forEach(container => {
+                container.classList.toggle('dark-mode');
             });
         }
 
-        function saveSongs() {
-            localStorage.setItem(localStorageKey, JSON.stringify(uploadedSongs));
-        }
+        function renderSongs() {
+            loadingMessage.style.display = 'none'; // Hide loading message
+            songList.innerHTML = '';
 
-        uploadBtn.addEventListener('click', () => {
-            const files = musicUpload.files;
-            const songData = Array.from(files).map(file => ({
-                name: file.name,
-                url: URL.createObjectURL(file),
-                category: determineCategory()
-            }));
+            if (uploadedSongs.length === 0) {
+                songList.innerHTML = '<p>No music available. Please check back later.</p>';
+                return;
+            }
 
-            uploadedSongs.push(...songData);
-            saveSongs();
-            renderSongs();
-        });
-
-        function determineCategory() {
-            const totalSongs = uploadedSongs.length;
-            if (totalSongs >= 6) return 'album';
-            if (totalSongs >= 2) return 'ep';
-            return 'single';
+            uploadedSongs.forEach((song, index) => {
+                const songItem = document.createElement('div');
+                songItem.className = 'song-item';
+                songItem.innerHTML = `
+                    <div class="song-info">
+                        <h3 class="song-name">${song.name}</h3>
+                        <p class="download-count">Downloads: ${song.downloads || 0}</p>
+                    </div>
+                    <div class="controls">
+                        <button class="play-btn" onclick="playSong(${index})">Play</button>
+                        <button class="download-btn" onclick="downloadSong(${index})">Download</button>
+                    </div>
+                `;
+                songList.appendChild(songItem);
+            });
         }
 
         function playSong(index) {
@@ -240,11 +191,10 @@
             audioElement.src = song.url;
             audioElement.controls = true;
 
+            // Stop any currently playing audio
             songList.querySelectorAll('audio').forEach(audio => audio.remove());
-            epList.querySelectorAll('audio').forEach(audio => audio.remove());
-            albumList.querySelectorAll('audio').forEach(audio => audio.remove());
 
-            const songItem = songList.children[index] || epList.children[index - songList.children.length] || albumList.children[index - songList.children.length - epList.children.length];
+            const songItem = songList.children[index];
             songItem.appendChild(audioElement);
         }
 
@@ -253,24 +203,22 @@
             const link = document.createElement('a');
             link.href = song.url;
             link.download = song.name;
+
+            // Increment download count
+            song.downloads = (song.downloads || 0) + 1;
+            saveSongs();
+
             link.click();
         }
 
-        function showCategory(category) {
-            songList.classList.add('hidden');
-            epList.classList.add('hidden');
-            albumList.classList.add('hidden');
-
-            if (category === 'songs') {
-                songList.classList.remove('hidden');
-            } else if (category === 'ep') {
-                epList.classList.remove('hidden');
-            } else if (category === 'album') {
-                albumList.classList.remove('hidden');
-            }
+        function saveSongs() {
+            localStorage.setItem(localStorageKey, JSON.stringify(uploadedSongs));
         }
 
-        document.addEventListener('DOMContentLoaded', renderSongs);
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSongs();
+        });
     </script>
 </body>
+
 </html>
