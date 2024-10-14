@@ -617,6 +617,22 @@
             "As an artist, this platform has given me exposure and opportunities I never thought possible." – Jay, Malawian Artist
         </p>
     </section>
-    
+       <!-- Dark Mode Script -->
+    <script>
+        const toggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        const sections = document.querySelectorAll('section');
+        const headers = document.querySelectorAll('header, footer');
+        const navLinks = document.querySelectorAll('nav a');
+        const images = document.querySelectorAll('article img');
+
+        toggle.addEventListener('change', () => {
+            body.classList.toggle('dark-mode');
+            headers.forEach(header => header.classList.toggle('dark-mode'));
+            sections.forEach(section => section.classList.toggle('dark-mode'));
+            navLinks.forEach(link => link.classList.toggle('dark-mode'));
+            images.forEach(img => img.classList.toggle('dark-mode'));
+        });
+    </script>
 </body>
 </html>
