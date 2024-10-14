@@ -377,117 +377,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URBAN MENU</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* General Styling */
-        * {
+
+         <style>
+        body {
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
         }
-
-        body {
-            background-color: white;
-            height: 2000px; /* Added height for scrolling */
-        }
-
-        /* Navbar Styling */
-        .navbar {
-            position: sticky;
-            top: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        header {
+            background-color: #444;
+            color: #fff;
             padding: 20px;
-            background-color: #008000; /* Solid background color */
-            z-index: 999;
+            text-align: center;
+            position: relative;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
         }
-
-        .logo h1 {
-            color: white;
-            font-size: 1.5em;
+        header h1 {
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            animation: glow 1.5s infinite alternate;
         }
-
-        .nav-links {
+        nav ul {
             list-style: none;
-            display: flex;
-            justify-content: space-around;
-            width: 60%;
+            padding: 0;
         }
-
-        .nav-links li {
+        nav ul li {
+            display: inline;
             margin: 0 15px;
-            position: relative;
         }
-
-        .nav-links a {
-            color: white;
+        nav a {
+            color: #fff;
             text-decoration: none;
-            font-size: 1.2em;
             font-weight: bold;
+        }
+        main {
+            padding: 20px;
+            background: linear-gradient(45deg, #f4f4f4, #f9fafc);
+        }
+        h2 {
+            color: #ff4b5c;
+            font-size: 2em;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+        }
+        section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        section:hover {
+            background: #ffe5e5;
+            transform: scale(1.02);
+            transition: all 0.3s ease-in-out;
+        }
+        article {
+            margin-bottom: 15px;
+        }
+        article img {
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out;
+        }
+        article img:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #444;
+            color: #fff;
             position: relative;
-        }
-
-        /* Cool Hover Effect */
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            width: 0%;
-            height: 3px;
-            bottom: -5px;
-            left: 0;
-            background-color: white;
-            transition: width 0.4s ease-in-out;
-        }
-
-        .nav-links a:hover::before {
+            bottom: 0;
             width: 100%;
         }
-
-        /* Responsive Burger Menu for Small Screens */
-        .burger {
-            display: none;
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #1c1c1c;
+            color: #f4f4f4;
+        }
+        section.dark-mode {
+            background-color: #2b2b2b;
+            color: #f4f4f4;
+        }
+        h2.dark-mode {
+            color: #ffab00;
+        }
+        header.dark-mode, footer.dark-mode {
+            background-color: #333;
+        }
+        nav a.dark-mode {
+            color: #ffab00;
+        }
+        article img.dark-mode {
+            filter: brightness(0.8);
+        }
+        /* Dark Mode Toggle */
+        .switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input { display: none; }
+        .slider {
+            position: absolute;
             cursor: pointer;
-            flex-direction: column;
-            gap: 5px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
         }
-
-        .burger div {
-            width: 25px;
-            height: 3px;
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
             background-color: white;
+            transition: .4s;
         }
-
-        /* Mobile View */
-        @media screen and (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 70px;
-                right: 0;
-                background-color: #008000; /* Solid background for mobile */
-                width: 100%;
-                height: 100vh;
-                align-items: center;
-                justify-content: space-around;
-                transition: transform 0.3s ease-in-out;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .burger {
-                display: flex;
-            }
+        input:checked + .slider {
+            background-color: #ff4b5c;
         }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .slider.round { border-radius: 34px; }
+        .slider.round:before { border-radius: 50%; }
 
-        /* Animation for smooth scrolling */
-        .nav-links a {
-            scroll-behavior: smooth;
+        /* Keyframes for glow effect */
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff4b5c, 0 0 20px #ff4b5c, 0 0 30px #ff4b5c, 0 0 40px #ff4b5c;
+            }
+            to {
+                text-shadow: 0 0 20px #ffab00, 0 0 30px #ffab00, 0 0 40px #ffab00, 0 0 50px #ffab00;
+            }
         }
     </style>
+
 </head>
 <body>
 
