@@ -81,6 +81,7 @@
 <div class="admin-section">
     <h2>Admin Section:</h2>
     <button id="adminLoginButton">Admin Access</button>
+    <button id="adminLoginButton2">View All Votes</button>
     <div id="adminResults" class="hidden">
         <h3>All Votes:</h3>
         <pre id="adminVotes"></pre>
@@ -136,6 +137,17 @@
         const password = prompt('Enter admin password:');
 
         if (password === 'royroy1212') {
+            revealVotes();
+        } else {
+            alert('Incorrect password');
+        }
+    });
+
+    // New button for accessing votes with different password
+    document.getElementById('adminLoginButton2').addEventListener('click', function () {
+        const password = prompt('Enter admin password for full access:');
+
+        if (password === 'jumbe2024') {
             revealVotes();
         } else {
             alert('Incorrect password');
