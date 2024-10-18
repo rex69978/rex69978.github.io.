@@ -12,11 +12,14 @@
         h1 {
             color: #333;
         }
-        .results {
+        .results, .admin-results {
             margin-top: 20px;
         }
         .hidden {
             display: none;
+        }
+        button {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -73,8 +76,14 @@
     <div id="voteResults"></div>
 </div>
 
+<div id="adminSection" class="hidden">
+    <h2>Admin Results:</h2>
+    <button id="revealVotesButton">Reveal All Votes</button>
+    <div id="adminResults" class="hidden"></div>
+</div>
+
 <script>
-    // Initialize the vote counts
+    // Initialize the vote counts and votes
     const voteCounts = {
         chair: { "Mrs. R. Kaliwata": 0, "Mrs. E. Ndhlove": 0 },
         secretary: { "Mrs. K. Mkambeni": 0, "Mr. R. Jose": 0 },
@@ -82,6 +91,9 @@
         committee: { "Mr. F. Gwejula": 0, "Mrs. S. Nkhuwa": 0, "Ms. M. Ngozo": 0 },
         discipline: { "Mrs. T. Jose": 0, "Ms. L. Chakwanira": 0, "Mr. D. Kaliwata": 0, "Ms. F. Jumbe": 0 }
     };
+    
+    // Store all votes
+    const allVotes = [];
 
     // Check if the user has already voted
     const hasVoted = localStorage.getItem('hasVoted');
@@ -114,6 +126,9 @@
             voteData.committee.forEach(candidate => voteCounts.committee[candidate]++);
             voteData.discipline.forEach(candidate => voteCounts.discipline[candidate]++);
 
+            // Store the vote data
+            allVotes.push(voteData);
+
             // Mark user as voted (prevent re-voting)
             localStorage.setItem('hasVoted', 'true');
 
@@ -137,10 +152,18 @@
             }
             resultsDiv.innerHTML += '</ul>';
         }
+
+        // Show admin section
+        document.getElementById('adminSection').classList.remove('hidden');
     }
+
+    // Admin reveal votes
+    document.getElementById('revealVotesButton').addEventListener('click', function() {
+        const adminResultsDiv = document.getElementById('adminResults');
+        adminResultsDiv.classList.remove('hidden');
+        adminResultsDiv.innerHTML = '<h3>All Votes:</h3><pre>' + JSON.stringify(allVotes, null, 2) + '</pre>';
+    });
 </script>
 
 </body>
 </html>
-
-
