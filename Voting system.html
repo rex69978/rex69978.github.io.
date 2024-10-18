@@ -90,14 +90,14 @@
 <script>
     // Firebase configuration
     const firebaseConfig = {
-  apiKey: "AIzaSyCH03QLcJGqfHbziZFwSvgc5lecMa0Vt9c",
-  authDomain: "clan-a2f08.firebaseapp.com",
-  projectId: "clan-a2f08",
-  storageBucket: "clan-a2f08.appspot.com",
-  messagingSenderId: "181988994542",
-  appId: "1:181988994542:web:9956d52af3492e1724f2ff",
-  measurementId: "G-Z6NNTBK9DC"
-};
+        apiKey: "AIzaSyCH03QLcJGqfHbziZFwSvgc5lecMa0Vt9c",
+        authDomain: "clan-a2f08.firebaseapp.com",
+        projectId: "clan-a2f08",
+        storageBucket: "clan-a2f08.appspot.com",
+        messagingSenderId: "181988994542",
+        appId: "1:181988994542:web:9956d52af3492e1724f2ff",
+        measurementId: "G-Z6NNTBK9DC"
+    };
 
     // Initialize Firebase
     const app = firebase.initializeApp(firebaseConfig);
@@ -120,18 +120,20 @@
         document.querySelectorAll('input[name="discipline"]:checked').forEach(box => voteData.discipline.push(box.value));
 
         // Save votes to Firebase
-        db.ref('votes').push(voteData);
-
-        // Hide the form and show confirmation
-        document.getElementById('voteForm').classList.add('hidden');
-        document.getElementById('results').classList.remove('hidden');
+        db.ref('votes').push(voteData).then(() => {
+            // Hide the form and show confirmation
+            document.getElementById('voteForm').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+        }).catch(error => {
+            console.error("Error saving vote:", error);
+        });
     });
 
     // Admin Access and Display Votes
     document.getElementById('adminLoginButton').addEventListener('click', function () {
         const password = prompt('Enter admin password:');
 
-        if (password === 'Roy1212') {
+        if (password === 'royroy1212') {
             revealVotes();
         } else {
             alert('Incorrect password');
@@ -139,10 +141,16 @@
     });
 
     function revealVotes() {
-        db.ref('votes').once('value', function(snapshot) {
+        db.ref('votes').once('value').then(function(snapshot) {
             const votes = snapshot.val();
-            document.getElementById('adminVotes').textContent = JSON.stringify(votes, null, 2);
+            if (votes) {
+                document.getElementById('adminVotes').textContent = JSON.stringify(votes, null, 2);
+            } else {
+                document.getElementById('adminVotes').textContent = "No votes have been submitted yet.";
+            }
             document.getElementById('adminResults').classList.remove('hidden');
+        }).catch(error => {
+            console.error("Error retrieving votes:", error);
         });
     }
 </script>
