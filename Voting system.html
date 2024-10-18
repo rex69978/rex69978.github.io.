@@ -120,13 +120,15 @@
         document.querySelectorAll('input[name="discipline"]:checked').forEach(box => voteData.discipline.push(box.value));
 
         // Save votes to Firebase
-        db.ref('votes').push(voteData).then(() => {
-            // Hide the form and show confirmation
-            document.getElementById('voteForm').classList.add('hidden');
-            document.getElementById('results').classList.remove('hidden');
-        }).catch(error => {
-            console.error("Error saving vote:", error);
-        });
+        db.ref('votes').push(voteData)
+            .then(() => {
+                // Hide the form and show confirmation
+                document.getElementById('voteForm').classList.add('hidden');
+                document.getElementById('results').classList.remove('hidden');
+            })
+            .catch((error) => {
+                console.error('Error saving vote:', error);
+            });
     });
 
     // Admin Access and Display Votes
@@ -141,16 +143,14 @@
     });
 
     function revealVotes() {
-        db.ref('votes').once('value').then(function(snapshot) {
+        db.ref('votes').once('value', function(snapshot) {
             const votes = snapshot.val();
             if (votes) {
                 document.getElementById('adminVotes').textContent = JSON.stringify(votes, null, 2);
             } else {
-                document.getElementById('adminVotes').textContent = "No votes have been submitted yet.";
+                document.getElementById('adminVotes').textContent = 'No votes recorded yet.';
             }
             document.getElementById('adminResults').classList.remove('hidden');
-        }).catch(error => {
-            console.error("Error retrieving votes:", error);
         });
     }
 </script>
