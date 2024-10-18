@@ -21,6 +21,9 @@
         button {
             margin-top: 10px;
         }
+        .admin-section {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -76,10 +79,13 @@
     <div id="voteResults"></div>
 </div>
 
-<div id="adminSection" class="hidden">
-    <h2>Admin Results:</h2>
-    <button id="revealVotesButton">Reveal All Votes</button>
-    <div id="adminResults" class="hidden"></div>
+<div class="admin-section">
+    <h2>Admin Section:</h2>
+    <button id="adminLoginButton">Admin Access</button>
+    <div id="adminResults" class="hidden">
+        <h3>All Votes:</h3>
+        <pre id="adminVotes"></pre>
+    </div>
 </div>
 
 <script>
@@ -152,17 +158,26 @@
             }
             resultsDiv.innerHTML += '</ul>';
         }
-
-        // Show admin section
-        document.getElementById('adminSection').classList.remove('hidden');
     }
 
-    // Admin reveal votes
-    document.getElementById('revealVotesButton').addEventListener('click', function() {
+    // Admin access with password
+    document.getElementById('adminLoginButton').addEventListener('click', function() {
+        const password = prompt('Enter admin password:');
+
+        // Admin password check
+        if (password === 'Roy1212') {
+            revealVotes();
+        } else {
+            alert('Incorrect password!');
+        }
+    });
+
+    // Reveal votes for admin
+    function revealVotes() {
         const adminResultsDiv = document.getElementById('adminResults');
         adminResultsDiv.classList.remove('hidden');
-        adminResultsDiv.innerHTML = '<h3>All Votes:</h3><pre>' + JSON.stringify(allVotes, null, 2) + '</pre>';
-    });
+        document.getElementById('adminVotes').innerText = JSON.stringify(allVotes, null, 2);
+    }
 </script>
 
 </body>
