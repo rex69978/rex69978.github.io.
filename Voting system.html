@@ -4,63 +4,141 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Clan Leadership Voting</title>
-    <script>
-        function submitVote() {
-            const formData = new FormData(document.getElementById('votingForm'));
-            fetch('submit_vote.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Vote submitted successfully. Thank you for voting!");
-                    document.getElementById('votingForm').reset();
-                } else {
-                    alert("Error: " + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
-    </script>
+        h1 {
+            color: #333;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
 <h1>Family Clan Leadership Voting</h1>
 
-<form id="votingForm">
-    <!-- Chair Vote -->
-    <label>Chair:</label><br>
-    <input type="radio" name="chair" value="Mrs. R. Kaliwata" required> Mrs. R. Kaliwata<br>
-    <input type="radio" name="chair" value="Mrs. E. Ndhlove"> Mrs. E. Ndhlove<br><br>
+<div id="voteForm">
+    <form id="votingForm">
+        <!-- Chair Vote -->
+        <fieldset>
+            <legend>Chair:</legend>
+            <input type="radio" name="chair" value="Mrs. R. Kaliwata" required> Mrs. R. Kaliwata<br>
+            <input type="radio" name="chair" value="Mrs. E. Ndhlove"> Mrs. E. Ndhlove
+        </fieldset>
 
-    <!-- Secretary Vote -->
-    <label>Secretary:</label><br>
-    <input type="radio" name="secretary" value="Mrs. K. Mkambeni" required> Mrs. K. Mkambeni<br>
-    <input type="radio" name="secretary" value="Mr. R. Jose"> Mr. R. Jose<br><br>
+        <!-- Secretary Vote -->
+        <fieldset>
+            <legend>Secretary:</legend>
+            <input type="radio" name="secretary" value="Mrs. K. Mkambeni" required> Mrs. K. Mkambeni<br>
+            <input type="radio" name="secretary" value="Mr. R. Jose"> Mr. R. Jose
+        </fieldset>
 
-    <!-- Treasurer Vote -->
-    <label>Treasurer:</label><br>
-    <input type="radio" name="treasurer" value="Mr. K. Chakwanira" required> Mr. K. Chakwanira<br>
-    <input type="radio" name="treasurer" value="Ms. M. Gwejula"> Ms. M. Gwejula<br><br>
+        <!-- Treasurer Vote -->
+        <fieldset>
+            <legend>Treasurer:</legend>
+            <input type="radio" name="treasurer" value="Mr. K. Chakwanira" required> Mr. K. Chakwanira<br>
+            <input type="radio" name="treasurer" value="Ms. M. Gwejula"> Ms. M. Gwejula
+        </fieldset>
 
-    <!-- Committee Vote -->
-    <label>Committee:</label><br>
-    <input type="checkbox" name="committee[]" value="Mr. F. Gwejula"> Mr. F. Gwejula<br>
-    <input type="checkbox" name="committee[]" value="Mrs. S. Nkhuwa"> Mrs. S. Nkhuwa<br>
-    <input type="checkbox" name="committee[]" value="Ms. M. Ngozo"> Ms. M. Ngozo<br><br>
+        <!-- Committee Vote -->
+        <fieldset>
+            <legend>Committee:</legend>
+            <input type="checkbox" name="committee" value="Mr. F. Gwejula"> Mr. F. Gwejula<br>
+            <input type="checkbox" name="committee" value="Mrs. S. Nkhuwa"> Mrs. S. Nkhuwa<br>
+            <input type="checkbox" name="committee" value="Ms. M. Ngozo"> Ms. M. Ngozo
+        </fieldset>
 
-    <!-- Discipline Vote -->
-    <label>Discipline:</label><br>
-    <input type="checkbox" name="discipline[]" value="Mrs. T. Jose"> Mrs. T. Jose<br>
-    <input type="checkbox" name="discipline[]" value="Ms. L. Chakwanira"> Ms. L. Chakwanira<br>
-    <input type="checkbox" name="discipline[]" value="Mr. D. Kaliwata"> Mr. D. Kaliwata<br>
-    <input type="checkbox" name="discipline[]" value="Ms. F. Jumbe"> Ms. F. Jumbe<br><br>
+        <!-- Discipline Vote -->
+        <fieldset>
+            <legend>Discipline:</legend>
+            <input type="checkbox" name="discipline" value="Mrs. T. Jose"> Mrs. T. Jose<br>
+            <input type="checkbox" name="discipline" value="Ms. L. Chakwanira"> Ms. L. Chakwanira<br>
+            <input type="checkbox" name="discipline" value="Mr. D. Kaliwata"> Mr. D. Kaliwata<br>
+            <input type="checkbox" name="discipline" value="Ms. F. Jumbe"> Ms. F. Jumbe
+        </fieldset>
 
-    <button type="button" onclick="submitVote()">Submit Vote</button>
-</form>
+        <button type="submit">Submit Vote</button>
+    </form>
+</div>
+
+<div id="results" class="hidden">
+    <h2>Voting Results:</h2>
+    <div id="voteResults"></div>
+</div>
+
+<script>
+    // Initialize the vote counts
+    const voteCounts = {
+        chair: { "Mrs. R. Kaliwata": 0, "Mrs. E. Ndhlove": 0 },
+        secretary: { "Mrs. K. Mkambeni": 0, "Mr. R. Jose": 0 },
+        treasurer: { "Mr. K. Chakwanira": 0, "Ms. M. Gwejula": 0 },
+        committee: { "Mr. F. Gwejula": 0, "Mrs. S. Nkhuwa": 0, "Ms. M. Ngozo": 0 },
+        discipline: { "Mrs. T. Jose": 0, "Ms. L. Chakwanira": 0, "Mr. D. Kaliwata": 0, "Ms. F. Jumbe": 0 }
+    };
+
+    // Check if the user has already voted
+    const hasVoted = localStorage.getItem('hasVoted');
+
+    if (hasVoted) {
+        document.getElementById('voteForm').style.display = 'none';
+        showResults();
+    } else {
+        // Submit Vote Form
+        document.getElementById('votingForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Collect vote data
+            const voteData = {
+                chair: document.querySelector('input[name="chair"]:checked').value,
+                secretary: document.querySelector('input[name="secretary"]:checked').value,
+                treasurer: document.querySelector('input[name="treasurer"]:checked').value,
+                committee: [],
+                discipline: []
+            };
+
+            // Collect checkbox values
+            document.querySelectorAll('input[name="committee"]:checked').forEach(checkbox => voteData.committee.push(checkbox.value));
+            document.querySelectorAll('input[name="discipline"]:checked').forEach(checkbox => voteData.discipline.push(checkbox.value));
+
+            // Increment vote counts
+            voteCounts.chair[voteData.chair]++;
+            voteCounts.secretary[voteData.secretary]++;
+            voteCounts.treasurer[voteData.treasurer]++;
+            voteData.committee.forEach(candidate => voteCounts.committee[candidate]++);
+            voteData.discipline.forEach(candidate => voteCounts.discipline[candidate]++);
+
+            // Mark user as voted (prevent re-voting)
+            localStorage.setItem('hasVoted', 'true');
+
+            // Hide form and show results
+            document.getElementById('voteForm').style.display = 'none';
+            showResults();
+        });
+    }
+
+    function showResults() {
+        document.getElementById('results').classList.remove('hidden');
+        
+        // Display the results
+        const resultsDiv = document.getElementById('voteResults');
+        resultsDiv.innerHTML = '';
+
+        for (let position in voteCounts) {
+            resultsDiv.innerHTML += `<h3>${position.charAt(0).toUpperCase() + position.slice(1)}</h3><ul>`;
+            for (let candidate in voteCounts[position]) {
+                resultsDiv.innerHTML += `<li>${candidate}: ${voteCounts[position][candidate]} votes</li>`;
+            }
+            resultsDiv.innerHTML += '</ul>';
+        }
+    }
+</script>
 
 </body>
 </html>
