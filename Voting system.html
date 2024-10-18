@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Clan Leadership Voting</title>
+    <title>Family Clan Leadership Voting with Firebase</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,19 +12,19 @@
         h1 {
             color: #333;
         }
-        .results, .admin-results {
-            margin-top: 20px;
-        }
-        .hidden {
-            display: none;
-        }
         button {
             margin-top: 10px;
         }
         .admin-section {
             margin-top: 20px;
         }
+        .hidden {
+            display: none;
+        }
     </style>
+    <!-- Firebase Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js"></script>
 </head>
 <body>
 
@@ -50,7 +50,7 @@
         <fieldset>
             <legend>Treasurer:</legend>
             <input type="radio" name="treasurer" value="Mr. K. Chakwanira" required> Mr. K. Chakwanira<br>
-            <input type="radio" name="treasurer" value="Ms. M. Gwejula"> Ms. M. Gwejula
+            <input type="radio" name="treasurer" value="Mrs. M. Gwejula"> Mrs. M. Gwejula
         </fieldset>
 
         <!-- Committee Vote -->
@@ -75,8 +75,7 @@
 </div>
 
 <div id="results" class="hidden">
-    <h2>Voting Results:</h2>
-    <div id="voteResults"></div>
+    <h2>Thank you for voting!</h2>
 </div>
 
 <div class="admin-section">
@@ -89,94 +88,62 @@
 </div>
 
 <script>
-    // Initialize the vote counts and votes
-    const voteCounts = {
-        chair: { "Mrs. R. Kaliwata": 0, "Mrs. E. Ndhlove": 0 },
-        secretary: { "Mrs. K. Mkambeni": 0, "Mr. R. Jose": 0 },
-        treasurer: { "Mr. K. Chakwanira": 0, "Ms. M. Gwejula": 0 },
-        committee: { "Mr. F. Gwejula": 0, "Mrs. S. Nkhuwa": 0, "Ms. M. Ngozo": 0 },
-        discipline: { "Mrs. T. Jose": 0, "Ms. L. Chakwanira": 0, "Mr. D. Kaliwata": 0, "Ms. F. Jumbe": 0 }
-    };
-    
-    // Store all votes
-    const allVotes = [];
+    // Firebase configuration
+    const firebaseConfig = {
+  apiKey: "AIzaSyCH03QLcJGqfHbziZFwSvgc5lecMa0Vt9c",
+  authDomain: "clan-a2f08.firebaseapp.com",
+  projectId: "clan-a2f08",
+  storageBucket: "clan-a2f08.appspot.com",
+  messagingSenderId: "181988994542",
+  appId: "1:181988994542:web:9956d52af3492e1724f2ff",
+  measurementId: "G-Z6NNTBK9DC"
+};
 
-    // Check if the user has already voted
-    const hasVoted = localStorage.getItem('hasVoted');
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-    if (hasVoted) {
-        document.getElementById('voteForm').style.display = 'none';
-        showResults();
-    } else {
-        // Submit Vote Form
-        document.getElementById('votingForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+    // Vote Submission Form Handler
+    document.getElementById('votingForm').addEventListener('submit', function (event) {
+        event.preventDefault();
 
-            // Collect vote data
-            const voteData = {
-                chair: document.querySelector('input[name="chair"]:checked').value,
-                secretary: document.querySelector('input[name="secretary"]:checked').value,
-                treasurer: document.querySelector('input[name="treasurer"]:checked').value,
-                committee: [],
-                discipline: []
-            };
+        const voteData = {
+            chair: document.querySelector('input[name="chair"]:checked').value,
+            secretary: document.querySelector('input[name="secretary"]:checked').value,
+            treasurer: document.querySelector('input[name="treasurer"]:checked').value,
+            committee: [],
+            discipline: []
+        };
 
-            // Collect checkbox values
-            document.querySelectorAll('input[name="committee"]:checked').forEach(checkbox => voteData.committee.push(checkbox.value));
-            document.querySelectorAll('input[name="discipline"]:checked').forEach(checkbox => voteData.discipline.push(checkbox.value));
+        // Get committee and discipline votes
+        document.querySelectorAll('input[name="committee"]:checked').forEach(box => voteData.committee.push(box.value));
+        document.querySelectorAll('input[name="discipline"]:checked').forEach(box => voteData.discipline.push(box.value));
 
-            // Increment vote counts
-            voteCounts.chair[voteData.chair]++;
-            voteCounts.secretary[voteData.secretary]++;
-            voteCounts.treasurer[voteData.treasurer]++;
-            voteData.committee.forEach(candidate => voteCounts.committee[candidate]++);
-            voteData.discipline.forEach(candidate => voteCounts.discipline[candidate]++);
+        // Save votes to Firebase
+        db.ref('votes').push(voteData);
 
-            // Store the vote data
-            allVotes.push(voteData);
-
-            // Mark user as voted (prevent re-voting)
-            localStorage.setItem('hasVoted', 'true');
-
-            // Hide form and show results
-            document.getElementById('voteForm').style.display = 'none';
-            showResults();
-        });
-    }
-
-    function showResults() {
+        // Hide the form and show confirmation
+        document.getElementById('voteForm').classList.add('hidden');
         document.getElementById('results').classList.remove('hidden');
-        
-        // Display the results
-        const resultsDiv = document.getElementById('voteResults');
-        resultsDiv.innerHTML = '';
+    });
 
-        for (let position in voteCounts) {
-            resultsDiv.innerHTML += `<h3>${position.charAt(0).toUpperCase() + position.slice(1)}</h3><ul>`;
-            for (let candidate in voteCounts[position]) {
-                resultsDiv.innerHTML += `<li>${candidate}: ${voteCounts[position][candidate]} votes</li>`;
-            }
-            resultsDiv.innerHTML += '</ul>';
-        }
-    }
-
-    // Admin access with password
-    document.getElementById('adminLoginButton').addEventListener('click', function() {
+    // Admin Access and Display Votes
+    document.getElementById('adminLoginButton').addEventListener('click', function () {
         const password = prompt('Enter admin password:');
 
-        // Admin password check
         if (password === 'Roy1212') {
             revealVotes();
         } else {
-            alert('Incorrect password!');
+            alert('Incorrect password');
         }
     });
 
-    // Reveal votes for admin
     function revealVotes() {
-        const adminResultsDiv = document.getElementById('adminResults');
-        adminResultsDiv.classList.remove('hidden');
-        document.getElementById('adminVotes').innerText = JSON.stringify(allVotes, null, 2);
+        db.ref('votes').once('value', function(snapshot) {
+            const votes = snapshot.val();
+            document.getElementById('adminVotes').textContent = JSON.stringify(votes, null, 2);
+            document.getElementById('adminResults').classList.remove('hidden');
+        });
     }
 </script>
 
