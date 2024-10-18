@@ -8,18 +8,62 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            padding: 0;
+            box-sizing: border-box;
         }
-        h1 {
+
+        h1, h2, h3 {
             color: #333;
         }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        fieldset {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
         button {
             margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
         .admin-section {
             margin-top: 20px;
         }
+
         .hidden {
             display: none;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            body {
+                margin: 10px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+
+            fieldset {
+                padding: 5px;
+            }
         }
     </style>
     <!-- Firebase Configuration -->
@@ -81,7 +125,6 @@
 <div class="admin-section">
     <h2>Admin Section:</h2>
     <button id="adminLoginButton">Admin Access</button>
-    <button id="adminLoginButton2">View All Votes</button>
     <div id="adminResults" class="hidden">
         <h3>All Votes:</h3>
         <pre id="adminVotes"></pre>
@@ -121,31 +164,16 @@
         document.querySelectorAll('input[name="discipline"]:checked').forEach(box => voteData.discipline.push(box.value));
 
         // Save votes to Firebase
-        db.ref('votes').push(voteData)
-            .then(() => {
-                // Hide the form and show confirmation
-                document.getElementById('voteForm').classList.add('hidden');
-                document.getElementById('results').classList.remove('hidden');
-            })
-            .catch((error) => {
-                console.error('Error saving vote:', error);
-            });
+        db.ref('votes').push(voteData);
+
+        // Hide the form and show confirmation
+        document.getElementById('voteForm').classList.add('hidden');
+        document.getElementById('results').classList.remove('hidden');
     });
 
     // Admin Access and Display Votes
     document.getElementById('adminLoginButton').addEventListener('click', function () {
         const password = prompt('Enter admin password:');
-
-        if (password === 'royroy1212') {
-            revealVotes();
-        } else {
-            alert('Incorrect password');
-        }
-    });
-
-    // New button for accessing votes with different password
-    document.getElementById('adminLoginButton2').addEventListener('click', function () {
-        const password = prompt('Enter admin password for full access:');
 
         if (password === 'jumbe2024') {
             revealVotes();
@@ -157,11 +185,7 @@
     function revealVotes() {
         db.ref('votes').once('value', function(snapshot) {
             const votes = snapshot.val();
-            if (votes) {
-                document.getElementById('adminVotes').textContent = JSON.stringify(votes, null, 2);
-            } else {
-                document.getElementById('adminVotes').textContent = 'No votes recorded yet.';
-            }
+            document.getElementById('adminVotes').textContent = votes ? JSON.stringify(votes, null, 2) : 'No votes recorded yet.';
             document.getElementById('adminResults').classList.remove('hidden');
         });
     }
