@@ -21,7 +21,7 @@
         .hidden {
             display: none;
         }
-        /* Make the form 100% responsive */
+        /* Responsive design for smaller screens */
         @media (max-width: 600px) {
             body {
                 font-size: 14px;
@@ -140,6 +140,7 @@
     document.getElementById('adminLoginButton').addEventListener('click', function () {
         const password = prompt('Enter admin password:');
 
+        // Password validation and vote reveal
         if (password === 'jumbe2024') {
             revealVotes();
         } else {
@@ -147,11 +148,21 @@
         }
     });
 
+    // Function to fetch and display votes from Firebase
     function revealVotes() {
         db.ref('votes').once('value', function(snapshot) {
             const votes = snapshot.val();
-            document.getElementById('adminVotes').textContent = JSON.stringify(votes, null, 2);
-            document.getElementById('adminResults').classList.remove('hidden');
+
+            if (votes) {
+                // Displaying the votes in JSON format
+                document.getElementById('adminVotes').textContent = JSON.stringify(votes, null, 2);
+                document.getElementById('adminResults').classList.remove('hidden');
+            } else {
+                document.getElementById('adminVotes').textContent = 'No votes available yet.';
+            }
+        }).catch(function(error) {
+            console.error('Error fetching votes:', error);
+            alert('Error fetching votes. Please try again.');
         });
     }
 </script>
