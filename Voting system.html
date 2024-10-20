@@ -21,9 +21,6 @@
         .hidden {
             display: none;
         }
-        .visible {
-            display: block;
-        }
     </style>
     <!-- Firebase Configuration -->
     <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
@@ -120,11 +117,16 @@
         document.querySelectorAll('input[name="entertainment"]:checked').forEach(box => voteData.entertainment.push(box.value));
 
         // Save votes to Firebase
-        db.ref('votes').push(voteData);
-
-        // Hide the form and show confirmation
-        document.getElementById('voteForm').classList.add('hidden');
-        document.getElementById('results').classList.remove('hidden');
+        db.ref('votes').push(voteData)
+            .then(() => {
+                console.log("Vote submitted:", voteData); // Log successful submission
+                // Hide the form and show confirmation
+                document.getElementById('voteForm').classList.add('hidden');
+                document.getElementById('results').classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error("Error saving vote:", error); // Log any error
+            });
     });
 
     // Admin Access and Display Votes
@@ -139,11 +141,19 @@
     });
 
     function revealVotes() {
-        db.ref('votes').once('value', function(snapshot) {
-            const votes = snapshot.val();
-            document.getElementById('adminVotes').textContent = JSON.stringify(votes, null, 2);
-            document.getElementById('adminResults').classList.remove('hidden');
-        });
+        db.ref('votes').once('value')
+            .then(snapshot => {
+                const votes = snapshot.val();
+                if (votes) {
+                    document.getElementById('adminVotes').textContent = JSON.stringify(votes, null, 2);
+                } else {
+                    document.getElementById('adminVotes').textContent = "No votes yet.";
+                }
+                document.getElementById('adminResults').classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error("Error retrieving votes:", error); // Log any error
+            });
     }
 </script>
 
