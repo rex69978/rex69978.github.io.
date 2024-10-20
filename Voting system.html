@@ -3,32 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Clan Leadership Voting</title>
+    <title>Family Clan Voting System</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            padding: 0;
+            box-sizing: border-box;
         }
-        h1 {
+        h1, h2 {
             color: #333;
         }
-        button {
-            margin-top: 10px;
+        fieldset {
+            margin-bottom: 20px;
         }
-        .admin-section {
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .admin-section, #voteForm {
             margin-top: 20px;
         }
         .hidden {
             display: none;
-        }
-        /* Responsive design for smaller screens */
-        @media (max-width: 600px) {
-            body {
-                font-size: 14px;
-            }
-            button {
-                width: 100%;
-            }
         }
     </style>
     <!-- Firebase Configuration -->
@@ -41,42 +45,40 @@
 
 <div id="voteForm">
     <form id="votingForm">
-        <!-- Chair Vote -->
+        <!-- Chairperson Vote -->
         <fieldset>
-            <legend>Chair:</legend>
-            <input type="radio" name="chair" value="Mrs. R. Kaliwata" required> Mrs. R. Kaliwata<br>
-            <input type="radio" name="chair" value="Mrs. E. Ndhlove"> Mrs. E. Ndhlove
+            <legend>Chairperson:</legend>
+            <input type="radio" name="chairperson" value="Mr. F Gwejula" required> Mr. F Gwejula<br>
+            <input type="radio" name="chairperson" value="Mrs. R Kaliwata"> Mrs. R Kaliwata<br>
+            <input type="radio" name="chairperson" value="Mr. K Chakwanira"> Mr. K Chakwanira
         </fieldset>
 
         <!-- Secretary Vote -->
         <fieldset>
             <legend>Secretary:</legend>
-            <input type="radio" name="secretary" value="Mrs. K. Mkambeni" required> Mrs. K. Mkambeni<br>
-            <input type="radio" name="secretary" value="Mr. R. Jose"> Mr. R. Jose
+            <input type="radio" name="secretary" value="Mrs. J Joaki" required> Mrs. J Joaki<br>
+            <input type="radio" name="secretary" value="Ms. C Gwejula"> Ms. C Gwejula<br>
+            <input type="radio" name="secretary" value="Mrs. M Ngozo"> Mrs. M Ngozo
         </fieldset>
 
         <!-- Treasurer Vote -->
         <fieldset>
             <legend>Treasurer:</legend>
-            <input type="radio" name="treasurer" value="Mr. K. Chakwanira" required> Mr. K. Chakwanira<br>
-            <input type="radio" name="treasurer" value="Mrs. M. Gwejula"> Mrs. M. Gwejula
+            <input type="radio" name="treasurer" value="Ms. D Chakwanira" required> Ms. D Chakwanira<br>
+            <input type="radio" name="treasurer" value="Mrs. J Jose"> Mrs. J Jose<br>
+            <input type="radio" name="treasurer" value="Mrs. E Ndhlovu"> Mrs. E Ndhlovu
         </fieldset>
 
-        <!-- Committee Vote -->
+        <!-- Entertainment/Welfare Vote -->
         <fieldset>
-            <legend>Committee:</legend>
-            <input type="checkbox" name="committee" value="Mr. F. Gwejula"> Mr. F. Gwejula<br>
-            <input type="checkbox" name="committee" value="Mrs. S. Nkhuwa"> Mrs. S. Nkhuwa<br>
-            <input type="checkbox" name="committee" value="Ms. M. Ngozo"> Ms. M. Ngozo
-        </fieldset>
-
-        <!-- Discipline Vote -->
-        <fieldset>
-            <legend>Discipline:</legend>
-            <input type="checkbox" name="discipline" value="Mrs. T. Jose"> Mrs. T. Jose<br>
-            <input type="checkbox" name="discipline" value="Ms. L. Chakwanira"> Ms. L. Chakwanira<br>
-            <input type="checkbox" name="discipline" value="Mr. D. Kaliwata"> Mr. D. Kaliwata<br>
-            <input type="checkbox" name="discipline" value="Ms. F. Jumbe"> Ms. F. Jumbe
+            <legend>Entertainment/Welfare:</legend>
+            <input type="checkbox" name="entertainment" value="Mr. TO Mkambeni"> Mr. TO Mkambeni<br>
+            <input type="checkbox" name="entertainment" value="Ms. N Jumbe"> Ms. N Jumbe<br>
+            <input type="checkbox" name="entertainment" value="Ms. M Gwejula"> Ms. M Gwejula<br>
+            <input type="checkbox" name="entertainment" value="Mr. M Ndhlovu"> Mr. M Ndhlovu<br>
+            <input type="checkbox" name="entertainment" value="Mrs. S Nkhuwa"> Mrs. S Nkhuwa<br>
+            <input type="checkbox" name="entertainment" value="Mr. D Kaliwata"> Mr. D Kaliwata<br>
+            <input type="checkbox" name="entertainment" value="Ms. F Jumbe"> Ms. F Jumbe
         </fieldset>
 
         <button type="submit">Submit Vote</button>
@@ -88,10 +90,10 @@
 </div>
 
 <div class="admin-section">
-    <h2>Admin Section:</h2>
+    <h2>Admin Section</h2>
     <button id="adminLoginButton">Admin Access</button>
     <div id="adminResults" class="hidden">
-        <h3>All Votes:</h3>
+        <h3>Voting Results:</h3>
         <pre id="adminVotes"></pre>
     </div>
 </div>
@@ -99,76 +101,66 @@
 <script>
     // Firebase configuration
     const firebaseConfig = {
-        apiKey: "AIzaSyCH03QLcJGqfHbziZFwSvgc5lecMa0Vt9c",
-        authDomain: "clan-a2f08.firebaseapp.com",
-        projectId: "clan-a2f08",
-        storageBucket: "clan-a2f08.appspot.com",
-        messagingSenderId: "181988994542",
-        appId: "1:181988994542:web:9956d52af3492e1724f2ff",
-        measurementId: "G-Z6NNTBK9DC"
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
     };
 
     // Initialize Firebase
     const app = firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // Vote Submission Form Handler
+    // Vote Submission Handler
     document.getElementById('votingForm').addEventListener('submit', function (event) {
         event.preventDefault();
 
         const voteData = {
-            chair: document.querySelector('input[name="chair"]:checked').value,
+            chairperson: document.querySelector('input[name="chairperson"]:checked').value,
             secretary: document.querySelector('input[name="secretary"]:checked').value,
             treasurer: document.querySelector('input[name="treasurer"]:checked').value,
-            committee: [],
-            discipline: []
+            entertainment: []
         };
 
-        // Get committee and discipline votes
-        document.querySelectorAll('input[name="committee"]:checked').forEach(box => voteData.committee.push(box.value));
-        document.querySelectorAll('input[name="discipline"]:checked').forEach(box => voteData.discipline.push(box.value));
+        // Get entertainment votes
+        document.querySelectorAll('input[name="entertainment"]:checked').forEach(box => voteData.entertainment.push(box.value));
 
         // Save votes to Firebase
         db.ref('votes').push(voteData);
 
-        // Hide the form and show confirmation
+        // Hide form and show results
         document.getElementById('voteForm').classList.add('hidden');
         document.getElementById('results').classList.remove('hidden');
     });
 
-    // Admin Access and Display Votes
+    // Admin Access and View Votes
     document.getElementById('adminLoginButton').addEventListener('click', function () {
         const password = prompt('Enter admin password:');
-
-        // Password validation and vote reveal
-        if (password === 'jumbe2024') {
+        if (password === 'Jumbe1212') {
             revealVotes();
         } else {
             alert('Incorrect password');
         }
     });
 
-    // Function to fetch and display votes from Firebase
     function revealVotes() {
         db.ref('votes').once('value', function(snapshot) {
             const votes = snapshot.val();
-
-            if (votes) {
-                // Displaying the votes in JSON format
-                document.getElementById('adminVotes').textContent = JSON.stringify(votes, null, 2);
-                document.getElementById('adminResults').classList.remove('hidden');
-            } else {
-                document.getElementById('adminVotes').textContent = 'No votes available yet.';
-            }
-        }).catch(function(error) {
-            console.error('Error fetching votes:', error);
-            alert('Error fetching votes. Please try again.');
+            document.getElementById('adminVotes').textContent = JSON.stringify(votes, null, 2);
+            document.getElementById('adminResults').classList.remove('hidden');
         });
     }
+
+    // Close voting after 12 hours
+    setTimeout(() => {
+        document.getElementById('votingForm').classList.add('hidden');
+        document.getElementById('results').classList.remove('hidden');
+        document.getElementById('results').innerHTML = "<h2>Voting has ended.</h2>";
+    }, 12 * 60 * 60 * 1000); // 12 hours in milliseconds
 </script>
 
 </body>
 </html>
-
-
-    
