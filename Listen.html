@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Library</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+  <style>
+    #music-list {
+      list-style-type: none;
+    }
+    #music-list li {
+      margin: 10px 0;
+    }
+  </style>
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const musicList = document.getElementById('music-list');
+
+      // Get the list of music files
+      storage.ref('music').listAll().then((result) => {
+        result.items.forEach((fileRef) => {
+          fileRef.getDownloadURL().then((url) => {
+            // Create list item
+            const li = document.createElement('li');
+            li.innerHTML = `
+              <audio controls>
+                <source src="${url}" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+              <a href="${url}" download>Download</a>
+            `;
+            musicList.appendChild(li);
+          });
+        });
+      }).catch((error) => {
+        console.error('Error fetching music files:', error);
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Music Library</h1>
+  <ul id="music-list"></ul>
+  <a href="adminurban.html">Admin Page</a>
+</body>
+</html>
