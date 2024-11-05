@@ -1,31 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Control Panel</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us for Promo- Urban Music Promo</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .contact-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-link {
+            color: #fff;
+            font-size: 1.5rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s, transform 0.2s;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            transform: scale(1.1);
+        }
+
+        /* Social Icon Colors */
+        .facebook { background-color: #3b5998; }
+        .youtube { background-color: #ff0000; }
+        .whatsapp { background-color: #25D366; }
+    </style>
 </head>
 <body>
-<div class="container">
-<header>
-<h1>Admin Control Panel</h1>
-</header>
-<main>
-<section class="upload-section">
-<h2>Upload Files</h2>
-<form id="upload-form">
-<input type="file" id="file-input" multiple>
-<button id="upload-button">Upload</button>
-</form>
-<div id="uploaded-files"></div>
-</section>
-<section class="file-manager-section">
-<h2>File Manager</h2>
-<ul id="file-list"></ul>
-</section>
-</main>
-</div>
-<script src="admin-script.js"></script>
+
+    <div class="contact-container">
+        <h2>Contact Us</h2>
+        <p>Connect with us on social media:</p>
+
+        <div class="social-links">
+            <a href="https://facebook.com/UrbanMusicPromo" target="_blank" class="social-link facebook" title="Facebook">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/facebook--v1.png" alt="Facebook" style="width: 25px; height: 25px;">
+            </a>
+            <a href="https://youtube.com/URBANMUSICPROMO" target="_blank" class="social-link youtube" title="YouTube">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/youtube-play.png" alt="YouTube" style="width: 25px; height: 25px;">
+            </a>
+            <a href="https://wa.me/099253112" target="_blank" class="social-link whatsapp" title="WhatsApp">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/whatsapp--v1.png" alt="WhatsApp" style="width: 25px; height: 25px;">
+            </a>
+        </div>
+    </div>
+
 </body>
 </html>
