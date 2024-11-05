@@ -1,62 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Music Library</title>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
-  <style>
-    #music-list {
-      list-style-type: none;
-    }
-    #music-list li {
-      margin: 10px 0;
-    }
-  </style>
-  <script>
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Music Promo</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
 
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const storage = firebase.storage();
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #181818;
+            color: #f1f1f1;
+        }
+        body.dark-mode a {
+            color: #1db954;
+        }
+        
+        /* General Styles */
+        body {
+            background-color: #f3f3f3;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const musicList = document.getElementById('music-list');
+        /* Main Container */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
 
-      // Get the list of music files
-      storage.ref('music').listAll().then((result) => {
-        result.items.forEach((fileRef) => {
-          fileRef.getDownloadURL().then((url) => {
-            // Create list item
-            const li = document.createElement('li');
-            li.innerHTML = `
-              <audio controls>
-                <source src="${url}" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
-              <a href="${url}" download>Download</a>
-            `;
-            musicList.appendChild(li);
-          });
-        });
-      }).catch((error) => {
-        console.error('Error fetching music files:', error);
-      });
-    });
-  </script>
+        /* Header */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #1db954;
+        }
+
+        /* Admin Section */
+        #admin-section {
+            margin: 20px 0;
+        }
+
+        #upload-form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label {
+            cursor: pointer;
+            padding: 10px 20px;
+            border: 2px solid #1db954;
+            border-radius: 5px;
+            color: #1db954;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        label:hover {
+            background-color: #1db954;
+            color: #fff;
+        }
+
+        /* Music List */
+        #music-list {
+            margin-top: 30px;
+        }
+
+        #musicFiles {
+            list-style: none;
+        }
+
+        #musicFiles li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #musicFiles li a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        /* Toggle Button */
+        .toggle-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #333;
+            border: none;
+            border-radius: 15px;
+            width: 50px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 5px;
+        }
+
+        .toggle-button .circle {
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        body.dark-mode .toggle-button {
+            background: #1db954;
+        }
+
+        body.dark-mode .toggle-button .circle {
+            transform: translateX(25px);
+        }
+    </style>
 </head>
 <body>
-  <h1>Music Library</h1>
-  <ul id="music-list"></ul>
-  <a href="adminurban.html">Admin Page</a>
+    <div class="container">
+        <h1>Urban Music Promo</h1>
+        
+        <!-- Dark Mode Toggle -->
+        <button class="toggle-button" onclick="toggleDarkMode()">
+            <div class="circle"></div>
+        </button>
+        
+        <!-- Admin Upload Section -->
+        <div id="admin-section">
+            <h2>Admin Upload</h2>
+            <form id="upload-form">
+                <label for="musicFile">Choose File</label>
+                <input type="file" id="musicFile" accept="audio/*">
+                <button type="button" onclick="uploadMusic()">Upload</button>
+            </form>
+        </div>
+        
+        <!-- Music List Section -->
+        <div id="music-list">
+            <h2>Available Music</h2>
+            <ul id="musicFiles"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Placeholder API URL
+        const API_URL = "YOUR_API_URL";  // Replace with your serverless backend endpoint
+
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Function to upload music
+        async function uploadMusic() {
+            const fileInput = document.getElementById("musicFile");
+            const file = fileInput.files[0];
+
+            if (file) {
+                const formData = new FormData();
+                formData.append("musicFile", file);
+
+                try {
+                    const response = await fetch(`${API_URL}/upload`, {
+                        method: "POST",
+                        body: formData
+                    });
+                    
+                    if (response.ok) {
+                        alert("File uploaded successfully!");
+                        listMusicFiles();
+                    } else {
+                        alert("Failed to upload file.");
+                    }
+                } catch (error) {
+                    console.error("Error uploading file:", error);
+                    alert("Error uploading file.");
+                }
+            } else {
+                alert("Please select a file to upload.");
+            }
+        }
+
+        // Function to list music files
+        async function listMusicFiles() {
+            try {
+                const response = await fetch(`${API_URL}/list`);
+                const files = await response.json();
+                
+                const musicFiles = document.getElementById("musicFiles");
+                musicFiles.innerHTML = ""; // Clear current list
+
+                files.forEach(file => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<a href="${file.url}" download>${file.name}</a>`;
+                    musicFiles.appendChild(li);
+                });
+            } catch (error) {
+                console.error("Error listing music files:", error);
+                alert("Error loading music files.");
+            }
+        }
+
+        // Initial load of music files
+        document.addEventListener("DOMContentLoaded", listMusicFiles);
+    </script>
 </body>
 </html>
