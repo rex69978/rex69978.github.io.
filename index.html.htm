@@ -45,6 +45,9 @@
             padding: 20px 40px;
             z-index: 1000;
             transition: background-color 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         header a {
@@ -59,14 +62,6 @@
 
         header a:hover {
             color: #FFD700;
-        }
-
-        /* Logo Styles */
-        header img {
-            max-width: 150px; /* Adjust this size */
-            height: auto;
-            display: block;
-            margin: 20px auto;
         }
 
         nav ul {
@@ -259,10 +254,6 @@
             box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.7);
         }
 
-        body.dark-mode header img {
-            filter: brightness(0) invert(1);
-        }
-
         /* Glow Effect */
         body.dark-mode #hero h1 {
             text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
@@ -275,6 +266,25 @@
 
         body.dark-mode button:hover {
             background-color: #e67e22;
+            transform: scale(1.1);
+        }
+
+        /* Dark Mode Toggle Button Styling */
+        .dark-mode-toggle {
+            background-color: #333;
+            color: #fff;
+            border: 2px solid #FFD700;
+            padding: 10px 20px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: background-color 0.3s, transform 0.3s ease;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: #FFD700;
+            color: #333;
             transform: scale(1.1);
         }
 
@@ -318,8 +328,7 @@
                 <li><a href="#testimonies">Testimonies</a></li>
             </ul>
         </nav>
-        <img src="logo.png" alt="Logo" />
-        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
     </header>
 
     <!-- Hero Section -->
