@@ -10,13 +10,25 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
 
         body {
-            background-color: #f9f9f9;
+            background-color: #f8f8f8;
             color: #333;
-            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* Global Typography */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #666;
             line-height: 1.6;
         }
 
@@ -26,55 +38,39 @@
             top: 0;
             left: 0;
             width: 100%;
-            background: #2c3e50;
-            color: white;
-            padding: 15px 30px;
+            background-color: rgba(40, 40, 40, 0.8);
+            padding: 20px 40px;
             z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
+        header a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            margin: 0 20px;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        header a:hover {
+            color: #FFD700;
         }
 
         nav ul {
             display: flex;
             justify-content: center;
             list-style-type: none;
-            margin-top: 10px;
-        }
-
-        nav ul li {
-            margin: 0 20px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            padding: 10px 20px;
-            transition: all 0.3s;
-        }
-
-        nav ul li a:hover {
-            background-color: #FFD700; /* Gold */
-            border-radius: 5px;
-            color: #2c3e50;
         }
 
         /* Hero Section */
         #hero {
-            background-image: url('https://via.placeholder.com/1600x800'); /* Replace with a hero image */
+            height: 100vh;
+            background-image: url('https://via.placeholder.com/1600x900'); /* Replace with your hero image */
             background-size: cover;
             background-position: center;
-            height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
@@ -85,25 +81,27 @@
 
         #hero h1 {
             font-size: 4rem;
-            font-weight: bold;
             margin-bottom: 20px;
+            text-transform: uppercase;
+            font-family: 'Playfair Display', serif;
         }
 
         #hero p {
             font-size: 1.25rem;
             margin-bottom: 30px;
-            line-height: 1.8;
+            font-weight: 400;
         }
 
         #hero button {
             background-color: #FFD700;
-            padding: 12px 40px;
-            border: none;
+            padding: 15px 40px;
             font-size: 1.2rem;
-            font-weight: bold;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
             color: #2c3e50;
             cursor: pointer;
-            border-radius: 30px;
+            text-transform: uppercase;
             transition: all 0.3s ease;
         }
 
@@ -114,22 +112,22 @@
 
         /* Section Styles */
         section {
-            padding: 60px 20px;
+            padding: 80px 20px;
             text-align: center;
+            color: #333;
         }
 
         section h2 {
-            font-size: 2.5rem;
-            color: #2c3e50;
-            margin-bottom: 20px;
+            font-size: 2.8rem;
+            margin-bottom: 30px;
             text-transform: uppercase;
-            font-weight: 600;
         }
 
         section p {
             font-size: 1.15rem;
-            color: #555;
-            margin-bottom: 30px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            font-weight: 400;
         }
 
         /* Ministry Section */
@@ -138,13 +136,13 @@
             justify-content: center;
             gap: 30px;
             flex-wrap: wrap;
-            margin-top: 20px;
+            margin-top: 40px;
         }
 
         #ministry ul li {
             background-color: #2c3e50;
             color: white;
-            padding: 15px 30px;
+            padding: 20px 30px;
             border-radius: 30px;
             font-size: 1.2rem;
             font-weight: 500;
@@ -157,48 +155,70 @@
             transform: scale(1.05);
         }
 
-        /* Testimonies Section */
-        #testimonies ul {
-            margin-top: 30px;
+        /* Events Section */
+        #events ul {
             list-style-type: none;
+            padding: 0;
+            margin-top: 30px;
         }
 
-        #testimonies ul li {
+        #events ul li {
             font-size: 1.1rem;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: #f2f2f2;
+            border-left: 5px solid #FFD700;
+            transition: all 0.3s ease;
+        }
+
+        #events ul li:hover {
+            background-color: #e67e22;
+            transform: translateX(10px);
+        }
+
+        /* Testimonies Section */
+        #testimonies blockquote {
+            font-size: 1.2rem;
             font-style: italic;
             color: #555;
-            margin-bottom: 20px;
+            border-left: 5px solid #FFD700;
+            padding-left: 20px;
+            margin: 20px 0;
+        }
+
+        #testimonies blockquote::before {
+            content: "“";
+            font-size: 2rem;
+            color: #FFD700;
+            margin-right: 10px;
         }
 
         /* Footer */
         footer {
             background-color: #2c3e50;
             color: white;
-            padding: 30px 20px;
+            padding: 30px 0;
             text-align: center;
-            font-size: 1rem;
-            box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 1.1rem;
         }
 
         footer p {
-            margin: 0;
+            margin-bottom: 20px;
         }
 
         footer nav ul {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+            gap: 30px;
             list-style-type: none;
-        }
-
-        footer nav ul li {
-            margin: 0 20px;
         }
 
         footer nav ul li a {
             color: white;
-            font-size: 1rem;
             text-decoration: none;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             transition: color 0.3s;
         }
 
@@ -209,41 +229,33 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             #hero h1 {
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
 
-            #hero p, section p {
+            #hero p {
                 font-size: 1rem;
             }
 
-            nav ul {
-                flex-direction: column;
-                align-items: center;
+            section h2 {
+                font-size: 2rem;
             }
 
-            nav ul li {
-                margin: 10px 0;
+            #ministry ul {
+                flex-direction: column;
+                gap: 15px;
             }
 
             footer nav ul {
                 flex-direction: column;
                 align-items: center;
             }
-
-            footer nav ul li {
-                margin: 10px 0;
-            }
-
-            #ministry ul {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
 <body>
+
     <!-- Header -->
     <header>
-        <h1>Prophetic Embassy Anointed Church</h1>
         <nav>
             <ul>
                 <li><a href="#hero">Home</a></li>
@@ -251,7 +263,6 @@
                 <li><a href="#ministry">Ministry</a></li>
                 <li><a href="#events">Events</a></li>
                 <li><a href="#donate">Donate</a></li>
-                <li><a href="#live-services">Live Services</a></li>
                 <li><a href="#testimonies">Testimonies</a></li>
             </ul>
         </nav>
@@ -259,21 +270,23 @@
 
     <!-- Hero Section -->
     <section id="hero">
-        <h1>Welcome to Prophetic Embassy Anointed Church</h1>
-        <p>Join us as we spread the Gospel of Jesus Christ across the globe.</p>
-        <button>Get Involved</button>
+        <div>
+            <h1>Welcome to Prophetic Embassy Anointed Church</h1>
+            <p>Join us in spreading the message of hope and salvation to the nations.</p>
+            <button>Get Involved</button>
+        </div>
     </section>
 
     <!-- About Section -->
     <section id="about">
         <h2>About Us</h2>
-        <p>We are a global Christian community committed to empowering believers and reaching out to humanity.</p>
+        <p>We are a global community of believers, committed to spreading the message of Jesus Christ and empowering people to live a life of purpose.</p>
     </section>
 
     <!-- Ministry Section -->
     <section id="ministry">
         <h2>Our Ministries</h2>
-        <p>We have a wide range of ministries for all ages and groups within our community.</p>
+        <p>We offer a variety of ministries for all ages, with something for everyone to be part of.</p>
         <ul>
             <li>Children's Ministry</li>
             <li>Youth Ministry</li>
@@ -285,24 +298,21 @@
     <!-- Events Section -->
     <section id="events">
         <h2>Upcoming Events</h2>
-        <p>We host exciting events throughout the year to strengthen our community.</p>
+        <p>We host several events and activities throughout the year to strengthen our community.</p>
         <ul>
-            <li>Crusades</li>
-            <li>Conferences</li>
-            <li>Workshops</li>
-            <li>Prayer Meetings</li>
+            <li>Annual Crusades</li>
+            <li>Church Conferences</li>
+            <li>Youth Workshops</li>
+            <li>Prayer and Healing Services</li>
         </ul>
     </section>
 
     <!-- Testimonies Section -->
     <section id="testimonies">
         <h2>Testimonies</h2>
-        <p>See how lives are being changed by the power of God.</p>
-        <ul>
-            <li>"My life was transformed through prayer and fellowship at the church!"</li>
-            <li>"The youth ministry has helped me grow in faith and purpose."</li>
-            <li>"I received healing through the ministry's prayer services!"</li>
-        </ul>
+        <p>Hear powerful stories of lives transformed by the power of God.</p>
+        <blockquote>"My life has been changed completely. The prayers and guidance from the church have helped me overcome many challenges."</blockquote>
+        <blockquote>"The youth ministry has been instrumental in guiding me through the toughest times in my life."</blockquote>
     </section>
 
     <!-- Footer Section -->
@@ -315,10 +325,10 @@
                 <li><a href="#ministry">Ministry</a></li>
                 <li><a href="#events">Events</a></li>
                 <li><a href="#donate">Donate</a></li>
-                <li><a href="#live-services">Live Services</a></li>
                 <li><a href="#testimonies">Testimonies</a></li>
             </ul>
         </nav>
     </footer>
 </body>
 </html>
+
