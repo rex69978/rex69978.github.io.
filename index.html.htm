@@ -17,6 +17,7 @@
             background-color: #f8f8f8;
             color: #333;
             line-height: 1.7;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         /* Global Typography */
@@ -24,12 +25,14 @@
             font-family: 'Playfair Display', serif;
             font-weight: 600;
             color: #2c3e50;
+            transition: color 0.3s;
         }
 
         p {
             font-size: 1.1rem;
             color: #666;
             line-height: 1.6;
+            transition: color 0.3s;
         }
 
         /* Header */
@@ -56,6 +59,14 @@
 
         header a:hover {
             color: #FFD700;
+        }
+
+        /* Logo Styles */
+        header img {
+            max-width: 150px; /* Adjust this size */
+            height: auto;
+            display: block;
+            margin: 20px auto;
         }
 
         nav ul {
@@ -226,6 +237,47 @@
             color: #FFD700;
         }
 
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #333;
+            color: #f8f8f8;
+        }
+
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode p {
+            color: #f8f8f8;
+        }
+
+        body.dark-mode header {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        body.dark-mode header a {
+            color: #fff;
+        }
+
+        body.dark-mode #hero {
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.7);
+        }
+
+        body.dark-mode header img {
+            filter: brightness(0) invert(1);
+        }
+
+        /* Glow Effect */
+        body.dark-mode #hero h1 {
+            text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
+        }
+
+        body.dark-mode button {
+            background-color: #FFD700;
+            color: #2c3e50;
+        }
+
+        body.dark-mode button:hover {
+            background-color: #e67e22;
+            transform: scale(1.1);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             #hero h1 {
@@ -267,6 +319,7 @@
             </ul>
         </nav>
         <img src="logo.png" alt="Logo" />
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
     </header>
 
     <!-- Hero Section -->
@@ -330,6 +383,12 @@
             </ul>
         </nav>
     </footer>
+
+    <!-- Dark Mode Toggle Script -->
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
 </body>
 </html>
-
