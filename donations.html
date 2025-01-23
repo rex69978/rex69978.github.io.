@@ -218,7 +218,7 @@
             <h3>Make a Donation</h3>
             <p>Please fill out the form below to contribute to our ministry. Your support is invaluable to us.</p>
             
-            <form action="https://wa.me/+260971578499" method="GET" target="_blank" onsubmit="return showConfirmation()">
+            <form id="donation-form" action="https://wa.me/+260971578499" method="GET" target="_blank" onsubmit="return showConfirmation()">
                 <label for="donor-name">Your Name</label>
                 <input type="text" id="donor-name" name="donor-name" placeholder="Your Name" required>
 
@@ -234,11 +234,25 @@
                     <option value="GBP">British Pound (GBP)</option>
                 </select>
 
+                <label for="designation">Designation</label>
+                <select id="designation" name="designation" required>
+                    <option value="Tithe">Tithe</option>
+                    <option value="Giving">Giving</option>
+                    <option value="Seed">Seed</option>
+                    <option value="Church Building">Church Building</option>
+                    <option value="Charity">Charity</option>
+                </select>
+
                 <label for="donation-message">Message (Optional)</label>
                 <textarea id="donation-message" name="donation-message" placeholder="Message (Optional)"></textarea>
 
                 <input type="submit" value="Submit Donation">
             </form>
+
+            <div id="thank-you-message" style="display:none; background-color: #1e1e1e; padding: 20px; border-radius: 10px; text-align: center; margin-top: 30px;">
+                <h3 style="color: #ffd700;">Thank You for Your Donation!</h3>
+                <p style="color: #bbb;">We appreciate your generosity in supporting our ministry. A confirmation message will be sent to you shortly. God bless you!</p>
+            </div>
         </div>
 
         <!-- Payment Info Section -->
@@ -267,8 +281,12 @@
     <!-- Payment Pop-up Script -->
     <script>
         function showConfirmation() {
-            alert("Thank you for your donation! A confirmation message will be sent to you shortly.");
-            return true; // Allow form submission
+            // Hide the donation form and show the thank you message
+            document.getElementById('donation-form').style.display = 'none';
+            document.getElementById('thank-you-message').style.display = 'block';
+
+            // Allow form submission to WhatsApp
+            return true; 
         }
 
         function processPayment() {
