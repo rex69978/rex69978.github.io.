@@ -21,18 +21,16 @@
         }
 
         /* Global Typography */
-        h1, h2, h3 {
+        h1, h2, h3, h4 {
             font-family: 'Playfair Display', serif;
             font-weight: 600;
             color: #2c3e50;
-            transition: color 0.3s;
         }
 
         p {
             font-size: 1.1rem;
             color: #666;
             line-height: 1.6;
-            transition: color 0.3s;
         }
 
         /* Section Styles */
@@ -43,14 +41,15 @@
         }
 
         section h2 {
-            font-size: 2.8rem;
+            font-size: 3rem;
             margin-bottom: 30px;
             text-transform: uppercase;
+            color: #2c3e50;
         }
 
         section p {
             font-size: 1.15rem;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto 30px;
             font-weight: 400;
         }
@@ -61,7 +60,7 @@
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
             text-align: left;
         }
@@ -79,7 +78,7 @@
 
         .donation-form input, .donation-form select, .donation-form textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -101,7 +100,7 @@
             background-color: #e67e22;
         }
 
-        /* Payment Gateway Section */
+        /* Payment Info Section */
         .payment-info {
             background-color: #f9f9f9;
             padding: 40px;
@@ -112,13 +111,37 @@
         }
 
         .payment-info h4 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 20px;
+            color: #2c3e50;
         }
 
         .payment-info p {
             font-size: 1.1rem;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Payment Button Section */
+        .payment-options {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .payment-options button {
+            background-color: #e67e22;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-options button:hover {
+            background-color: #FFD700;
+            transform: scale(1.05);
         }
 
         /* Responsive Design */
@@ -130,6 +153,11 @@
             .donation-form {
                 padding: 30px;
             }
+
+            .payment-options {
+                flex-direction: column;
+                gap: 20px;
+            }
         }
     </style>
 </head>
@@ -139,12 +167,9 @@
     <header>
         <nav>
             <ul>
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#ministry">Ministry</a></li>
-                <li><a href="#events">Events</a></li>
-                <li><a href="#donate">Donate</a></li>
-                <li><a href="#testimonies">Testimonies</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="donations.html">Donate</a></li>
+                <!-- Add other links as necessary -->
             </ul>
         </nav>
     </header>
@@ -152,13 +177,13 @@
     <!-- Donation Section -->
     <section id="donate">
         <h2>Support Our Ministry</h2>
-        <p>Your donation makes a difference! Thank you for considering a gift to the Prophetic Embassy Anointed Church. Your support helps us continue to spread the message of hope and salvation to the nations.</p>
+        <p>Your donation enables us to expand our reach, support outreach programs, and continue spreading the message of hope. We appreciate your generosity in helping us fulfill God's calling.</p>
 
         <div class="donation-form">
             <h3>Make a Donation</h3>
-            <p>Please fill out the form below to donate securely to our ministry.</p>
+            <p>Please fill out the form below to contribute to our ministry. Your support is invaluable to us.</p>
             
-            <form action="#" method="POST">
+            <form action="#" method="POST" onsubmit="return showConfirmation()">
                 <label for="donor-name">Your Name</label>
                 <input type="text" id="donor-name" name="donor-name" placeholder="Your Name" required>
 
@@ -175,13 +200,18 @@
         <!-- Payment Info Section -->
         <div class="payment-info">
             <h4>Other Ways to Donate</h4>
-            <p>If you prefer to donate via bank transfer, please use the following information:</p>
+            <p>If you prefer to donate via mobile transfer, please use the following numbers:</p>
             
-            <p><strong>Bank Name:</strong> ABSA </p>
-            <p><strong>Account Name:</strong> ABRAHAM KASAWA </p>
-            <p><strong>Account Number:</strong> 051-1110823</p>
+            <p><strong>Mobile Number (Zambia):</strong> +260971578499</p>
+            <p><strong>Mobile Number (Botswana):</strong> +26778757183</p>
 
-            <p>Your donation will be put to good use, supporting church activities, outreach programs, and the continued work of the ministry. Thank you for your generosity and support.</p>
+            <p>Your donation will go towards supporting our church's outreach programs, events, and ministries. We are grateful for your contribution in advancing the work of the kingdom.</p>
+
+            <!-- Payment Options -->
+            <div class="payment-options">
+                <button onclick="processPayment()">Donate via Mobile Transfer</button>
+                <button onclick="processPayment()">Donate via Bank Transfer</button>
+            </div>
         </div>
     </section>
 
@@ -190,15 +220,24 @@
         <p>&copy; 2023 Prophetic Embassy Anointed Church</p>
         <nav>
             <ul>
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#ministry">Ministry</a></li>
-                <li><a href="#events">Events</a></li>
-                <li><a href="#donate">Donate</a></li>
-                <li><a href="#testimonies">Testimonies</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="donations.html">Donate</a></li>
+                <!-- Add other links as necessary -->
             </ul>
         </nav>
     </footer>
+
+    <!-- Payment Pop-up Script -->
+    <script>
+        function showConfirmation() {
+            alert("Thank you for your donation! We will send a confirmation to your mobile number.");
+            return false; // Prevent form submission for demonstration
+        }
+
+        function processPayment() {
+            alert("Thank you for your donation! Please complete the payment via the provided mobile numbers. A confirmation will be sent shortly.");
+        }
+    </script>
 
 </body>
 </html>
