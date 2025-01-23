@@ -89,13 +89,20 @@
             font-size: 4rem;
             margin-bottom: 20px;
             text-transform: uppercase;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Dancing Script', cursive; /* Changed to a more welcoming font */
+            color: #ff6f61; /* Default color */
+            background: linear-gradient(to right, #ff6f61, #ffd700); /* Gradient effect */
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Added text shadow for depth */
+            padding: 0 5px;
         }
 
         #hero p {
             font-size: 1.25rem;
             margin-bottom: 30px;
             font-weight: 400;
+            color: #ffffff; /* White color for the text */
         }
 
         #hero button {
@@ -309,26 +316,19 @@
 
             footer nav ul {
                 flex-direction: column;
-                align-items: center;
+                gap: 10px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header>
-        <nav>
-            <ul>
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#ministry">Ministry</a></li>
-                <li><a href="#events">Events</a></li>
-                </li><a href="donations.html">Donate</a>
-                <li><a href="#testimonies">Testimonies</a></li>
-            </ul>
-        </nav>
-        <button class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        <a href="#">Home</a>
+        <a href="#">Ministries</a>
+        <a href="#">Events</a>
+        <a href="#">Testimonies</a>
+        <a href="#">Contact</a>
     </header>
 
     <!-- Hero Section -->
@@ -337,48 +337,35 @@
             <h1>Welcome to Prophetic Embassy Anointed Church</h1>
             <p>Join us in spreading the message of hope and salvation to the nations.</p>
             <button>Get Involved</button>
-
             <b><p>with prophet Abraham Kasawa</p></b>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <h2>About Us</h2>
-        <p>We are a global community of believers, committed to spreading the message of Jesus Christ and empowering people to live a life of purpose.</p>
     </section>
 
     <!-- Ministry Section -->
     <section id="ministry">
         <h2>Our Ministries</h2>
-        <p>We offer a variety of ministries for all ages, with something for everyone to be part of.</p>
         <ul>
-            <li>Children's Ministry</li>
-            <li>Youth Ministry</li>
-            <li>Women's Ministry</li>
-            <li>Men's Ministry</li>
+            <li>Healing & Deliverance</li>
+            <li>Worship & Praise</li>
+            <li>Community Outreach</li>
+            <li>Prayer & Intercession</li>
         </ul>
     </section>
 
-    <!-- Ministry Section -->
-<section id="ministry">
-    <h2>Our Ministries</h2>
-    <p>We offer a variety of ministries for all ages, with something for everyone to be part of.</p>
-    <ul>
-        <li>Children's Ministry</li>
-        <li>Youth Ministry</li>
-        <li>Women's Ministry</li>
-        <li>Men's Ministry</li>
-    </ul>
-</section>
-
-<!-- Branches Section -->
-<section id="branches">
-    <h2>Our Branches</h2>
-    <p>We have multiple branches across different locations, each serving as a beacon of faith and hope.</p>
-
-    <div class="branch">
-        <h3>Harare Branch</h3>
+    <!-- Events Section -->
+    <section id="events">
+        <h2>Upcoming Events</h2>
+        <ul>
+            <li>Annual Conference - March 2025</li>
+            <li>Miracle Night - Every Friday</li>
+            <li>Youth Gathering - Monthly</li>
+        </ul>
+    </section>
+<!-- Branch section -->
+    <section id="Branch">
+        <h2>Church Branches</h2>
+        <ul>
+        <li>Harare Branch</h3>
         <p><strong>Location:</strong> 101 Alexander Harare Drive, just after the tuckshops, Hatfield, Harare</p>
         <p><strong>Contact:</strong> <a href="tel:+263717540684">0717540684</a></p>
         <p><strong>Lead Pastor:</strong> Apostle Nyashanu</p>
@@ -398,75 +385,40 @@
     </div>
 </section>
 
-<!-- Testimonies Section -->
-<section id="testimonies">
-    <h2>Testimonies</h2>
-    <p>Hear powerful stories of lives transformed by the power of God.</p>
-    <blockquote>"My life has been changed completely. The prayers and guidance from the church have helped me overcome many challenges."</blockquote>
-    <blockquote>"The youth ministry has been instrumental in guiding me through the toughest times in my life."</blockquote>
-</section>
-    
-
-    <!-- Events Section -->
-    <section id="events">
-        <h2>Upcoming Events</h2>
-        <p>We host several events and activities throughout the year to strengthen our community.</p>
-        <ul>
-            <li>Annual Crusades</li>
-            <li>Church Conferences</li>
-            <li>Youth Workshops</li>
-            <li>Prayer and Healing Services</li>
-        </ul>
-    </section>
-
     <!-- Testimonies Section -->
     <section id="testimonies">
         <h2>Testimonies</h2>
-        <p>Hear powerful stories of lives transformed by the power of God.</p>
-        <blockquote>"My life has been changed completely. The prayers and guidance from the church have helped me overcome many challenges."</blockquote>
-        <blockquote>"The youth ministry has been instrumental in guiding me through the toughest times in my life."</blockquote>
+        <blockquote>
+            "I received a miracle through prayer at the church. Truly life-changing!"
+        </blockquote>
+        <blockquote>
+            "The teachings here have transformed my spiritual walk. Glory to God!"
+        </blockquote>
     </section>
 
-    <!-- contact section -->
-    <section id="Contact">
-        <!-- Contact Section -->
-<section id="contact">
-    <h2>Contact Us</h2>
-    <p>Get in touch with us for any inquiries or support. We're always here to help!</p>
-
-    <!-- Phone Numbers -->
-    <div>
-        <p><strong>Phone Number (Zambia):</strong> <a href="tel:+260971578499">+260971578499</a></p>
-        <p><strong>Phone Number (Botswana):</strong> <a href="tel:+26778757183">+26778757183</a></p>
-    </div>
-
-    <!-- Social Media Links -->
-    <div>
-        <p><strong>Follow Us on Facebook:</strong> <a href="https://www.facebook.com/YourPage" target="_blank">Facebook</a></p>
-        <p><strong>Watch Us on YouTube:</strong> <a href="https://www.youtube.com/channel/YourChannel" target="_blank">YouTube</a></p>
-    </div>
-</section>
-
-<!-- Footer Section -->
-<footer>
-    <div>
-        <p>&copy; 2023 Prophetic Embassy Anointed Church</p>
-        <p><strong>Phone Number:</strong> <a href="tel:+260971578499">+260971578499</a></p>
-        <p><strong>Follow Us on Social Media:</strong></p>
-        <p><a href="https://www.facebook.com/share/1GZVj9Pp7t/?mibextid=wwXIfr" target="_blank">Facebook</a> | <a href="https://www.youtube.com/channel/YourChannel" target="_blank">YouTube</a></p>
-    </div>
-</footer>
-
-    <!-- Footer Section -->
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2023 Prophetic Embassy Anointed Church</p>
+        <p>&copy; 2025 Prophetic Embassy Anointed Church | All Rights Reserved</p>
         <nav>
             <ul>
-               ol-->
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </nav>
+    </footer>
+
     <script>
-        function toggleDarkMode() {
+        // Dark Mode Toggle Functionality
+        const toggleBtn = document.createElement('button');
+        toggleBtn.classList.add('dark-mode-toggle');
+        toggleBtn.textContent = 'Toggle Dark Mode';
+        document.body.appendChild(toggleBtn);
+
+        toggleBtn.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
-        }
+        });
     </script>
+
 </body>
 </html>
