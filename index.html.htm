@@ -1,638 +1,132 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URBAN MUSIC PROMO</title>
-    <style>
-        /* Style the logo */
-        .logo img {
-            width: 150px;
-            height: auto;
-        }
-
-        /* Optional: Position the logo in the center of the page */
-        .logo {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        header {
-            background-color: #444;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        header h1 {
-            font-size: 2.5em;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            animation: glow 1.5s infinite alternate;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        main {
-            padding: 20px;
-            background: linear-gradient(45deg, #f4f4f4, #f9fafc);
-        }
-        h2 {
-            color: #ff4b5c;
-            font-size: 2em;
-            letter-spacing: 2px;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
-        }
-        section {
-            margin-bottom: 40px;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s, color 0.3s;
-        }
-        section:hover {
-            background: #ffe5e5;
-            transform: scale(1.02);
-            transition: all 0.3s ease-in-out;
-        }
-        article {
-            margin-bottom: 15px;
-        }
-        article img {
-            border-radius: 8px;
-            transition: transform 0.3s ease-in-out;
-        }
-        article img:hover {
-            transform: scale(1.05);
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #444;
-            color: #fff;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-        /* Dark Mode */
-        body.dark-mode {
-            background-color: #1c1c1c;
-            color: #f4f4f4;
-        }
-        section.dark-mode {
-            background-color: #2b2b2b;
-            color: #f4f4f4;
-        }
-        h2.dark-mode {
-            color: #ffab00;
-        }
-        header.dark-mode, footer.dark-mode {
-            background-color: #333;
-        }
-        nav a.dark-mode {
-            color: #ffab00;
-        }
-        article img.dark-mode {
-            filter: brightness(0.8);
-        }
-        /* Dark Mode Toggle */
-        .switch {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 60px;
-            height: 34px;
-        }
-        .switch input { display: none; }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-        }
-        input:checked + .slider {
-            background-color: #ff4b5c;
-        }
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-        .slider.round { border-radius: 34px; }
-        .slider.round:before { border-radius: 50%; }
-
-        /* Keyframes for glow effect */
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 10px #ff4b5c, 0 0 20px #ff4b5c, 0 0 30px #ff4b5c, 0 0 40px #ff4b5c;
-            }
-            to {
-                text-shadow: 0 0 20px #ffab00, 0 0 30px #ffab00, 0 0 40px #ffab00, 0 0 50px #ffab00;
-            }
-        }
-    </style>
+    <title>Prophetic Embassy Anointed Church of All Nations</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <!-- Logo at the top center of the page -->
-    <div class="logo">
-        <img src="data:image/png;base64,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"" alt="Welcome To Urban Music Promo!">
-    </div>
-
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urban Music Promo - Boosting Malawi's Urban Talents</title>
-    <style>
-        /* General page styling */
-        body {
-            font-family: 'Poppins', Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Animated banner styling */
-        .banner {
-            background-color: #ff4757;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-            font-size: 1.1em;
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .banner p {
-            display: inline-block;
-            animation: scroll-left 10s linear infinite;
-            white-space: nowrap;
-        }
-
-        @keyframes scroll-left {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-
-        /* Navigation Bar Styling */
-        nav {
-            background: linear-gradient(135deg, #191414, #1DB954);
-            padding: 15px;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            width: 100%;
-            z-index: 100;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease-in-out;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        nav ul li {
-            margin: 0 20px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: white;
-            font-size: 1.2em;
-            padding: 8px 16px;
-            border-radius: 20px;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            display: inline-block;
-        }
-
-        nav ul li a:hover {
-            background-color: #fff;
-            color: #1DB954;
-            box-shadow: 0 4px 10px rgba(0, 255, 0, 0.5);
-        }
-
-        /* Navigation bar transition on scroll */
-        nav.scrolled {
-            background-color: #1DB954;
-        }
-
-        /* Header styling */
-        header {
-            background-color: #1DB954;
-            color: white;
-            padding: 40px;
-            text-align: center;
-        }
-
-        header h1 {
-            font-size: 3.5em;
-            margin: 0;
-            text-transform: uppercase;
-        }
-
-        header p {
-            font-size: 1.2em;
-            margin-top: 10px;
-        }
-
-        /* Content Section styling */
-        .content {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .content h2 {
-            color: #1DB954;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        .content p {
-            font-size: 1.1em;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        /* New Discover Section */
-        .discover-section {
-            background-color: #f4f4f9;
-            padding: 30px 20px;
-            text-align: center;
-        }
-
-        .discover-section h2 {
-            color: #1DB954;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        .discover-section p {
-            font-size: 1.2em;
-            color: #333;
-        }
-
-        .discover-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .discover-section li {
-            font-size: 1.1em;
-            padding: 10px 0;
-        }
-
-        .cta-button {
-            background-color: #1DB954;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .cta-button:hover {
-            background-color: #148d3b;
-        }
-
-        /* Footer styling */
-        footer {
-            background-color: #191414;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 30px;
-        }
-
-        footer p {
-            margin: 0;
-        }
-
-        /* Responsive header */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2.5em;
-            }
-
-            header p {
-                font-size: 1em;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- Moving Banner -->
-    <div class="banner">
-        <p>Welcome to Urban Music Promo! stay tuned </p>
-    </div>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Navigation Bar -->
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URBAN MENU</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-         <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        header {
-            background-color: #444;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        header h1 {
-            font-size: 2.5em;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            animation: glow 1.5s infinite alternate;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        main {
-            padding: 20px;
-            background: linear-gradient(45deg, #f4f4f4, #f9fafc);
-        }
-        h2 {
-            color: #ff4b5c;
-            font-size: 2em;
-            letter-spacing: 2px;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
-        }
-        section {
-            margin-bottom: 40px;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s, color 0.3s;
-        }
-        section:hover {
-            background: #ffe5e5;
-            transform: scale(1.02);
-            transition: all 0.3s ease-in-out;
-        }
-        article {
-            margin-bottom: 15px;
-        }
-        article img {
-            border-radius: 8px;
-            transition: transform 0.3s ease-in-out;
-        }
-        article img:hover {
-            transform: scale(1.05);
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #444;
-            color: #fff;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-        /* Dark Mode */
-        body.dark-mode {
-            background-color: #1c1c1c;
-            color: #f4f4f4;
-        }
-        section.dark-mode {
-            background-color: #2b2b2b;
-            color: #f4f4f4;
-        }
-        h2.dark-mode {
-            color: #ffab00;
-        }
-        header.dark-mode, footer.dark-mode {
-            background-color: #333;
-        }
-        nav a.dark-mode {
-            color: #ffab00;
-        }
-        article img.dark-mode {
-            filter: brightness(0.8);
-        }
-        /* Dark Mode Toggle */
-        .switch {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 60px;
-            height: 34px;
-        }
-        .switch input { display: none; }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-        }
-        input:checked + .slider {
-            background-color: #ff4b5c;
-        }
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-        .slider.round { border-radius: 34px; }
-        .slider.round:before { border-radius: 50%; }
-
-        /* Keyframes for glow effect */
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 10px #ff4b5c, 0 0 20px #ff4b5c, 0 0 30px #ff4b5c, 0 0 40px #ff4b5c;
-            }
-            to {
-                text-shadow: 0 0 20px #ffab00, 0 0 30px #ffab00, 0 0 40px #ffab00, 0 0 50px #ffab00;
-            }
-        }
-    </style>
-
-</head>
-<body>
-
-    <nav class="navbar">
-        <div class="logo">
-            <h1>URBAN MENU</h1>
-        </div>
-      <ul class="nav-links">
-    <li><a href="Listen.html"><i class="fas fa-headphones"></i> Listen</a></li>
-    <li><a href="top30.html"><i class="fas fa-star"></i> Urban Music Updates</a></li> <!-- Updated link -->
-    <li><a href="admin_control_panel.html"><i class="fas fa-envelope"></i> Contact</a></li>
-    <li><a href="Listen.html"><i class="fas fa-headphones"></i> Urban Music Player</a></li>
-    <li><a href="#home"><i class="fas fa-house"></i> Home</a></li>
-</ul>
-
-        <div class="burger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
-    </nav>
-
-    <script>
-        const burger = document.querySelector('.burger');
-        const navLinks = document.querySelector('.nav-links');
-
-        burger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        navLinks.addEventListener('click', () => {
-            if (navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-            }
-        });
-    </script
-    
-    
-    <!-- Main Header -->
     <header>
-        <h1>Urban Music Promo</h1>
-        <p>Boosting Local Talents & Urban Artists in Malawi</p>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#ministry">Ministry</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#donate">Donate</a></li>
+                <li><a href="#live-services">Live Services</a></li>
+                <li><a href="#testimonies">Testimonies</a></li>
+            </ul>
+        </nav>
     </header>
-
-    <!-- Introduction Section -->
-    <section class="content">
-        <h2>About Us</h2>
-        <p>
-            Urban Music Promo is dedicated to promoting Malawi's thriving urban music scene by supporting local talents and artists.
-            Our mission is to create a wider audience base for Malawian urban music, helping artists gain more exposure both locally and internationally.
-            We aim to uplift urban music culture and inspire creativity and connection across the country.
-        </p>
-        <p>
-            Whether it's hip-hop, R&B, Afrobeat, or fusion, Urban Music Promo is committed to giving Malawian artists the spotlight they deserve.
-        </p>
-    </section>
-
-    <!-- Discover New Section -->
-    <section class="discover-section">
-        <h2>Discover the Best of Malawi’s Urban Music Scene</h2>
-        <p>
-            Explore the hottest new releases, rising stars, and iconic hits from Malawi’s urban music culture. Our platform offers:
-        </p>
-        <ul>
-            <li>Top 30 Chart: Stay updated with the top-rated tracks.</li>
-            <li>New Releases: Check out the latest singles and albums from emerging talents.</li>
-            <li>Curated Playlists: Discover music curated for every mood and genre.</li>
-            <li>Exclusive Interviews: Hear directly from the artists shaping Malawi’s urban music culture.</li>
-        </ul>
-        <button class="cta-button">Start Listening Now</button>
-    </section>
-
-    <!-- Artist Spotlights Section -->
-    <section class="discover-section">
-        <h2>Artist Spotlights</h2>
-        <p>
-            Urban Music Promo is home to some of Malawi's most talented urban artists. We feature upcoming stars and established musicians, giving fans exclusive access to their latest tracks and personal stories. 
-        </p>
-        <button class="cta-button">Explore More Artists</button>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="discover-section">
-        <h2>What Our Fans Are Saying</h2>
-        <p>
-            "Urban Music Promo has revolutionized how I discover new Malawian music. The platform keeps me up-to-date with what's hot and who's next." – Alice, Music Lover
-        </p>
-        <p>
-            "As an artist, this platform has given me exposure and opportunities I never thought possible." – Jay, Malawian Artist
-        </p>
-    </section>
-       <!-- Dark Mode Script -->
-    <script>
-        const toggle = document.getElementById('darkModeToggle');
-        const body = document.body;
-        const sections = document.querySelectorAll('section');
-        const headers = document.querySelectorAll('header, footer');
-        const navLinks = document.querySelectorAll('nav a');
-        const images = document.querySelectorAll('article img');
-
-        toggle.addEventListener('change', () => {
-            body.classList.toggle('dark-mode');
-            headers.forEach(header => header.classList.toggle('dark-mode'));
-            sections.forEach(section => section.classList.toggle('dark-mode'));
-            navLinks.forEach(link => link.classList.toggle('dark-mode'));
-            images.forEach(img => img.classList.toggle('dark-mode'));
-        });
-    </script>
+    <main>
+        <section id="home">
+            <h1>Welcome to Prophetic Embassy Anointed Church of All Nations</h1>
+            <p>We are a global ministry with a vision to spread the Gospel of Jesus Christ to all nations.</p>
+            <button>Learn More</button>
+        </section>
+        <section id="about">
+            <h2>About Us</h2>
+            <p>We are a community of believers who are passionate about serving God and humanity.</p>
+        </section>
+        <section id="ministry">
+            <h2>Ministry</h2>
+            <p>We have various ministry departments that cater to different needs and interests.</p>
+            <ul>
+                <li>Children's Ministry</li>
+                <li>Youth Ministry</li>
+                <li>Women's Ministry</li>
+                <li>Men's Ministry</li>
+            </ul>
+        </section>
+        <section id="events">
+            <h2>Events</h2>
+            <p>We have various events and activities throughout the year.</p>
+            <ul>
+                <li>Crusades</li>
+                <li>Conferences</li>
+                <li>Workshops</li>
+                <li>Prayer Meetings</li>
+            </ul>
+        </section>
+        <section id="donate">
+            <h2>Donate</h2>
+            <p>Your donation will help us spread the Gospel and support our ministry activities.</p>
+            <button>Donate Now</button>
+        </section>
+        <section id="live-services">
+            <h2>Live Services</h2>
+            <p>Join us for our live online church services.</p>
+            <iframe src="https://www.youtube.com/embed/your-video-id" frameborder="0" allowfullscreen></iframe>
+        </section>
+        <section id="testimonies">
+            <h2>Testimonies</h2>
+            <p>Hear from people whose lives have been transformed by our ministry.</p>
+            <ul>
+                <li>Testimony 1</li>
+                <li>Testimony 2</li>
+                <li>Testimony 3</li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Prophetic Embassy Anointed Church of All Nations</p>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
+CSS (styles.css)
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+section {
+    background-color: #f7f7f7;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+    margin-top: 0;
+}
+
+button {
+    background-color: #333;
+    color: #fff;
+    border: none
