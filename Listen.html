@@ -3,225 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urban Music Promo</title>
+    <title>Donate - Prophetic Embassy Anointed Church</title>
     <style>
-        /* Reset */
+        /* General Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
 
-        /* Dark Mode */
-        body.dark-mode {
-            background-color: #181818;
-            color: #f1f1f1;
-        }
-        body.dark-mode a {
-            color: #1db954;
-        }
-        
-        /* General Styles */
         body {
-            background-color: #f3f3f3;
+            background-color: #f8f8f8;
             color: #333;
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            line-height: 1.7;
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Main Container */
-        .container {
-            width: 90%;
-            max-width: 800px;
-            padding: 20px;
-            border-radius: 10px;
-            background: #fff;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        /* Global Typography */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: #2c3e50;
+            transition: color 0.3s;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+            transition: color 0.3s;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 80px 20px;
             text-align: center;
-        }
-
-        /* Header */
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: #1db954;
-        }
-
-        /* Admin Section */
-        #admin-section {
-            margin: 20px 0;
-        }
-
-        #upload-form {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-        label {
-            cursor: pointer;
-            padding: 10px 20px;
-            border: 2px solid #1db954;
-            border-radius: 5px;
-            color: #1db954;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        label:hover {
-            background-color: #1db954;
-            color: #fff;
-        }
-
-        /* Music List */
-        #music-list {
-            margin-top: 30px;
-        }
-
-        #musicFiles {
-            list-style: none;
-        }
-
-        #musicFiles li {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        #musicFiles li a {
             color: #333;
-            text-decoration: none;
         }
 
-        /* Toggle Button */
-        .toggle-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #333;
-            border: none;
-            border-radius: 15px;
-            width: 50px;
-            height: 25px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            padding: 0 5px;
+        section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            text-transform: uppercase;
         }
 
-        .toggle-button .circle {
-            width: 20px;
-            height: 20px;
+        section p {
+            font-size: 1.15rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            font-weight: 400;
+        }
+
+        /* Donation Form */
+        .donation-form {
             background-color: #fff;
-            border-radius: 50%;
-            transition: transform 0.3s;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
         }
 
-        body.dark-mode .toggle-button {
-            background: #1db954;
+        .donation-form h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
         }
 
-        body.dark-mode .toggle-button .circle {
-            transform: translateX(25px);
+        .donation-form p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .donation-form input, .donation-form select, .donation-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .donation-form input[type="submit"] {
+            background-color: #FFD700;
+            color: #333;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            padding: 15px 30px;
+            transition: background-color 0.3s;
+        }
+
+        .donation-form input[type="submit"]:hover {
+            background-color: #e67e22;
+        }
+
+        /* Payment Gateway Section */
+        .payment-info {
+            background-color: #f9f9f9;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .payment-info h4 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .payment-info p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            section h2 {
+                font-size: 2rem;
+            }
+
+            .donation-form {
+                padding: 30px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Urban Music Promo</h1>
-        
-        <!-- Dark Mode Toggle -->
-        <button class="toggle-button" onclick="toggleDarkMode()">
-            <div class="circle"></div>
-        </button>
-        
-        <!-- Admin Upload Section -->
-        <div id="admin-section">
-            <h2>Admin Upload</h2>
-            <form id="upload-form">
-                <label for="musicFile">Choose File</label>
-                <input type="file" id="musicFile" accept="audio/*">
-                <button type="button" onclick="uploadMusic()">Upload</button>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#ministry">Ministry</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#donate">Donate</a></li>
+                <li><a href="#testimonies">Testimonies</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Donation Section -->
+    <section id="donate">
+        <h2>Support Our Ministry</h2>
+        <p>Your donation makes a difference! Thank you for considering a gift to the Prophetic Embassy Anointed Church. Your support helps us continue to spread the message of hope and salvation to the nations.</p>
+
+        <div class="donation-form">
+            <h3>Make a Donation</h3>
+            <p>Please fill out the form below to donate securely to our ministry.</p>
+            
+            <form action="#" method="POST">
+                <label for="donor-name">Your Name</label>
+                <input type="text" id="donor-name" name="donor-name" placeholder="Your Name" required>
+
+                <label for="donation-amount">Donation Amount ($)</label>
+                <input type="number" id="donation-amount" name="donation-amount" placeholder="Amount in USD" required min="1">
+
+                <label for="donation-message">Message (Optional)</label>
+                <textarea id="donation-message" name="donation-message" placeholder="Message (Optional)"></textarea>
+
+                <input type="submit" value="Donate Now">
             </form>
         </div>
-        
-        <!-- Music List Section -->
-        <div id="music-list">
-            <h2>Available Music</h2>
-            <ul id="musicFiles"></ul>
+
+        <!-- Payment Info Section -->
+        <div class="payment-info">
+            <h4>Other Ways to Donate</h4>
+            <p>If you prefer to donate via bank transfer, please use the following information:</p>
+            
+            <p><strong>Bank Name:</strong> ABSA </p>
+            <p><strong>Account Name:</strong> ABRAHAM KASAWA </p>
+            <p><strong>Account Number:</strong> 051-1110823</p>
+
+            <p>Your donation will be put to good use, supporting church activities, outreach programs, and the continued work of the ministry. Thank you for your generosity and support.</p>
         </div>
-    </div>
+    </section>
 
-    <script>
-        // Placeholder API URL
-        const API_URL = "YOUR_API_URL";  // Replace with your serverless backend endpoint
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2023 Prophetic Embassy Anointed Church</p>
+        <nav>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#ministry">Ministry</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#donate">Donate</a></li>
+                <li><a href="#testimonies">Testimonies</a></li>
+            </ul>
+        </nav>
+    </footer>
 
-        // Dark Mode Toggle
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
-
-        // Function to upload music
-        async function uploadMusic() {
-            const fileInput = document.getElementById("musicFile");
-            const file = fileInput.files[0];
-
-            if (file) {
-                const formData = new FormData();
-                formData.append("musicFile", file);
-
-                try {
-                    const response = await fetch(`${API_URL}/upload`, {
-                        method: "POST",
-                        body: formData
-                    });
-                    
-                    if (response.ok) {
-                        alert("File uploaded successfully!");
-                        listMusicFiles();
-                    } else {
-                        alert("Failed to upload file.");
-                    }
-                } catch (error) {
-                    console.error("Error uploading file:", error);
-                    alert("Error uploading file.");
-                }
-            } else {
-                alert("Please select a file to upload.");
-            }
-        }
-
-        // Function to list music files
-        async function listMusicFiles() {
-            try {
-                const response = await fetch(`${API_URL}/list`);
-                const files = await response.json();
-                
-                const musicFiles = document.getElementById("musicFiles");
-                musicFiles.innerHTML = ""; // Clear current list
-
-                files.forEach(file => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `<a href="${file.url}" download>${file.name}</a>`;
-                    musicFiles.appendChild(li);
-                });
-            } catch (error) {
-                console.error("Error listing music files:", error);
-                alert("Error loading music files.");
-            }
-        }
-
-        // Initial load of music files
-        document.addEventListener("DOMContentLoaded", listMusicFiles);
-    </script>
 </body>
 </html>
