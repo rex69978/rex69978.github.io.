@@ -29,7 +29,7 @@
         }
 
         p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #666;
             line-height: 1.6;
             transition: color 0.3s;
@@ -42,18 +42,18 @@
             left: 0;
             width: 100%;
             background-color: rgba(40, 40, 40, 0.8);
-            padding: 20px 40px;
+            padding: 10px 20px;
             z-index: 1000;
-            transition: background-color 0.3s;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         header a {
             color: #fff;
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin: 0 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -89,12 +89,12 @@
             font-size: 4rem;
             margin-bottom: 20px;
             text-transform: uppercase;
-            font-family: 'Dancing Script', cursive; /* Changed to a more welcoming font */
-            color: #ff6f61; /* Default color */
-            background: linear-gradient(to right, #ff6f61, #ffd700); /* Gradient effect */
+            font-family: 'Dancing Script', cursive;
+            color: #ff6f61;
+            background: linear-gradient(to right, #ff6f61, #ffd700);
             -webkit-background-clip: text;
             background-clip: text;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Added text shadow for depth */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
             padding: 0 5px;
         }
 
@@ -102,7 +102,7 @@
             font-size: 1.25rem;
             margin-bottom: 30px;
             font-weight: 400;
-            color: #ffffff; /* White color for the text */
+            color: #ffffff;
         }
 
         #hero button {
@@ -210,7 +210,7 @@
         footer {
             background-color: #2c3e50;
             color: white;
-            padding: 30px 0;
+            padding: 30px 20px;
             text-align: center;
             font-size: 1.1rem;
         }
@@ -296,22 +296,59 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 1200px) {
+            #hero h1 {
+                font-size: 3.5rem;
+            }
+
+            #hero p {
+                font-size: 1.1rem;
+            }
+
+            section h2 {
+                font-size: 2.5rem;
+            }
+
+            #ministry ul {
+                gap: 20px;
+            }
+
+            #ministry ul li {
+                font-size: 1.1rem;
+            }
+
+            footer nav ul {
+                gap: 20px;
+            }
+        }
+
         @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
             #hero h1 {
                 font-size: 3rem;
             }
 
             #hero p {
                 font-size: 1rem;
+                margin-bottom: 20px;
             }
 
             section h2 {
                 font-size: 2rem;
             }
 
+            section p {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+
             #ministry ul {
-                flex-direction: column;
                 gap: 15px;
+                flex-direction: column;
             }
 
             footer nav ul {
@@ -319,6 +356,34 @@
                 gap: 10px;
             }
         }
+
+        @media (max-width: 480px) {
+            #hero h1 {
+                font-size: 2.5rem;
+            }
+
+            #hero button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+
+            section h2 {
+                font-size: 1.8rem;
+            }
+
+            #ministry ul {
+                gap: 10px;
+            }
+
+            footer nav ul {
+                gap: 5px;
+            }
+
+            footer {
+                font-size: 1rem;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -334,10 +399,43 @@
     <section id="hero">
         <div>
             <h1>Welcome to Prophetic Embassy Anointed Church</h1>
-            <p>Join us in spreading the message of hope and salvation to the nations.</p>
+            <p>Join us in spreading the message of hope and salvation to the nations. Together, we can fulfill the Great Commission!</p>
             <button>Get Involved</button>
             <b><p>with prophet Abraham Kasawa</p></b>
         </div>
+    </section>
+
+    <!-- Mission, Strategies, Core Values, Vision Section -->
+    <section>
+        <h2>Our Mission</h2>
+        <p>The Prophetic Embassy Anointed Church of All Nations exists to fulfill the Great Commandment and Great Commission of the Lord Jesus Christ according to the Great Plan (Mark 12:30-31; Matthew 28:19-20; Acts 1:8).</p>
+        
+        <h2>Strategies</h2>
+        <p>Our church accomplishes its mission through these key strategies:</p>
+        <ul>
+            <li>Evangelizing the Unsaved</li>
+            <li>Establishing Churches</li>
+            <li>Edifying Believers</li>
+            <li>Equipping Leaders</li>
+            <li>Exercising Social Compassion</li>
+        </ul>
+
+        <h2>Core Values</h2>
+        <ul>
+            <li>Accountability</li>
+            <li>Biblical authority</li>
+            <li>Diversity</li>
+            <li>Excellence</li>
+            <li>Faith</li>
+            <li>Family</li>
+            <li>Fellowship</li>
+            <li>Holiness</li>
+            <li>Integrity</li>
+            <li>Servanthood</li>
+        </ul>
+
+        <h2>Vision</h2>
+        <p>We envision a world transformed by the power of God’s love and grace. Our mission is to foster spiritual growth, empower communities, and spread the Gospel globally, uniting believers from all walks of life in worship, service, and love.</p>
     </section>
 
     <!-- Ministry Section -->
@@ -360,29 +458,29 @@
             <li>Youth Gathering - Monthly</li>
         </ul>
     </section>
-<!-- Branch section -->
+
+    <!-- Branch Section -->
     <section id="Branch">
         <h2>Church Branches</h2>
         <ul>
-        <li>Harare Branch</h3>
-        <p><strong>Location:</strong> 101 Alexander Harare Drive, just after the tuckshops, Hatfield, Harare</p>
-        <p><strong>Contact:</strong> <a href="tel:+263717540684">0717540684</a></p>
-        <p><strong>Lead Pastor:</strong> Apostle Nyashanu</p>
-    </div>
+            <li><h3>Harare Branch</h3>
+            <p><strong>Location:</strong> 101 Alexander Harare Drive, just after the tuckshops, Hatfield, Harare</p>
+            <p><strong>Contact:</strong> <a href="tel:+263717540684">0717540684</a></p>
+            <p><strong>Lead Pastor:</strong> Apostle Nyashanu</p>
+            </li>
 
-    <div class="branch">
-        <h3>Gweru Branch</h3>
-        <p><strong>Location:</strong> Ridgemont Heights, Number 1385, Gweru</p>
-        <p><strong>Contact:</strong> <a href="tel:+263717540684">0717540684</a></p>
-        <p><strong>Leads:</strong> Pst. Chama & Prophetess Mercy</p>
-    </div>
+            <li><h3>Gweru Branch</h3>
+            <p><strong>Location:</strong> Ridgemont Heights, Number 1385, Gweru</p>
+            <p><strong>Contact:</strong> <a href="tel:+263717540684">0717540684</a></p>
+            <p><strong>Leads:</strong> Pst. Chama & Prophetess Mercy</p>
+            </li>
 
-    <div class="branch">
-        <h3>PEACOAN Ministries (Lusaka, Zambia Branch)</h3>
-        <p><strong>Location:</strong> Lusaka, Zambia</p>
-        <p><strong>Contact:</strong> <a href="tel:+260971578499">+260971578499</a></p>
-    </div>
-</section>
+            <li><h3>PEACOAN Ministries (Lusaka, Zambia Branch)</h3>
+            <p><strong>Location:</strong> Lusaka, Zambia</p>
+            <p><strong>Contact:</strong> <a href="tel:+260971578499">+260971578499</a></p>
+            </li>
+        </ul>
+    </section>
 
     <!-- Testimonies Section -->
     <section id="testimonies">
