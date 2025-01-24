@@ -29,7 +29,7 @@
         }
 
         p {
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: #666;
             line-height: 1.6;
             transition: color 0.3s;
@@ -37,16 +37,17 @@
 
         /* Header */
         header {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             background-color: rgba(40, 40, 40, 0.8);
-            padding: 15px 20px;
+            padding: 20px 40px;
+            z-index: 1000;
+            transition: background-color 0.3s;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         header a {
@@ -88,19 +89,13 @@
             font-size: 4rem;
             margin-bottom: 20px;
             text-transform: uppercase;
-            font-family: 'Dancing Script', cursive;
-            background: linear-gradient(to right, #ff6f61, #ffd700);
-            -webkit-background-clip: text;
-            background-clip: text;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
-            color: transparent;
+            font-family: 'Playfair Display', serif;
         }
 
         #hero p {
             font-size: 1.25rem;
             margin-bottom: 30px;
             font-weight: 400;
-            color: #ffffff;
         }
 
         #hero button {
@@ -208,7 +203,7 @@
         footer {
             background-color: #2c3e50;
             color: white;
-            padding: 30px 20px;
+            padding: 30px 0;
             text-align: center;
             font-size: 1.1rem;
         }
@@ -294,34 +289,7 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 1200px) {
-            #hero h1 {
-                font-size: 3.5rem;
-            }
-
-            #hero p {
-                font-size: 1.1rem;
-            }
-
-            section h2 {
-                font-size: 2.5rem;
-            }
-
-            #ministry ul {
-                gap: 20px;
-            }
-
-            #ministry ul li {
-                font-size: 1.1rem;
-            }
-        }
-
         @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
             #hero h1 {
                 font-size: 3rem;
             }
@@ -334,181 +302,170 @@
                 font-size: 2rem;
             }
 
-            section p {
-                font-size: 1rem;
-                max-width: 100%;
-            }
-
             #ministry ul {
+                flex-direction: column;
                 gap: 15px;
-                flex-direction: column;
             }
 
             footer nav ul {
                 flex-direction: column;
-                gap: 10px;
+                align-items: center;
             }
         }
-
-        @media (max-width: 480px) {
-            #hero h1 {
-                font-size: 2.5rem;
-            }
-
-            #hero button {
-                padding: 12px 30px;
-                font-size: 1rem;
-            }
-
-            section h2 {
-                font-size: 1.8rem;
-            }
-
-            #ministry ul {
-                gap: 10px;
-            }
-
-            footer nav ul {
-                gap: 5px;
-            }
-
-            footer {
-                font-size: 1rem;
-            }
-        }
-
     </style>
 </head>
 <body>
 
+    <!-- Header -->
     <header>
-        <a href="#">Ministries</a>
-        <a href="#">Events</a>
-        <a href="#">Testimonies</a>
-        <a href="#">Contact</a>
+        <nav>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#ministry">Ministry</a></li>
+                <li><a href="#events">Events</a></li>
+                </li><a href="donations.html">Donate</a>
+                <li><a href="#testimonies">Testimonies</a></li>
+            </ul>
+        </nav>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
     </header>
 
     <!-- Hero Section -->
     <section id="hero">
         <div>
-            <h1>Empowered to Transform the World</h1>
-            <p>Step into a life-changing journey with the Prophetic Embassy Anointed Church. Together, we will spread hope, healing, and the love of Christ across nations.</p>
-            <button>Join Us Today</button>
-            <b><p>with Prophet Abraham Kasawa</p></b>
+            <h1>Welcome to Prophetic Embassy Anointed Church</h1>
+            <p>Join us in spreading the message of hope and salvation to the nations.</p>
+            <button>Get Involved</button>
+
+            <b><p>with prophet Abraham Kasawa</p></b>
         </div>
     </section>
 
-    <!-- Mission, Strategies, Core Values, Vision Section -->
-    <section>
-        <h2>Our Mission</h2>
-        <p>The Prophetic Embassy Anointed Church of All Nations exists to fulfill the Great Commandment and Great Commission of the Lord Jesus Christ according to the Great Plan (Mark 12:30-31; Matthew 28:19-20; Acts 1:8).</p>
-        
-        <h2>Strategies</h2>
-        <p>Our church accomplishes its mission through these key strategies:</p>
-        <ul>
-            <li>Evangelizing the Unsaved</li>
-            <li>Establishing Churches</li>
-            <li>Edifying Believers</li>
-            <li>Equipping Leaders</li>
-            <li>Exercising Social Compassion</li>
-        </ul>
-
-        <h2>Core Values</h2>
-        <ul>
-            <li>Accountability</li>
-            <li>Biblical authority</li>
-            <li>Diversity</li>
-            <li>Excellence</li>
-            <li>Faith</li>
-            <li>Family</li>
-            <li>Fellowship</li>
-            <li>Holiness</li>
-            <li>Integrity</li>
-            <li>Servanthood</li>
-        </ul>
-
-        <h2>Vision</h2>
-        <p>We envision a world transformed by the power of God’s love and grace. Our mission is to foster spiritual growth, empower communities, and spread the Gospel globally, uniting believers from all walks of life in worship, service, and love.</p>
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Us</h2>
+        <p>We are a global community of believers, committed to spreading the message of Jesus Christ and empowering people to live a life of purpose.</p>
     </section>
 
     <!-- Ministry Section -->
     <section id="ministry">
         <h2>Our Ministries</h2>
+        <p>We offer a variety of ministries for all ages, with something for everyone to be part of.</p>
         <ul>
-            <li>Healing & Deliverance</li>
-            <li>Worship & Praise</li>
-            <li>Community Outreach</li>
-            <li>Prayer & Intercession</li>
+            <li>Children's Ministry</li>
+            <li>Youth Ministry</li>
+            <li>Women's Ministry</li>
+            <li>Men's Ministry</li>
         </ul>
     </section>
 
-    <!-- Events Section -->
+   <!-- Ministry Section -->
+<section id="ministry">
+    <h2>Our Ministries</h2>
+    <p>We offer a variety of ministries for all ages, with something for everyone to be part of.</p>
+    <ul>
+        <li>Children's Ministry</li>
+        <li>Youth Ministry</li>
+        <li>Women's Ministry</li>
+        <li>Men's Ministry</li>
+    </ul>
+</section>
+
+<!-- Branches Section -->
+<section id="branches">
+    <h2>Our Branches</h2>
+    <p>We have multiple branches across different locations, each serving as a beacon of faith and hope.</p>
+
+    <div class="branch">
+        <h3>Harare Branch</h3>
+        <p><strong>Location:</strong> 101 Alexander Harare Drive, just after the tuckshops, Hatfield, Harare</p>
+        <p><strong>Contact:</strong> <a href="tel:+263717540684">0717540684</a></p>
+        <p><strong>Lead Pastor:</strong> Apostle Nyashanu</p>
+    </div>
+
+    <div class="branch">
+        <h3>Gweru Branch</h3>
+        <p><strong>Location:</strong> Ridgemont Heights, Number 1385, Gweru</p>
+        <p><strong>Contact:</strong> <a href="tel:+263717540684">0717540684</a></p>
+        <p><strong>Leads:</strong> Pst. Chama & Prophetess Mercy</p>
+    </div>
+
+    <div class="branch">
+        <h3>PEACOAN Ministries (Lusaka, Zambia Branch)</h3>
+        <p><strong>Location:</strong> Lusaka, Zambia</p>
+        <p><strong>Contact:</strong> <a href="tel:+260971578499">+260971578499</a></p>
+    </div>
+</section>
+
+<!-- Testimonies Section -->
+<section id="testimonies">
+    <h2>Testimonies</h2>
+    <p>Hear powerful stories of lives transformed by the power of God.</p>
+    <blockquote>"My life has been changed completely. The prayers and guidance from the church have helped me overcome many challenges."</blockquote>
+    <blockquote>"The youth ministry has been instrumental in guiding me through the toughest times in my life."</blockquote>
+</section>
+
+<!-- Events Section -->
     <section id="events">
         <h2>Upcoming Events</h2>
+        <p>We host several events and activities throughout the year to strengthen our community.</p>
         <ul>
-            <li>Annual Conference - March 2025</li>
-            <li>Miracle Night - Every Friday</li>
-            <li>Youth Gathering - Monthly</li>
-        </ul>
-    </section>
-
-    <!-- Branch Section -->
-    <section id="Branch">
-        <h2>Church Branches</h2>
-        <ul>
-            <li><h3>Harare Branch</h3>
-            <p><strong>Location:</strong> 101 Alexander Harare Drive, just after the tuckshops, Hatfield, Harare</p>
-            <p><strong>Contact:</strong> <a href="tel:+263717540684">0717540684</a></p>
-            <p><strong>Lead Pastor:</strong> Apostle Nyashanu</p>
-            </li>
-
-            <li><h3>Gweru Branch</h3>
-            <p><strong>Location:</strong> Ridgemont Heights, Number 1385, Gweru</p>
-            <p><strong>Contact:</strong> <a href="tel:+263717540684">0717540684</a></p>
-            <p><strong>Leads:</strong> Pst. Chama & Prophetess Mercy</p>
-            </li>
-
-            <li><h3>PEACOAN Ministries (Lusaka, Zambia Branch)</h3>
-            <p><strong>Location:</strong> Lusaka, Zambia</p>
-            <p><strong>Contact:</strong> <a href="tel:+260971578499">+260971578499</a></p>
-            </li>
+            <li>Annual Crusades</li>
+            <li>Church Conferences</li>
+            <li>Youth Workshops</li>
+            <li>Prayer and Healing Services</li>
         </ul>
     </section>
 
     <!-- Testimonies Section -->
     <section id="testimonies">
         <h2>Testimonies</h2>
-        <blockquote>
-            "I received a miracle through prayer at the church. Truly life-changing!"
-        </blockquote>
-        <blockquote>
-            "The teachings here have transformed my spiritual walk. Glory to God!"
-        </blockquote>
+        <p>Hear powerful stories of lives transformed by the power of God.</p>
+        <blockquote>"My life has been changed completely. The prayers and guidance from the church have helped me overcome many challenges."</blockquote>
+        <blockquote>"The youth ministry has been instrumental in guiding me through the toughest times in my life."</blockquote>
     </section>
 
-    <!-- Footer -->
+    <!-- contact section -->
+    <section id="Contact">
+        <!-- Contact Section -->
+<section id="contact">
+    <h2>Contact Us</h2>
+    <p>Get in touch with us for any inquiries or support. We're always here to help!</p>
+
+    <!-- Phone Numbers -->
+    <div>
+        <p><strong>Phone Number (Zambia):</strong> <a href="tel:+260971578499">+260971578499</a></p>
+        <p><strong>Phone Number (Botswana):</strong> <a href="tel:+26778757183">+26778757183</a></p>
+    </div>
+
+    <!-- Social Media Links -->
+    <div>
+        <p><strong>Follow Us on Facebook:</strong> <a href="https://www.facebook.com/YourPage" target="_blank">Facebook</a></p>
+        <p><strong>Watch Us on YouTube:</strong> <a href="https://www.youtube.com/channel/YourChannel" target="_blank">YouTube</a></p>
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer>
+    <div>
+        <p>&copy; 2023 Prophetic Embassy Anointed Church</p>
+        <p><strong>Phone Number:</strong> <a href="tel:+260971578499">+260971578499</a></p>
+        <p><strong>Follow Us on Social Media:</strong></p>
+        <p><a href="https://www.facebook.com/share/1GZVj9Pp7t/?mibextid=wwXIfr" target="_blank">Facebook</a> | <a href="https://www.youtube.com/channel/YourChannel" target="_blank">YouTube</a></p>
+    </div>
+</footer>
+
+    <!-- Footer Section -->
     <footer>
-        <p>&copy; 2025 PEACOAN MINISTRIES | All Rights Reserved</p>
+        <p>&copy; 2023 Prophetic Embassy Anointed Church</p>
         <nav>
             <ul>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms of Service</a></li>
-                <li><a href="#">FAQ</a></li>
-            </ul>
-        </nav>
-    </footer>
-
+               ol-->
     <script>
-        // Dark Mode Toggle Functionality
-        const toggleBtn = document.createElement('button');
-        toggleBtn.classList.add('dark-mode-toggle');
-        toggleBtn.textContent = 'Toggle Dark Mode';
-        document.body.appendChild(toggleBtn);
-
-        toggleBtn.addEventListener('click', () => {
+        function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
-        });
+        }
     </script>
-
 </body>
 </html>
